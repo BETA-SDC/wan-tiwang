@@ -72,6 +72,10 @@ When `Image`, `Audio`, or `Video` is checked, the form shows a media section for
 
 勾选 `Image`、`Audio` 或 `Video` 后，表单会显示对应的媒体区域。你可以选择已有媒体，也可以上传新的本地文件。上传文件会写入被 Git 忽略的 `media/`，同时自动追加一条 `media-meta/*.jsonl` 元数据。
 
+Changing fields, switching between `Form` and `JSON`, and selecting local media files do not write data. The UI only writes question data, uploaded media files, and media metadata after `Save` is clicked.
+
+修改字段、切换 `Form` / `JSON`、选择本地媒体文件都不会写入数据。只有点击 `Save` 后，UI 才会写入题目、上传媒体文件和媒体元数据。
+
 ## CLI Remains Available
 
 The UI uses the same repository files as the CLI. AI agents can continue using:

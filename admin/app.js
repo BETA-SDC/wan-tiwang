@@ -400,10 +400,11 @@ async function uploadMediaFromBlock(block) {
   return result.media;
 }
 
-async function readMediaRefsFromForm() {
+async function readMediaRefsFromForm({ uploadMedia = false } = {}) {
   const refs = [];
   for (const block of elements.mediaEditors.querySelectorAll(".mediaEditor")) {
-    const uploaded = await uploadMediaFromBlock(block);
+    const file = block.querySelector('[data-media-field="file"]').files[0];
+    const uploaded = uploadMedia && file ? await uploadMediaFromBlock(block) : null;
     const selectedId = block.querySelector('[data-media-field="existing"]').value.trim();
     const id = uploaded?.id || selectedId;
     if (!id) continue;
@@ -446,7 +447,7 @@ function questionToForm(question) {
   renderMediaEditors(question.media || []);
 }
 
-async function formToQuestion() {
+async function formToQuestion({ uploadMedia = false } = {}) {
   const form = elements.questionForm;
   const { _file, _line, ...baseQuestion } = state.formBaseQuestion || state.selectedQuestion || {};
   for (const field of [
@@ -468,7 +469,7 @@ async function formToQuestion() {
   ]) {
     delete baseQuestion[field];
   }
-  const media = await readMediaRefsFromForm();
+  const media = await readMediaRefsFromForm({ uploadMedia });
   const question = {
     ...baseQuestion,
     ...(baseQuestion.id || state.selectedQuestion?.id ? { id: baseQuestion.id || state.selectedQuestion.id } : {}),
@@ -569,7 +570,7 @@ async function refreshAll() {
 async function saveEditor() {
   let question;
   try {
-    question = state.editorMode === "form" ? await formToQuestion() : JSON.parse(elements.jsonEditor.value);
+    question = state.editorMode === "form" ? await formToQuestion({ uploadMedia: true }) : JSON.parse(elements.jsonEditor.value);
   } catch (error) {
     alert(`Cannot save: ${error.message}`);
     return;
