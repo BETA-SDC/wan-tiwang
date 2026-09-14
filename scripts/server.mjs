@@ -158,12 +158,14 @@ async function handleApi(request, response, url) {
   if (request.method === "GET" && url.pathname === "/api/questions") {
     const query = (url.searchParams.get("q") ?? "").toLowerCase();
     const category = url.searchParams.get("category") ?? "";
+    const categoryPrefix = url.searchParams.get("categoryPrefix") ?? "";
     const type = url.searchParams.get("type") ?? "";
     const status = url.searchParams.get("status") ?? "";
     const tag = url.searchParams.get("tag") ?? "";
     const limit = Number(url.searchParams.get("limit") ?? 500);
     const questions = loadQuestions().filter((question) => {
       if (category && question.category !== category) return false;
+      if (categoryPrefix && question.category !== categoryPrefix && !question.category.startsWith(`${categoryPrefix}.`)) return false;
       if (type && question.type !== type) return false;
       if (status && question.status !== status) return false;
       if (tag && !(question.tags ?? []).includes(tag)) return false;

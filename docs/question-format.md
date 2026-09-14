@@ -83,7 +83,7 @@ Use `status: "published"` only when the question is ready for random sampling.
 - `answer`：答案数组，方便兼容多选和多空题。选择题建议存选项 ID，比如 `["A"]`，避免中英文答案重复。
 - `reveal`：揭晓答案时展示的解释。
 - `fun_fact`：可选的额外趣味补充。
-- `category`：题目分类，只放一个稳定分类；必须至少二级，例如 `science.astronomy`，不要只写 `science`。
+- `category`：题目分类，只放一个稳定分类；支持 `science.astronomy` 这样的点分层级，管理界面会按层级筛选。
 - `tags`：灵活标签，用于复用、检索和专题组合。
 - `mood`：题目氛围，比如 `funny`、`surprising`、`hardcore`。
 - `occasion`：适合场景，比如 `daily`、`party`、`stream`。

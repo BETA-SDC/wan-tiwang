@@ -5,9 +5,7 @@ const errors = [];
 const questionFiles = walkFiles(path.join(repoRoot, "questions"), (file) => file.endsWith(".jsonl"));
 const mediaFiles = walkFiles(path.join(repoRoot, "media-meta"), (file) => file.endsWith(".jsonl"));
 
-const categoryItems = readJson(path.join(repoRoot, "taxonomy/categories.json")).categories;
-const categories = new Set(categoryItems.map((item) => item.id));
-const questionCategories = new Set(categoryItems.filter((item) => item.parent).map((item) => item.id));
+const categories = new Set(readJson(path.join(repoRoot, "taxonomy/categories.json")).categories.map((item) => item.id));
 const formats = new Set(readJson(path.join(repoRoot, "taxonomy/formats.json")).formats.map((item) => item.id));
 const moods = new Set(readJson(path.join(repoRoot, "taxonomy/moods.json")).moods.map((item) => item.id));
 const occasions = new Set(readJson(path.join(repoRoot, "taxonomy/occasions.json")).occasions.map((item) => item.id));
@@ -62,9 +60,6 @@ for (const file of questionFiles) {
     validateLocalizedText(file, line, question.prompt, "prompt");
     if (!Array.isArray(question.answer) || question.answer.length === 0) addError(file, line, "question answer must be a non-empty array");
     if (!question.category || !categories.has(question.category)) addError(file, line, `unknown category: ${question.category}`);
-    if (question.category && !questionCategories.has(question.category)) {
-      addError(file, line, `question category must be at least second-level: ${question.category}`);
-    }
     if (!question.status) addError(file, line, "question is missing status");
 
     for (const option of question.options ?? []) {

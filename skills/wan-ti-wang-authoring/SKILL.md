@@ -13,7 +13,7 @@ Use this skill when working on the Wan Ti Wang repository, especially for AI-ass
 - Every question must have Chinese and English player-facing text.
 - Player-facing localized text uses `{ "zh-CN": "...", "en-US": "..." }`.
 - Question source data lives under `questions/<primary>/<secondary>/<topic>.jsonl`.
-- Question `category` values must be at least second-level, such as `science.astronomy`; never use top-level-only categories like `science`.
+- Category IDs may be hierarchical, such as `science.astronomy`; the admin UI filters each dot-separated level separately.
 - Media files under `media/` are ignored by Git; versioned media metadata lives under `media-meta/`.
 - Generated indexes under `indexes/` are rebuilt by script and should not be edited by hand.
 - A local admin UI exists for humans, while CLI commands remain preferred for AI automation.

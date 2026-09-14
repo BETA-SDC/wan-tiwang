@@ -76,6 +76,10 @@ label {
   color: var(--muted);
   margin-bottom: 12px;
 }
+.categoryLevels {
+  display: grid;
+  gap: 8px;
+}
 input, select, textarea {
   width: 100%;
   border: 1px solid var(--border);

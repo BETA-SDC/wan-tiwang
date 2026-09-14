@@ -4,17 +4,17 @@ Categories describe the main topic of a question. Keep them stable and broad eno
 
 分类表示题目的主要内容领域。它应该稳定、直观，不要太碎。细粒度主题交给 `tags` 处理。
 
-Question categories must be at least second-level. Use `science.astronomy`, not `science`.
+The admin UI filters categories by hierarchy. Each `.` in a category ID creates another filter level.
 
-题目的 `category` 必须至少是二级分类。使用 `science.astronomy`，不要只写 `science`。
+管理界面会按层级筛选分类。分类 ID 里每多一个 `.`，界面就会多一层筛选。
 
-Use one second-level or deeper category per question:
+Use one stable category per question:
 
 ```json
 "category": "science.astronomy"
 ```
 
-每道题建议只设置一个二级或更深的分类，例如：
+每道题建议只设置一个稳定分类，例如：
 
 ```json
 "category": "games.specific-titles"

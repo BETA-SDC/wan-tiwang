@@ -1,8 +1,14 @@
-const state = { bootstrap: null, questions: [], media: [], selectedQuestion: null };
+const state = {
+  bootstrap: null,
+  questions: [],
+  media: [],
+  selectedQuestion: null,
+  categoryPath: []
+};
 
 const elements = {
   stats: document.querySelector("#stats"),
-  categoryFilter: document.querySelector("#categoryFilter"),
+  categoryLevels: document.querySelector("#categoryLevels"),
   typeFilter: document.querySelector("#typeFilter"),
   statusFilter: document.querySelector("#statusFilter"),
   searchInput: document.querySelector("#searchInput"),
@@ -60,12 +66,54 @@ function renderStats() {
 }
 
 function renderFilters() {
-  elements.categoryFilter.replaceChildren(option("", "All categories"));
-  for (const category of state.bootstrap.categories) {
-    if (category.parent) elements.categoryFilter.append(option(category.id, category.id));
-  }
+  renderCategoryLevels();
   elements.typeFilter.replaceChildren(option("", "All types"));
   for (const format of state.bootstrap.formats) elements.typeFilter.append(option(format.id, format.id));
+}
+
+function childCategories(parentId) {
+  return state.bootstrap.categories
+    .filter((category) => (parentId ? category.parent === parentId : !category.parent))
+    .sort((a, b) => a.id.localeCompare(b.id));
+}
+
+function selectedCategoryPrefix() {
+  return state.categoryPath[state.categoryPath.length - 1] || "";
+}
+
+function renderCategoryLevels() {
+  elements.categoryLevels.replaceChildren();
+
+  let parentId = "";
+  let depth = 0;
+
+  while (true) {
+    const children = childCategories(parentId);
+    if (children.length === 0) break;
+
+    const selected = state.categoryPath[depth] || "";
+    const select = document.createElement("select");
+    select.dataset.depth = String(depth);
+    select.append(option("", depth === 0 ? "All categories" : "All subcategories"));
+
+    for (const category of children) {
+      select.append(option(category.id, `${category.id} - ${category.name}`));
+    }
+
+    select.value = selected;
+    select.addEventListener("change", () => {
+      const nextDepth = Number(select.dataset.depth);
+      state.categoryPath = state.categoryPath.slice(0, nextDepth);
+      if (select.value) state.categoryPath.push(select.value);
+      renderCategoryLevels();
+      loadQuestions();
+    });
+    elements.categoryLevels.append(select);
+
+    if (!selected) break;
+    parentId = selected;
+    depth += 1;
+  }
 }
 
 function renderQuestions() {
@@ -118,7 +166,10 @@ function editQuestion(question) {
 }
 
 function newDraft() {
-  const category = elements.categoryFilter.value || "general.weird-facts";
+  const selected = selectedCategoryPrefix();
+  const category = state.bootstrap.categories.find((item) => item.id === selected && item.parent)
+    ? selected
+    : childCategories(selected || "general")[0]?.id || "general.weird-facts";
   state.selectedQuestion = null;
   elements.editorMeta.textContent = "New draft. ID will be generated when saved.";
   elements.jsonEditor.value = JSON.stringify({
@@ -154,7 +205,7 @@ async function loadBootstrap() {
 async function loadQuestions() {
   const params = new URLSearchParams();
   if (elements.searchInput.value) params.set("q", elements.searchInput.value);
-  if (elements.categoryFilter.value) params.set("category", elements.categoryFilter.value);
+  if (selectedCategoryPrefix()) params.set("categoryPrefix", selectedCategoryPrefix());
   if (elements.typeFilter.value) params.set("type", elements.typeFilter.value);
   if (elements.statusFilter.value) params.set("status", elements.statusFilter.value);
   const data = await requestJson(`/api/questions?${params}`);

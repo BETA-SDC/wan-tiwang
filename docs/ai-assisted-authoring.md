@@ -55,7 +55,7 @@ Requirements:
 - Output: normal JSON objects, one object per question. Do not output JSONL unless asked.
 - Do not invent an id; leave id omitted so the import script can generate it.
 - Include category, topic, type, title, prompt, options, answer, reveal, fun_fact, tags, mood, occasion, play_time_sec, and status.
-- Use at least a second-level category, such as science.astronomy. Do not use top-level-only categories such as science.
+- Category IDs may be hierarchical, such as science.astronomy. Use the most useful stable category available in taxonomy.
 - Use answer option IDs for choice questions, such as ["A"].
 - Use status: "draft" unless the facts and wording have been reviewed.
 - Do not include media unless I provide a local media path and source information.
@@ -84,7 +84,7 @@ Count:
 - 输出普通 JSON 对象，每道题一个对象。除非我明确要求，不要输出 JSONL。
 - 不要编写 id，留空让导入脚本自动生成。
 - 包含 category、topic、type、title、prompt、options、answer、reveal、fun_fact、tags、mood、occasion、play_time_sec、status。
-- 至少使用二级分类，例如 science.astronomy。不要只使用 science 这类一级分类。
+- 分类 ID 可以是层级式的，例如 science.astronomy。请使用 taxonomy 中最合适、稳定的分类。
 - 选择题答案使用选项 ID，例如 ["A"]。
 - 除非事实和措辞已经审核，否则 status 使用 "draft"。
 - 除非我提供本地媒体路径和来源信息，否则不要加入媒体。
