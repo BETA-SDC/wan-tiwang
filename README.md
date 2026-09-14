@@ -39,6 +39,7 @@ scripts/       校验、索引构建和随机抽题脚本
 ## Design Principles
 
 - Keep questions fun, lightweight, and replayable.
+- Provide Chinese and English versions for every question.
 - Use categories for stable topic placement.
 - Use tags, moods, and occasions for flexible reuse.
 - Store media metadata in Git, but keep large media files local or in external storage.
@@ -48,6 +49,7 @@ scripts/       校验、索引构建和随机抽题脚本
 ## 中文设计原则
 
 - 题目优先追求好玩、轻量、可重复游玩。
+- 每道题都必须有中文和英文两个版本。
 - 分类用于稳定地放置主题，标签用于跨主题复用。
 - 用 `mood` 表示题目的氛围，比如搞笑、反直觉、硬核。
 - 用 `occasion` 表示适合的场景，比如每日一题、聚会、直播。

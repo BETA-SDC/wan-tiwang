@@ -5,6 +5,23 @@
   "type": "object",
   "required": ["id", "type", "title", "prompt", "answer", "category", "status"],
   "additionalProperties": true,
+  "$defs": {
+    "localizedText": {
+      "type": "object",
+      "required": ["zh-CN", "en-US"],
+      "additionalProperties": false,
+      "properties": {
+        "zh-CN": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en-US": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
   "properties": {
     "id": {
       "type": "string",
@@ -14,12 +31,10 @@
       "type": "string"
     },
     "title": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/localizedText"
     },
     "prompt": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/localizedText"
     },
     "options": {
       "type": "array",
@@ -28,7 +43,7 @@
         "required": ["id", "text"],
         "properties": {
           "id": { "type": "string" },
-          "text": { "type": "string" }
+          "text": { "$ref": "#/$defs/localizedText" }
         }
       }
     },
@@ -37,10 +52,10 @@
       "minItems": 1
     },
     "reveal": {
-      "type": "string"
+      "$ref": "#/$defs/localizedText"
     },
     "fun_fact": {
-      "type": "string"
+      "$ref": "#/$defs/localizedText"
     },
     "category": {
       "type": "string"

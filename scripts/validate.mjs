@@ -17,6 +17,24 @@ function addError(file, line, message) {
   errors.push(`${relativePath(file)}:${line} ${message}`);
 }
 
+function isLocalizedText(value) {
+  return (
+    value &&
+    typeof value === "object" &&
+    !Array.isArray(value) &&
+    typeof value["zh-CN"] === "string" &&
+    value["zh-CN"].trim().length > 0 &&
+    typeof value["en-US"] === "string" &&
+    value["en-US"].trim().length > 0
+  );
+}
+
+function validateLocalizedText(file, line, value, fieldName) {
+  if (!isLocalizedText(value)) {
+    addError(file, line, `${fieldName} must include non-empty zh-CN and en-US text`);
+  }
+}
+
 for (const file of mediaFiles) {
   for (const { value: item, line } of readJsonl(file)) {
     if (!item.id) addError(file, line, "media item is missing id");
@@ -36,11 +54,19 @@ for (const file of questionFiles) {
     if (question.id) questionIds.add(question.id);
 
     if (!question.type || !formats.has(question.type)) addError(file, line, `unknown question type: ${question.type}`);
-    if (!question.title) addError(file, line, "question is missing title");
-    if (!question.prompt) addError(file, line, "question is missing prompt");
+    validateLocalizedText(file, line, question.title, "title");
+    validateLocalizedText(file, line, question.prompt, "prompt");
     if (!Array.isArray(question.answer) || question.answer.length === 0) addError(file, line, "question answer must be a non-empty array");
     if (!question.category || !categories.has(question.category)) addError(file, line, `unknown category: ${question.category}`);
     if (!question.status) addError(file, line, "question is missing status");
+
+    for (const option of question.options ?? []) {
+      if (!option.id) addError(file, line, "option is missing id");
+      validateLocalizedText(file, line, option.text, `option ${option.id ?? ""} text`.trim());
+    }
+
+    if (question.reveal !== undefined) validateLocalizedText(file, line, question.reveal, "reveal");
+    if (question.fun_fact !== undefined) validateLocalizedText(file, line, question.fun_fact, "fun_fact");
 
     for (const mood of question.mood ?? []) {
       if (!moods.has(mood)) addError(file, line, `unknown mood: ${mood}`);

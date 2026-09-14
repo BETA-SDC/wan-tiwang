@@ -7,6 +7,7 @@ Wan Ti Wang is optimized for fun trivia, not formal testing. Contributions shoul
 ## Question Guidelines
 
 - Prefer short prompts with one clear answer.
+- Provide both `zh-CN` and `en-US` for every player-facing text field.
 - Add a reveal that is interesting even when the player guessed correctly.
 - Avoid overly obscure facts unless the mood is intentionally `wild` or `hardcore`.
 - Use tags generously for reuse across packs and playlists.
@@ -16,7 +17,9 @@ Wan Ti Wang is optimized for fun trivia, not formal testing. Contributions shoul
 ## 中文题目规范
 
 - 题干尽量短，一眼能看懂。
+- 每道题必须有中英文两个版本，玩家可见文本都要包含 `zh-CN` 和 `en-US`。
 - 答案要明确，避免产生多个合理答案。
+- 选择题答案优先使用选项 ID，例如 `["A"]`，不要把中文答案和英文答案重复写两遍。
 - `reveal` 不只是解释对错，也应该有一点可读性和趣味。
 - 冷门知识可以有，但要用 `mood` 或 `tags` 标清楚。
 - 不要把正式考试题原样搬进来，优先改写成轻松的趣味问法。
