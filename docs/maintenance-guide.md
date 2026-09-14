@@ -28,6 +28,7 @@ node scripts/build-index.mjs
 ## Readability Rules
 
 - Store questions under `questions/<primary>/<secondary>/<topic>.jsonl`.
+- Use at least second-level question categories, such as `science.astronomy`.
 - Keep one complete question per line.
 - Keep files topic-focused; split files when they become hard to review.
 - Keep player-facing text bilingual with `zh-CN` and `en-US`.
@@ -37,6 +38,7 @@ node scripts/build-index.mjs
 中文规则：
 
 - 题目放在 `questions/<一级分类>/<二级分类>/<具体主题>.jsonl`。
+- 题目分类至少使用二级分类，例如 `science.astronomy`。
 - 每一行是一道完整题目。
 - 文件尽量聚焦一个主题；太长或太杂时拆分。
 - 玩家可见文本必须有 `zh-CN` 和 `en-US`。
