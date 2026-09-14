@@ -23,6 +23,7 @@ indexes/       Generated lookup indexes
 scripts/       Validation, indexing, and sampling utilities
 templates/     Copyable question draft templates
 skills/        AI assistant instructions for this repository
+admin/         Local browser-based management UI
 ```
 
 ```text
@@ -38,6 +39,7 @@ indexes/       自动生成的快速查询索引
 scripts/       校验、索引构建和随机抽题脚本
 templates/     可复制的题目草稿模板
 skills/        面向 AI 助手的仓库操作说明
+admin/         本地浏览器管理界面
 ```
 
 ## Design Principles
@@ -69,10 +71,22 @@ For everyday work, start here:
 npm run wtw
 ```
 
+For the local management UI:
+
+```bash
+npm run ui
+```
+
 日常操作只需要先记住这个入口：
 
 ```bash
 npm run wtw
+```
+
+本地可视化管理界面：
+
+```bash
+npm run ui
 ```
 
 The console groups common tasks into content creation, maintenance, play testing, and overview.
@@ -98,3 +112,7 @@ For long-term readability, tag standards, duplicate checks, and generated media 
 For tag naming specifically, see [Tag Guide](docs/tag-guide.md).
 
 标签命名规范见 [Tag Guide](docs/tag-guide.md)。
+
+For the visual management interface, see [Admin UI Guide](docs/ui-guide.md).
+
+可视化管理界面说明见 [Admin UI Guide](docs/ui-guide.md)。

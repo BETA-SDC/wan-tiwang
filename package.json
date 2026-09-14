@@ -7,6 +7,7 @@
   "scripts": {
     "wtw": "node scripts/wtw.mjs",
     "start": "node scripts/wtw.mjs",
+    "ui": "node scripts/server.mjs",
     "new:question": "node scripts/new-question.mjs",
     "validate": "node scripts/validate.mjs",
     "build:index": "node scripts/build-index.mjs",

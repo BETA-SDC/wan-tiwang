@@ -15,6 +15,7 @@ Use this skill when working on the Wan Ti Wang repository, especially for AI-ass
 - Question source data lives under `questions/<primary>/<secondary>/<topic>.jsonl`.
 - Media files under `media/` are ignored by Git; versioned media metadata lives under `media-meta/`.
 - Generated indexes under `indexes/` are rebuilt by script and should not be edited by hand.
+- A local admin UI exists for humans, while CLI commands remain preferred for AI automation.
 
 ## Before Editing
 
@@ -29,6 +30,7 @@ Read the relevant local files instead of guessing:
 - `docs/maintenance-guide.md` for tag standards, duplicate checks, and generated indexes
 - `docs/tag-guide.md` for tag naming conventions
 - `docs/ai-assisted-authoring.md` for AI workflow expectations
+- `docs/ui-guide.md` for the local browser management interface
 
 ## Question Drafting Rules
 
@@ -69,6 +71,12 @@ For dry-run importing from a JSON draft:
 
 ```bash
 npm run new:question -- --from-json draft-question.json --dry-run
+```
+
+For human visual management, start the local UI with:
+
+```bash
+npm run ui
 ```
 
 ## AI Collaboration Pattern

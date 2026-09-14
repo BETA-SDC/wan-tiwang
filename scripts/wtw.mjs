@@ -4,7 +4,8 @@ import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 
 const rl = readline.createInterface({ input, output });
-const queuedInput = input.isTTY ? [] : fs.readFileSync(0, "utf8").split(/\r?\n/);
+const hasDirectCommand = Boolean(process.argv[2]);
+const queuedInput = input.isTTY || hasDirectCommand ? [] : fs.readFileSync(0, "utf8").split(/\r?\n/);
 let inputEnded = false;
 
 const commands = {

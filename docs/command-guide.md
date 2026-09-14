@@ -12,6 +12,18 @@ npm run wtw
 npm run wtw
 ```
 
+For a visual local interface, use:
+
+```bash
+npm run ui
+```
+
+如果想用可视化本地界面，运行：
+
+```bash
+npm run ui
+```
+
 ## Menu Levels
 
 The console groups tasks by how people actually work:

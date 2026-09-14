@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wan Ti Wang Admin</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Wan Ti Wang Admin</h1>
+        <p>万题王本地管理台</p>
+      </div>
+      <div class="actions">
+        <button id="checkButton" type="button">Run Check</button>
+        <button id="refreshButton" type="button">Refresh</button>
+      </div>
+    </header>
+    <main class="layout">
+      <aside class="sidebar">
+        <section class="panel">
+          <h2>Stats</h2>
+          <div id="stats" class="stats"></div>
+        </section>
+        <section class="panel">
+          <h2>Filters</h2>
+          <label>Search <input id="searchInput" type="search" placeholder="id, title, tag, keyword"></label>
+          <label>Category <select id="categoryFilter"></select></label>
+          <label>Type <select id="typeFilter"></select></label>
+          <label>Status
+            <select id="statusFilter">
+              <option value="">All statuses</option>
+              <option value="draft">draft</option>
+              <option value="review">review</option>
+              <option value="published">published</option>
+              <option value="deprecated">deprecated</option>
+            </select>
+          </label>
+          <button id="applyFiltersButton" type="button">Apply Filters</button>
+        </section>
+      </aside>
+      <section class="content">
+        <nav class="tabs" aria-label="Main views">
+          <button class="tab active" data-view="browse" type="button">Browse</button>
+          <button class="tab" data-view="editor" type="button">Editor</button>
+          <button class="tab" data-view="media" type="button">Media</button>
+          <button class="tab" data-view="check" type="button">Check</button>
+        </nav>
+        <section id="browseView" class="view active">
+          <div class="sectionHeader">
+            <div>
+              <h2>Questions</h2>
+              <p id="questionCount">Loading</p>
+            </div>
+            <button id="newQuestionButton" type="button">New Draft</button>
+          </div>
+          <div id="questionList" class="questionList"></div>
+        </section>
+        <section id="editorView" class="view">
+          <div class="sectionHeader">
+            <div>
+              <h2>Question Editor</h2>
+              <p id="editorMeta">Create or edit one JSON question object.</p>
+            </div>
+            <div class="actions">
+              <button id="formatButton" type="button">Format JSON</button>
+              <button id="saveButton" type="button">Save</button>
+            </div>
+          </div>
+          <textarea id="jsonEditor" spellcheck="false"></textarea>
+          <p class="hint">保存后运行 Run Check，校验并重建索引。</p>
+        </section>
+        <section id="mediaView" class="view">
+          <div class="sectionHeader">
+            <div>
+              <h2>Media Metadata</h2>
+              <p>媒体文件本体保留在本地，Git 只维护元数据。</p>
+            </div>
+          </div>
+          <div id="mediaList" class="mediaList"></div>
+        </section>
+        <section id="checkView" class="view">
+          <div class="sectionHeader">
+            <div>
+              <h2>Maintenance Output</h2>
+              <p>Runs validate, tag lint, duplicate check, and index build.</p>
+            </div>
+          </div>
+          <pre id="checkOutput">Run Check to see output.</pre>
+        </section>
+      </section>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
