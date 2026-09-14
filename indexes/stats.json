@@ -1,6 +1,20 @@
 {
-  "total": 0,
-  "by_status": {},
-  "by_type": {},
-  "by_category": {}
+  "total": 14,
+  "by_status": {
+    "published": 14
+  },
+  "by_type": {
+    "single_choice": 11,
+    "true_false": 3
+  },
+  "by_category": {
+    "brain.lateral-thinking": 2,
+    "general.weird-facts": 2,
+    "history.ancient-china": 2,
+    "language.idioms": 1,
+    "language.wordplay": 1,
+    "life.food": 2,
+    "science.astronomy": 2,
+    "technology.internet": 2
+  }
 }

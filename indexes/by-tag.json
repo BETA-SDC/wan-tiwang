@@ -1,1 +1,108 @@
-{}
+{
+  "riddle": [
+    "brain-lateral-thinking-000001",
+    "brain-lateral-thinking-000002"
+  ],
+  "classic": [
+    "brain-lateral-thinking-000001"
+  ],
+  "party": [
+    "brain-lateral-thinking-000001"
+  ],
+  "pun": [
+    "brain-lateral-thinking-000002"
+  ],
+  "english": [
+    "brain-lateral-thinking-000002",
+    "language-wordplay-000001"
+  ],
+  "botany": [
+    "general-weird-facts-000001",
+    "life-food-000001"
+  ],
+  "food": [
+    "general-weird-facts-000001",
+    "general-weird-facts-000002",
+    "life-food-000001",
+    "life-food-000002"
+  ],
+  "surprising": [
+    "general-weird-facts-000001",
+    "general-weird-facts-000002"
+  ],
+  "microbes": [
+    "general-weird-facts-000002"
+  ],
+  "qin-dynasty": [
+    "history-ancient-china-000001"
+  ],
+  "terracotta-army": [
+    "history-ancient-china-000001"
+  ],
+  "ancient-china": [
+    "history-ancient-china-000001"
+  ],
+  "invention": [
+    "history-ancient-china-000002"
+  ],
+  "paper": [
+    "history-ancient-china-000002"
+  ],
+  "han-dynasty": [
+    "history-ancient-china-000002"
+  ],
+  "chinese": [
+    "language-idioms-000001"
+  ],
+  "idiom": [
+    "language-idioms-000001"
+  ],
+  "wordplay": [
+    "language-idioms-000001"
+  ],
+  "alphabet": [
+    "language-wordplay-000001"
+  ],
+  "pangram": [
+    "language-wordplay-000001"
+  ],
+  "everyday": [
+    "life-food-000001"
+  ],
+  "chocolate": [
+    "life-food-000002"
+  ],
+  "cacao": [
+    "life-food-000002"
+  ],
+  "venus": [
+    "science-astronomy-000001"
+  ],
+  "planet": [
+    "science-astronomy-000001"
+  ],
+  "space": [
+    "science-astronomy-000001",
+    "science-astronomy-000002"
+  ],
+  "jupiter": [
+    "science-astronomy-000002"
+  ],
+  "solar-system": [
+    "science-astronomy-000002"
+  ],
+  "web": [
+    "technology-internet-000001",
+    "technology-internet-000002"
+  ],
+  "security": [
+    "technology-internet-000001"
+  ],
+  "internet": [
+    "technology-internet-000001",
+    "technology-internet-000002"
+  ],
+  "http": [
+    "technology-internet-000002"
+  ]
+}

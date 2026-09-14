@@ -1,1 +1,58 @@
-{}
+{
+  "brain-lateral-thinking-000001": {
+    "file": "questions/brain/lateral-thinking/riddles.jsonl",
+    "line": 1
+  },
+  "brain-lateral-thinking-000002": {
+    "file": "questions/brain/lateral-thinking/riddles.jsonl",
+    "line": 2
+  },
+  "general-weird-facts-000001": {
+    "file": "questions/general/weird-facts/mixed.jsonl",
+    "line": 1
+  },
+  "general-weird-facts-000002": {
+    "file": "questions/general/weird-facts/mixed.jsonl",
+    "line": 2
+  },
+  "history-ancient-china-000001": {
+    "file": "questions/history/ancient-china/fun-facts.jsonl",
+    "line": 1
+  },
+  "history-ancient-china-000002": {
+    "file": "questions/history/ancient-china/fun-facts.jsonl",
+    "line": 2
+  },
+  "language-idioms-000001": {
+    "file": "questions/language/idioms/chinese-idioms.jsonl",
+    "line": 1
+  },
+  "language-wordplay-000001": {
+    "file": "questions/language/wordplay/word-trivia.jsonl",
+    "line": 1
+  },
+  "life-food-000001": {
+    "file": "questions/life/food/kitchen-trivia.jsonl",
+    "line": 1
+  },
+  "life-food-000002": {
+    "file": "questions/life/food/kitchen-trivia.jsonl",
+    "line": 2
+  },
+  "science-astronomy-000001": {
+    "file": "questions/science/astronomy/space-trivia.jsonl",
+    "line": 1
+  },
+  "science-astronomy-000002": {
+    "file": "questions/science/astronomy/space-trivia.jsonl",
+    "line": 2
+  },
+  "technology-internet-000001": {
+    "file": "questions/technology/internet/web-trivia.jsonl",
+    "line": 1
+  },
+  "technology-internet-000002": {
+    "file": "questions/technology/internet/web-trivia.jsonl",
+    "line": 2
+  }
+}

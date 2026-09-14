@@ -1,1 +1,20 @@
-{}
+{
+  "single_choice": [
+    "brain-lateral-thinking-000001",
+    "brain-lateral-thinking-000002",
+    "general-weird-facts-000001",
+    "history-ancient-china-000001",
+    "history-ancient-china-000002",
+    "language-idioms-000001",
+    "language-wordplay-000001",
+    "life-food-000001",
+    "life-food-000002",
+    "science-astronomy-000002",
+    "technology-internet-000001"
+  ],
+  "true_false": [
+    "general-weird-facts-000002",
+    "science-astronomy-000001",
+    "technology-internet-000002"
+  ]
+}
