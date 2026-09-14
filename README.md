@@ -90,3 +90,11 @@ See [Command Guide](docs/command-guide.md) for the organized command structure.
 For AI-assisted question drafting and review, see [AI-Assisted Authoring](docs/ai-assisted-authoring.md).
 
 AI 辅助生成、翻译、审核和导入流程见 [AI-Assisted Authoring](docs/ai-assisted-authoring.md)。
+
+For long-term readability, tag standards, duplicate checks, and generated media indexes, see [Maintenance Guide](docs/maintenance-guide.md).
+
+长期可读性、标签规范、重复题检测和媒体索引说明见 [Maintenance Guide](docs/maintenance-guide.md)。
+
+For tag naming specifically, see [Tag Guide](docs/tag-guide.md).
+
+标签命名规范见 [Tag Guide](docs/tag-guide.md)。

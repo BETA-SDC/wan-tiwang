@@ -79,7 +79,11 @@
         "required": ["id", "role"],
         "properties": {
           "id": { "type": "string" },
-          "role": { "type": "string" }
+          "role": { "type": "string" },
+          "kind": {
+            "enum": ["image", "audio", "video", "thumbnail"]
+          },
+          "hint": { "$ref": "#/$defs/localizedText" }
         }
       }
     },

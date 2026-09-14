@@ -26,6 +26,8 @@ Read the relevant local files instead of guessing:
 - `taxonomy/occasions.json` for occasions
 - `docs/question-format.md` for question shape
 - `docs/media-guide.md` for media references
+- `docs/maintenance-guide.md` for tag standards, duplicate checks, and generated indexes
+- `docs/tag-guide.md` for tag naming conventions
 - `docs/ai-assisted-authoring.md` for AI workflow expectations
 
 ## Question Drafting Rules
@@ -36,6 +38,8 @@ Read the relevant local files instead of guessing:
 - For choice questions, use option IDs in `answer`, such as `["A"]`.
 - Ensure `title`, `prompt`, `options.text`, `reveal`, and `fun_fact` include both `zh-CN` and `en-US`.
 - Prefer lowercase English tags suitable for search and reuse.
+- Use `npm run lint:tags` when changing or generating tags.
+- Use `npm run dedupe` when adding batches or when a topic looks repetitive.
 - Match the JSONL file path to the question's category whenever practical.
 
 ## Media Rules
@@ -43,6 +47,7 @@ Read the relevant local files instead of guessing:
 - Do not invent local media paths.
 - If adding a media question, create or update the appropriate `media-meta/*.jsonl` entry first.
 - Questions should reference media by ID with `media: [{ "id": "...", "role": "question" }]`.
+- For readability, media references should include `kind` and bilingual `hint` when practical.
 - Media paths in metadata must be relative to the repository root.
 - Treat media source and license as required review items.
 

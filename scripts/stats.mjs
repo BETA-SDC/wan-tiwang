@@ -19,6 +19,7 @@ function printSection(title, values) {
 console.log("Wan Ti Wang Stats");
 console.log("万题王统计");
 console.log(`\nTotal questions: ${stats.total}`);
+console.log(`Questions with media: ${stats.with_media ?? 0}`);
 printSection("By status", stats.by_status);
 printSection("By type", stats.by_type);
 printSection("By category", stats.by_category);

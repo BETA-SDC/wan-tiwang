@@ -9,8 +9,10 @@ const byTag = {};
 const byMood = {};
 const byOccasion = {};
 const byFormat = {};
+const byMedia = {};
 const stats = {
   total: 0,
+  with_media: 0,
   by_status: {},
   by_type: {},
   by_category: {}
@@ -35,8 +37,10 @@ for (const file of questionFiles) {
     for (const tag of question.tags ?? []) pushIndex(byTag, tag, question.id);
     for (const mood of question.mood ?? []) pushIndex(byMood, mood, question.id);
     for (const occasion of question.occasion ?? []) pushIndex(byOccasion, occasion, question.id);
+    for (const media of question.media ?? []) pushIndex(byMedia, media.id, question.id);
 
     stats.total += 1;
+    if ((question.media ?? []).length > 0) stats.with_media += 1;
     stats.by_status[question.status] = (stats.by_status[question.status] ?? 0) + 1;
     stats.by_type[question.type] = (stats.by_type[question.type] ?? 0) + 1;
     stats.by_category[question.category] = (stats.by_category[question.category] ?? 0) + 1;
@@ -49,6 +53,7 @@ writeJson(path.join(repoRoot, "indexes/by-tag.json"), byTag);
 writeJson(path.join(repoRoot, "indexes/by-mood.json"), byMood);
 writeJson(path.join(repoRoot, "indexes/by-occasion.json"), byOccasion);
 writeJson(path.join(repoRoot, "indexes/by-format.json"), byFormat);
+writeJson(path.join(repoRoot, "indexes/by-media.json"), byMedia);
 writeJson(path.join(repoRoot, "indexes/stats.json"), stats);
 
 console.log(`Built indexes for ${stats.total} question(s).`);

@@ -20,11 +20,21 @@ const commands = {
     }
   },
   check: {
-    description: "Validate questions and rebuild indexes",
+    description: "Run maintenance checks and rebuild indexes",
     run: () => {
-      runNode(["scripts/validate.mjs"]);
+      if (!runNode(["scripts/validate.mjs"])) return;
+      if (!runNode(["scripts/lint-tags.mjs"])) return;
+      if (!runNode(["scripts/dedupe.mjs"])) return;
       runNode(["scripts/build-index.mjs"]);
     }
+  },
+  "lint-tags": {
+    description: "Check tag naming and consistency",
+    run: () => runNode(["scripts/lint-tags.mjs"])
+  },
+  dedupe: {
+    description: "Find exact and near-duplicate questions",
+    run: () => runNode(["scripts/dedupe.mjs"])
   },
   sample: {
     description: "Randomly sample question IDs",
@@ -55,7 +65,10 @@ function runNode(args) {
 
   if (result.status !== 0) {
     process.exitCode = result.status ?? 1;
+    return false;
   }
+
+  return true;
 }
 
 async function ask(message, fallback = "") {
@@ -89,7 +102,9 @@ async function chooseMenu() {
   console.log("3. Check and index     校验并生成索引");
   console.log("4. Sample questions    随机抽题");
   console.log("5. Show stats          查看统计");
-  console.log("6. Help                查看帮助");
+  console.log("6. Lint tags           检查标签");
+  console.log("7. Find duplicates     检查重复题");
+  console.log("8. Help                查看帮助");
   console.log("0. Exit                退出\n");
 
   const choice = await ask("Choose");
@@ -100,7 +115,9 @@ async function chooseMenu() {
     "3": "check",
     "4": "sample",
     "5": "stats",
-    "6": "help",
+    "6": "lint-tags",
+    "7": "dedupe",
+    "8": "help",
     "0": "exit"
   };
 
@@ -121,11 +138,15 @@ Direct commands:
   npm run wtw -- check    Validate and rebuild indexes
   npm run wtw -- sample   Randomly sample question IDs
   npm run wtw -- stats    Show question bank stats
+  npm run wtw -- lint-tags  Check tag naming and consistency
+  npm run wtw -- dedupe     Find exact and near-duplicate questions
   npm run wtw -- help     Show this help
 
 Lower-level scripts still exist for automation:
   npm run new:question
   npm run validate
+  npm run lint:tags
+  npm run dedupe
   npm run build:index
   npm run sample
   npm run stats

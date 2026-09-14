@@ -10,6 +10,8 @@
     "new:question": "node scripts/new-question.mjs",
     "validate": "node scripts/validate.mjs",
     "build:index": "node scripts/build-index.mjs",
+    "lint:tags": "node scripts/lint-tags.mjs",
+    "dedupe": "node scripts/dedupe.mjs",
     "sample": "node scripts/sample.mjs",
     "stats": "node scripts/stats.mjs"
   },

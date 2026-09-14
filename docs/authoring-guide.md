@@ -114,16 +114,14 @@ This validates the source files and rebuilds generated indexes.
 - Use the script for first drafts.
 - Keep generated IDs stable after creation.
 - Store one topic per JSONL file when possible.
-- Run `npm run validate` after editing.
-- Run `npm run build:index` before committing.
+- Run `npm run wtw -- check` before committing.
 
 中文建议：
 
 - 先用脚本生成草稿，之后再人工润色。
 - ID 生成后尽量不要修改。
 - 一个 JSONL 文件尽量只放一个具体主题。
-- 修改后运行 `npm run validate`。
-- 提交前运行 `npm run build:index`。
+- 提交前运行 `npm run wtw -- check`。
 
 ## Non-Media First
 

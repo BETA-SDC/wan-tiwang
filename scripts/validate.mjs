@@ -12,6 +12,7 @@ const occasions = new Set(readJson(path.join(repoRoot, "taxonomy/occasions.json"
 
 const questionIds = new Set();
 const mediaIds = new Set();
+const mediaTypes = new Map();
 
 function addError(file, line, message) {
   errors.push(`${relativePath(file)}:${line} ${message}`);
@@ -40,6 +41,7 @@ for (const file of mediaFiles) {
     if (!item.id) addError(file, line, "media item is missing id");
     if (item.id && mediaIds.has(item.id)) addError(file, line, `duplicate media id: ${item.id}`);
     if (item.id) mediaIds.add(item.id);
+    if (item.id && item.type) mediaTypes.set(item.id, item.type);
     if (!item.type) addError(file, line, "media item is missing type");
     if (!item.path) addError(file, line, "media item is missing relative path");
     if (item.path && path.isAbsolute(item.path)) addError(file, line, "media path must be relative");
@@ -79,6 +81,10 @@ for (const file of questionFiles) {
     for (const media of question.media ?? []) {
       if (!media.id) addError(file, line, "media reference is missing id");
       if (media.id && !mediaIds.has(media.id)) addError(file, line, `unknown media reference: ${media.id}`);
+      if (media.kind && media.id && mediaTypes.has(media.id) && media.kind !== mediaTypes.get(media.id)) {
+        addError(file, line, `media reference kind ${media.kind} does not match metadata type ${mediaTypes.get(media.id)} for ${media.id}`);
+      }
+      if (media.hint !== undefined) validateLocalizedText(file, line, media.hint, `media ${media.id ?? ""} hint`.trim());
     }
   }
 }

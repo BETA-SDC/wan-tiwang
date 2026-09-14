@@ -56,7 +56,15 @@ Recommended fields:
   "mood": ["surprising", "easygoing"],
   "occasion": ["daily", "party"],
   "media": [
-    { "id": "img-example-001", "role": "question" }
+    {
+      "id": "img-example-001",
+      "role": "question",
+      "kind": "image",
+      "hint": {
+        "zh-CN": "示例图片",
+        "en-US": "example image"
+      }
+    }
   ],
   "play_time_sec": 20,
   "status": "draft"
@@ -79,7 +87,7 @@ Use `status: "published"` only when the question is ready for random sampling.
 - `tags`：灵活标签，用于复用、检索和专题组合。
 - `mood`：题目氛围，比如 `funny`、`surprising`、`hardcore`。
 - `occasion`：适合场景，比如 `daily`、`party`、`stream`。
-- `media`：媒体引用，只写媒体 ID 和角色。
+- `media`：媒体引用，至少写媒体 ID 和角色；推荐补充 `kind` 和双语 `hint`，方便搜索和维护。
 - `play_time_sec`：预估游玩时长。
 - `status`：题目状态，`published` 的题目才适合进入随机抽题。
 
