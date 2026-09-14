@@ -22,6 +22,7 @@ http://127.0.0.1:5177
 
 - `Browse`: search and filter questions.
 - `Editor`: create a new draft or edit an existing question with either a form or raw JSON.
+- `Slides`: generate a slide-style deck from selected or filtered questions.
 - `Media`: inspect media metadata.
 - `Check`: run the same maintenance checks used by the CLI.
 
@@ -29,6 +30,7 @@ http://127.0.0.1:5177
 
 - `Browse`：搜索和筛选题目。
 - `Editor`：用表单或原始 JSON 新建、编辑题目。
+- `Slides`：把勾选或筛选后的题目生成幻灯片式展示稿。
 - `Media`：查看媒体元数据。
 - `Check`：运行和 CLI 相同的维护检查。
 

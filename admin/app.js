@@ -5,7 +5,11 @@ const state = {
   selectedQuestion: null,
   formBaseQuestion: null,
   categoryPath: [],
-  editorMode: "form"
+  editorMode: "form",
+  selectedSlideIds: new Set(),
+  slideQuestions: [],
+  currentSlide: 0,
+  revealVisible: false
 };
 
 const elements = {
@@ -16,6 +20,7 @@ const elements = {
   searchInput: document.querySelector("#searchInput"),
   questionList: document.querySelector("#questionList"),
   questionCount: document.querySelector("#questionCount"),
+  clearSlideSelectionButton: document.querySelector("#clearSlideSelectionButton"),
   questionForm: document.querySelector("#questionForm"),
   formType: document.querySelector("#formType"),
   formCategory: document.querySelector("#formCategory"),
@@ -29,6 +34,12 @@ const elements = {
   mediaEditors: document.querySelector("#mediaEditors"),
   jsonEditor: document.querySelector("#jsonEditor"),
   editorMeta: document.querySelector("#editorMeta"),
+  slideSource: document.querySelector("#slideSource"),
+  slideCount: document.querySelector("#slideCount"),
+  slideLocale: document.querySelector("#slideLocale"),
+  slideRevealMode: document.querySelector("#slideRevealMode"),
+  slideDeck: document.querySelector("#slideDeck"),
+  slideStatus: document.querySelector("#slideStatus"),
   mediaList: document.querySelector("#mediaList"),
   checkOutput: document.querySelector("#checkOutput")
 };
@@ -36,6 +47,24 @@ const elements = {
 function localized(value, locale = "zh-CN") {
   if (!value || typeof value !== "object") return "";
   return value[locale] || value["en-US"] || "";
+}
+
+function displayText(value, locale = "zh-CN") {
+  if (locale !== "bilingual") return localized(value, locale);
+  const zh = localized(value, "zh-CN");
+  const en = localized(value, "en-US");
+  if (!zh) return en;
+  if (!en || en === zh) return zh;
+  return `${zh}\n${en}`;
+}
+
+function formatAnswer(question, locale) {
+  const answers = question.answer || [];
+  if (!question.options) return answers.join(", ");
+  return answers.map((answer) => {
+    const item = question.options.find((option) => option.id === answer);
+    return item ? `${answer}. ${displayText(item.text, locale).replace(/\n/g, " / ")}` : answer;
+  }).join(", ");
 }
 
 function option(value, label) {
@@ -138,22 +167,36 @@ function renderCategoryLevels() {
 }
 
 function renderQuestions() {
-  elements.questionCount.textContent = `${state.questions.length} shown`;
+  elements.questionCount.textContent = `${state.questions.length} shown · ${state.selectedSlideIds.size} selected`;
   elements.questionList.replaceChildren();
   for (const question of state.questions) {
-    const node = document.createElement("button");
+    const node = document.createElement("div");
     node.className = "questionItem";
-    node.type = "button";
+    node.classList.toggle("selected", state.selectedSlideIds.has(question.id));
     node.innerHTML = `
-      <div class="questionTitle"><strong>${localized(question.title)}</strong><span>${question.status}</span></div>
+      <div class="questionTitle">
+        <label class="checkLabel"><input type="checkbox" data-slide-select="${question.id}" ${state.selectedSlideIds.has(question.id) ? "checked" : ""}> <strong>${localized(question.title)}</strong></label>
+        <span>${question.status}</span>
+      </div>
       <div>${localized(question.prompt)}</div>
       <div class="meta"><span>${question.id}</span><span>${question.category}</span><span>${question.type}</span><span>${question._file}:${question._line}</span></div>
     `;
     const tags = document.createElement("div");
     tags.className = "tags";
     for (const tag of question.tags || []) tags.append(pill(tag));
-    node.append(tags);
-    node.addEventListener("click", () => editQuestion(question));
+    const actions = document.createElement("div");
+    actions.className = "actions";
+    const editButton = document.createElement("button");
+    editButton.type = "button";
+    editButton.textContent = "Edit";
+    editButton.addEventListener("click", () => editQuestion(question));
+    actions.append(editButton);
+    node.append(tags, actions);
+    node.querySelector("[data-slide-select]").addEventListener("change", (event) => {
+      if (event.target.checked) state.selectedSlideIds.add(question.id);
+      else state.selectedSlideIds.delete(question.id);
+      renderQuestions();
+    });
     elements.questionList.append(node);
   }
 }
@@ -172,6 +215,153 @@ function renderMedia() {
     node.innerHTML = `<strong>${item.id}</strong><span>${item.type} · ${item.status}</span><span>${item.path}</span><span>${item._file}:${item._line}</span>`;
     elements.mediaList.append(node);
   }
+}
+
+function mediaById(id) {
+  return state.media.find((item) => item.id === id);
+}
+
+function createSlideMedia(question, locale) {
+  const refs = question.media || [];
+  const wrap = document.createElement("div");
+  wrap.className = "slideMedia";
+  if (refs.length === 0) return wrap;
+
+  for (const ref of refs) {
+    const item = mediaById(ref.id);
+    if (!item) continue;
+    const kind = ref.kind || item.type;
+    const src = `/${item.path}`;
+    const label = displayText(ref.hint, locale) || item.alt || item.title || ref.id;
+    if (kind === "image" || kind === "thumbnail") {
+      const image = document.createElement("img");
+      image.src = src;
+      image.alt = label;
+      wrap.append(image);
+    } else if (kind === "audio") {
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.src = src;
+      wrap.append(audio);
+    } else if (kind === "video") {
+      const video = document.createElement("video");
+      video.controls = true;
+      video.src = src;
+      wrap.append(video);
+    }
+  }
+  return wrap;
+}
+
+function createSlide(question, index, total) {
+  const locale = elements.slideLocale.value;
+  const revealInline = elements.slideRevealMode.value === "inline" || state.revealVisible;
+  const slide = document.createElement("article");
+  slide.className = "questionSlide";
+
+  const kicker = document.createElement("div");
+  kicker.className = "slideKicker";
+  kicker.textContent = `${index + 1} / ${total} · ${question.category} · ${question.type}`;
+
+  const title = document.createElement("h3");
+  title.textContent = displayText(question.title, locale);
+
+  const prompt = document.createElement("p");
+  prompt.className = "slidePrompt";
+  prompt.textContent = displayText(question.prompt, locale);
+
+  const options = document.createElement("ol");
+  options.className = "slideOptions";
+  for (const item of question.options || []) {
+    const node = document.createElement("li");
+    const marker = document.createElement("span");
+    marker.textContent = item.id;
+    const text = document.createElement("strong");
+    text.textContent = displayText(item.text, locale);
+    node.append(marker, text);
+    options.append(node);
+  }
+
+  const reveal = document.createElement("div");
+  reveal.className = "slideReveal";
+  reveal.classList.toggle("hidden", !revealInline);
+  const answer = document.createElement("strong");
+  answer.textContent = `Answer: ${formatAnswer(question, locale)}`;
+  const explanation = document.createElement("p");
+  explanation.textContent = displayText(question.reveal, locale);
+  reveal.append(answer, explanation);
+
+  slide.append(kicker, title, prompt, createSlideMedia(question, locale));
+  if ((question.options || []).length > 0) slide.append(options);
+  slide.append(reveal);
+  return slide;
+}
+
+function renderSlides() {
+  elements.slideDeck.replaceChildren();
+  if (state.slideQuestions.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "emptySlide";
+    empty.textContent = "Choose questions and build slides. 选择题目后生成幻灯片。";
+    elements.slideDeck.append(empty);
+    elements.slideStatus.textContent = "No slides yet.";
+    return;
+  }
+
+  state.currentSlide = Math.max(0, Math.min(state.currentSlide, state.slideQuestions.length - 1));
+  const visibleSlide = createSlide(state.slideQuestions[state.currentSlide], state.currentSlide, state.slideQuestions.length);
+  visibleSlide.classList.add("activeSlide");
+  elements.slideDeck.append(visibleSlide);
+  const printDeck = document.createElement("div");
+  printDeck.className = "printDeck";
+  state.slideQuestions.forEach((question, index) => {
+    printDeck.append(createSlide(question, index, state.slideQuestions.length));
+  });
+  elements.slideDeck.append(printDeck);
+  elements.slideStatus.textContent = `${state.currentSlide + 1} / ${state.slideQuestions.length}`;
+  document.querySelector("#toggleRevealButton").textContent = state.revealVisible ? "Hide Reveal" : "Show Reveal";
+}
+
+function shuffleItems(items) {
+  return [...items]
+    .map((item) => ({ item, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ item }) => item);
+}
+
+async function slideSourceQuestions() {
+  if (elements.slideSource.value === "selected") {
+    const data = await requestJson("/api/questions?limit=10000");
+    return data.questions.filter((question) => state.selectedSlideIds.has(question.id));
+  }
+  if (elements.slideSource.value === "all") {
+    const data = await requestJson("/api/questions?limit=10000");
+    return data.questions;
+  }
+  return state.questions;
+}
+
+async function buildSlides({ shuffle = false } = {}) {
+  const count = Number(elements.slideCount.value || 10);
+  let questions = await slideSourceQuestions();
+  if (shuffle) questions = shuffleItems(questions);
+  state.slideQuestions = questions.slice(0, count);
+  state.currentSlide = 0;
+  state.revealVisible = elements.slideRevealMode.value === "inline";
+  renderSlides();
+  switchView("slides");
+}
+
+function moveSlide(delta) {
+  if (state.slideQuestions.length === 0) return;
+  state.currentSlide = Math.max(0, Math.min(state.slideQuestions.length - 1, state.currentSlide + delta));
+  renderSlides();
+}
+
+function togglePresentation(force) {
+  const enabled = force ?? !document.body.classList.contains("presenting");
+  document.body.classList.toggle("presenting", enabled);
+  document.querySelector("#presentSlidesButton").textContent = enabled ? "Exit" : "Present";
 }
 
 function switchView(name) {
@@ -598,6 +788,10 @@ document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click",
 document.querySelector("#applyFiltersButton").addEventListener("click", loadQuestions);
 document.querySelector("#refreshButton").addEventListener("click", refreshAll);
 document.querySelector("#newQuestionButton").addEventListener("click", newDraft);
+elements.clearSlideSelectionButton.addEventListener("click", () => {
+  state.selectedSlideIds.clear();
+  renderQuestions();
+});
 document.querySelector("#formModeButton").addEventListener("click", () => {
   try {
     questionToForm(JSON.parse(elements.jsonEditor.value || "{}"));
@@ -632,6 +826,35 @@ document.querySelector("#formatButton").addEventListener("click", () => {
 });
 document.querySelector("#saveButton").addEventListener("click", saveEditor);
 document.querySelector("#checkButton").addEventListener("click", runCheck);
+document.querySelector("#buildSlidesButton").addEventListener("click", () => buildSlides());
+document.querySelector("#shuffleSlidesButton").addEventListener("click", () => buildSlides({ shuffle: true }));
+document.querySelector("#presentSlidesButton").addEventListener("click", () => {
+  if (state.slideQuestions.length === 0) buildSlides().then(() => togglePresentation(true));
+  else togglePresentation();
+});
+document.querySelector("#printSlidesButton").addEventListener("click", () => window.print());
+document.querySelector("#prevSlideButton").addEventListener("click", () => moveSlide(-1));
+document.querySelector("#nextSlideButton").addEventListener("click", () => moveSlide(1));
+document.querySelector("#toggleRevealButton").addEventListener("click", () => {
+  state.revealVisible = !state.revealVisible;
+  document.querySelector("#toggleRevealButton").textContent = state.revealVisible ? "Hide Reveal" : "Show Reveal";
+  renderSlides();
+});
+elements.slideLocale.addEventListener("change", renderSlides);
+elements.slideRevealMode.addEventListener("change", () => {
+  state.revealVisible = elements.slideRevealMode.value === "inline";
+  renderSlides();
+});
+document.addEventListener("keydown", (event) => {
+  if (!document.querySelector("#slidesView").classList.contains("active")) return;
+  if (event.key === "Escape") togglePresentation(false);
+  if (event.key === "ArrowLeft") moveSlide(-1);
+  if (event.key === "ArrowRight") moveSlide(1);
+  if (event.key.toLowerCase() === "r") {
+    state.revealVisible = !state.revealVisible;
+    renderSlides();
+  }
+});
 
 refreshAll().catch((error) => {
   document.body.innerHTML = `<pre class="error">${error.stack || error.message}</pre>`;

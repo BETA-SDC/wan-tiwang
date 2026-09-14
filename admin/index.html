@@ -44,6 +44,7 @@
         <nav class="tabs" aria-label="Main views">
           <button class="tab active" data-view="browse" type="button">Browse</button>
           <button class="tab" data-view="editor" type="button">Editor</button>
+          <button class="tab" data-view="slides" type="button">Slides</button>
           <button class="tab" data-view="media" type="button">Media</button>
           <button class="tab" data-view="check" type="button">Check</button>
         </nav>
@@ -53,7 +54,10 @@
               <h2>Questions</h2>
               <p id="questionCount">Loading</p>
             </div>
-            <button id="newQuestionButton" type="button">New Draft</button>
+            <div class="actions">
+              <button id="clearSlideSelectionButton" type="button">Clear Selection</button>
+              <button id="newQuestionButton" type="button">New Draft</button>
+            </div>
           </div>
           <div id="questionList" class="questionList"></div>
         </section>
@@ -132,6 +136,54 @@
           </form>
           <textarea id="jsonEditor" spellcheck="false"></textarea>
           <p class="hint">保存后运行 Run Check，校验并重建索引。</p>
+        </section>
+        <section id="slidesView" class="view">
+          <div class="sectionHeader">
+            <div>
+              <h2>Slide Generator</h2>
+              <p>把筛选后的题目组装成一题一页的展示稿。</p>
+            </div>
+            <div class="actions">
+              <button id="buildSlidesButton" type="button">Build Slides</button>
+              <button id="shuffleSlidesButton" type="button">Shuffle</button>
+              <button id="presentSlidesButton" type="button">Present</button>
+              <button id="printSlidesButton" type="button">Print</button>
+            </div>
+          </div>
+          <div class="slideControls">
+            <label>Source
+              <select id="slideSource">
+                <option value="filtered">Current filtered questions</option>
+                <option value="selected">Selected questions</option>
+                <option value="all">All questions</option>
+              </select>
+            </label>
+            <label>Count <input id="slideCount" type="number" min="1" max="100" value="10"></label>
+            <label>Language
+              <select id="slideLocale">
+                <option value="zh-CN">zh-CN</option>
+                <option value="en-US">en-US</option>
+                <option value="bilingual">Bilingual 双语</option>
+              </select>
+            </label>
+            <label>Reveal
+              <select id="slideRevealMode">
+                <option value="hidden">Hidden until show</option>
+                <option value="inline">Inline on each slide</option>
+              </select>
+            </label>
+          </div>
+          <div class="slideStage">
+            <div id="slideDeck" class="slideDeck"></div>
+          </div>
+          <div class="slideFooter">
+            <div class="actions">
+              <button id="prevSlideButton" type="button">Previous</button>
+              <button id="nextSlideButton" type="button">Next</button>
+              <button id="toggleRevealButton" type="button">Show Reveal</button>
+            </div>
+            <p id="slideStatus">No slides yet.</p>
+          </div>
         </section>
         <section id="mediaView" class="view">
           <div class="sectionHeader">
