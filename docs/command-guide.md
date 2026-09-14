@@ -24,6 +24,10 @@ npm run ui
 npm run ui
 ```
 
+The UI includes a form editor for common question fields and a JSON editor for advanced edits.
+
+UI 内置表单编辑器处理常见题目字段，也保留 JSON 编辑器处理高级修改。
+
 ## Menu Levels
 
 The console groups tasks by how people actually work:
