@@ -1,6 +1,6 @@
 # Media Guide
 
-Media files are local-first and ignored by Git for now. Store stable metadata in `media-meta/`, and reference media from questions by `media_id`.
+Media files are local-first and ignored by Git for now. Store stable metadata in `data/media-meta/`, and reference media from questions by `media_id`.
 
 媒体文件暂时采用本地优先策略，并被 Git 忽略。仓库只保存媒体元数据，题目通过 `media_id` 引用媒体。
 
@@ -48,21 +48,21 @@ Questions should not depend on physical paths directly. They should reference me
 
 ## Media Question Workflow
 
-From the Admin UI, check `Image`, `Audio`, or `Video` in the question form, then choose an existing media item or upload a local file. The UI writes the file under `media/`, appends metadata under `media-meta/`, and links the generated media ID to the question.
+From the Admin UI, check `Image`, `Audio`, or `Video` in the question form, then choose an existing media item or upload a local file. The UI writes the file under `media/`, appends metadata under `data/media-meta/`, and links the generated media ID to the question.
 
-在管理界面中，可以在题目表单里勾选 `Image`、`Audio` 或 `Video`，然后选择已有媒体或上传本地文件。UI 会把文件写入 `media/`，把元数据追加到 `media-meta/`，并把生成的媒体 ID 关联到题目。
+在管理界面中，可以在题目表单里勾选 `Image`、`Audio` 或 `Video`，然后选择已有媒体或上传本地文件。UI 会把文件写入 `media/`，把元数据追加到 `data/media-meta/`，并把生成的媒体 ID 关联到题目。
 
 Manual workflow:
 
 1. Put the local media file under `media/`.
-2. Add one metadata line under `media-meta/images.jsonl`, `media-meta/audio.jsonl`, or `media-meta/video.jsonl`.
+2. Add one metadata line under `data/media-meta/images.jsonl`, `data/media-meta/audio.jsonl`, or `data/media-meta/video.jsonl`.
 3. Reference the media ID from the question.
 4. Run `npm run wtw -- check`.
 
 中文流程：
 
 1. 把本地媒体文件放到 `media/`。
-2. 在 `media-meta/images.jsonl`、`media-meta/audio.jsonl` 或 `media-meta/video.jsonl` 里新增一行元数据。
+2. 在 `data/media-meta/images.jsonl`、`data/media-meta/audio.jsonl` 或 `data/media-meta/video.jsonl` 里新增一行元数据。
 3. 在题目里引用这个媒体 ID。
 4. 运行 `npm run wtw -- check`。
 
@@ -98,9 +98,9 @@ In this example, `single_choice` is the answer type, while `image-guess` is a ta
 
 `npm run wtw -- check` 会校验题目引用的媒体 ID 是否存在、可选的 `kind` 是否和媒体元数据类型一致、可选的 `hint` 是否双语，以及媒体路径是否为相对路径。它目前不会检查被 Git 忽略的本地媒体文件是否真实存在。
 
-`indexes/by-media.json` is generated automatically and maps media IDs back to question IDs.
+`data/indexes/by-media.json` is generated automatically and maps media IDs back to question IDs.
 
-`indexes/by-media.json` 会自动生成，用于从媒体 ID 反查引用它的题目 ID。
+`data/indexes/by-media.json` 会自动生成，用于从媒体 ID 反查引用它的题目 ID。
 
 推荐规则：
 

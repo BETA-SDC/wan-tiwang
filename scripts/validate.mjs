@@ -1,14 +1,14 @@
 import path from "node:path";
-import { readJson, readJsonl, relativePath, repoRoot, walkFiles } from "./lib.mjs";
+import { mediaMetaRoot, questionsRoot, readJson, readJsonl, relativePath, taxonomyRoot, walkFiles } from "./lib.mjs";
 
 const errors = [];
-const questionFiles = walkFiles(path.join(repoRoot, "questions"), (file) => file.endsWith(".jsonl"));
-const mediaFiles = walkFiles(path.join(repoRoot, "media-meta"), (file) => file.endsWith(".jsonl"));
+const questionFiles = walkFiles(questionsRoot, (file) => file.endsWith(".jsonl"));
+const mediaFiles = walkFiles(mediaMetaRoot, (file) => file.endsWith(".jsonl"));
 
-const categories = new Set(readJson(path.join(repoRoot, "taxonomy/categories.json")).categories.map((item) => item.id));
-const formats = new Set(readJson(path.join(repoRoot, "taxonomy/formats.json")).formats.map((item) => item.id));
-const moods = new Set(readJson(path.join(repoRoot, "taxonomy/moods.json")).moods.map((item) => item.id));
-const occasions = new Set(readJson(path.join(repoRoot, "taxonomy/occasions.json")).occasions.map((item) => item.id));
+const categories = new Set(readJson(path.join(taxonomyRoot, "categories.json")).categories.map((item) => item.id));
+const formats = new Set(readJson(path.join(taxonomyRoot, "formats.json")).formats.map((item) => item.id));
+const moods = new Set(readJson(path.join(taxonomyRoot, "moods.json")).moods.map((item) => item.id));
+const occasions = new Set(readJson(path.join(taxonomyRoot, "occasions.json")).occasions.map((item) => item.id));
 
 const questionIds = new Set();
 const mediaIds = new Set();

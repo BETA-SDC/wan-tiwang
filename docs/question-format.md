@@ -1,8 +1,8 @@
 # Question Format
 
-Questions are stored as JSON Lines files under `questions/`. Each line is one JSON object.
+Questions are stored as JSON Lines files under `data/questions/`. Each line is one JSON object.
 
-题目保存在 `questions/` 目录下，采用 JSON Lines 格式。每一行是一道完整题目，方便追加、审阅和 Git diff。
+题目保存在 `data/questions/` 目录下，采用 JSON Lines 格式。每一行是一道完整题目，方便追加、审阅和 Git diff。
 
 Use `npm run new:question` for most new entries. It generates the bilingual structure, question ID, and target JSONL line automatically.
 

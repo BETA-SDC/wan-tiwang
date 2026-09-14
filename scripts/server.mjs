@@ -2,7 +2,7 @@ import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 import { spawn } from "node:child_process";
-import { readJson, readJsonl, relativePath, repoRoot, walkFiles } from "./lib.mjs";
+import { indexesRoot, mediaMetaRoot, questionsRoot, readJson, readJsonl, relativePath, repoRoot, taxonomyRoot, walkFiles } from "./lib.mjs";
 
 const port = Number(process.env.PORT ?? 5177);
 const maxRequestBytes = Number(process.env.MAX_REQUEST_BYTES ?? 200_000_000);
@@ -53,7 +53,7 @@ function readBody(request) {
 }
 
 function loadQuestions() {
-  const questionFiles = walkFiles(path.join(repoRoot, "questions"), (file) => file.endsWith(".jsonl"));
+  const questionFiles = walkFiles(questionsRoot, (file) => file.endsWith(".jsonl"));
   const questions = [];
 
   for (const file of questionFiles) {
@@ -66,7 +66,7 @@ function loadQuestions() {
 }
 
 function loadMedia() {
-  const mediaFiles = walkFiles(path.join(repoRoot, "media-meta"), (file) => file.endsWith(".jsonl"));
+  const mediaFiles = walkFiles(mediaMetaRoot, (file) => file.endsWith(".jsonl"));
   const media = [];
 
   for (const file of mediaFiles) {
@@ -134,7 +134,7 @@ function mediaMetaFile(type) {
 
 function defaultQuestionFile(question) {
   const parts = question.category.split(".");
-  return path.join(repoRoot, "questions", ...parts, `${normalizeSlug(question.topic || "mixed")}.jsonl`);
+  return path.join(questionsRoot, ...parts, `${normalizeSlug(question.topic || "mixed")}.jsonl`);
 }
 
 function rewriteJsonlLine(relativeFile, line, nextValue) {
@@ -176,11 +176,11 @@ function runMaintenance() {
 async function handleApi(request, response, url) {
   if (request.method === "GET" && url.pathname === "/api/bootstrap") {
     return sendJson(response, 200, {
-      categories: readJson(path.join(repoRoot, "taxonomy/categories.json")).categories,
-      formats: readJson(path.join(repoRoot, "taxonomy/formats.json")).formats,
-      moods: readJson(path.join(repoRoot, "taxonomy/moods.json")).moods,
-      occasions: readJson(path.join(repoRoot, "taxonomy/occasions.json")).occasions,
-      stats: readJson(path.join(repoRoot, "indexes/stats.json"))
+      categories: readJson(path.join(taxonomyRoot, "categories.json")).categories,
+      formats: readJson(path.join(taxonomyRoot, "formats.json")).formats,
+      moods: readJson(path.join(taxonomyRoot, "moods.json")).moods,
+      occasions: readJson(path.join(taxonomyRoot, "occasions.json")).occasions,
+      stats: readJson(path.join(indexesRoot, "stats.json"))
     });
   }
 
@@ -247,7 +247,7 @@ async function handleApi(request, response, url) {
       tags: Array.isArray(body.tags) ? body.tags : [],
       status: body.status || "draft"
     };
-    const metaFile = path.join(repoRoot, "media-meta", mediaMetaFile(type));
+    const metaFile = path.join(mediaMetaRoot, mediaMetaFile(type));
     fs.mkdirSync(path.dirname(metaFile), { recursive: true });
     fs.appendFileSync(metaFile, `${JSON.stringify(item)}\n`);
     return sendJson(response, 201, { ok: true, media: item });

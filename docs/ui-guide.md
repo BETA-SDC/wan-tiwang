@@ -68,9 +68,9 @@ When editing an existing question in Form mode, unexposed fields are preserved w
 
 `Answer type` 表示玩家怎么作答：单选、多选、判断、填空或简答。猜图、听音频猜、看视频回答属于媒体玩法，通过媒体引用和标签表达，不再单独作为题型。
 
-When `Image`, `Audio`, or `Video` is checked, the form shows a media section for that kind. You can choose an existing media item or upload a new local file. Uploaded files are written under `media/`, which is ignored by Git, and metadata is appended to `media-meta/*.jsonl`.
+When `Image`, `Audio`, or `Video` is checked, the form shows a media section for that kind. You can choose an existing media item or upload a new local file. Uploaded files are written under `media/`, which is ignored by Git, and metadata is appended to `data/media-meta/*.jsonl`.
 
-勾选 `Image`、`Audio` 或 `Video` 后，表单会显示对应的媒体区域。你可以选择已有媒体，也可以上传新的本地文件。上传文件会写入被 Git 忽略的 `media/`，同时自动追加一条 `media-meta/*.jsonl` 元数据。
+勾选 `Image`、`Audio` 或 `Video` 后，表单会显示对应的媒体区域。你可以选择已有媒体，也可以上传新的本地文件。上传文件会写入被 Git 忽略的 `media/`，同时自动追加一条 `data/media-meta/*.jsonl` 元数据。
 
 Changing fields, switching between `Form` and `JSON`, and selecting local media files do not write data. The UI only writes question data, uploaded media files, and media metadata after `Save` is clicked.
 

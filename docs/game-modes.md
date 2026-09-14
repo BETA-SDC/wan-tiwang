@@ -11,7 +11,7 @@ Suggested game modes:
 - `themed`: focused topic rounds.
 - `chaos`: mixed categories with surprising or funny questions.
 
-Game modes should be expressed through packs, playlists, moods, occasions, and sampling rules.
+Game modes should currently be expressed through moods, occasions, tags, categories, and sampling rules. Dedicated pack or playlist files can be added later when the app needs curated rounds.
 
 中文说明：
 
@@ -22,4 +22,4 @@ Game modes should be expressed through packs, playlists, moods, occasions, and s
 - `themed`：主题局，比如“奇怪历史”“太空冷知识”“游戏老玩家”。
 - `chaos`：混合随机局，强调反差、惊喜和娱乐性。
 
-玩法不要写死在题目里。更推荐通过 `packs/`、`playlists/`、`mood`、`occasion` 和抽样规则组合出来。
+玩法不要写死在题目里。当前推荐通过 `mood`、`occasion`、`tags`、`category` 和抽样规则组合出来。等应用真的需要固定专题局或推荐流时，再增加专门的题包或列表文件。

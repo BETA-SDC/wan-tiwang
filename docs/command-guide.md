@@ -86,11 +86,11 @@ It handles:
 - checking duplicate question IDs
 - checking known categories, question types, moods, and occasions
 - checking bilingual `zh-CN` and `en-US` player-facing fields
-- checking that question media references exist in `media-meta/`
+- checking that question media references exist in `data/media-meta/`
 - checking that media paths are relative
 - checking tag naming and duplicate tags inside one question
 - reporting exact and near-duplicate question candidates
-- rebuilding generated indexes under `indexes/`
+- rebuilding generated indexes under `data/indexes/`
 
 它会处理：
 
@@ -98,11 +98,11 @@ It handles:
 - 检查题目 ID 是否重复
 - 检查分类、题型、氛围、场景是否合法
 - 检查玩家可见文本是否包含 `zh-CN` 和 `en-US`
-- 检查题目引用的媒体 ID 是否已登记在 `media-meta/`
+- 检查题目引用的媒体 ID 是否已登记在 `data/media-meta/`
 - 检查媒体路径是否为相对路径
 - 检查标签命名，以及同一道题里的重复标签
 - 报告精确重复和相似题候选
-- 重新生成 `indexes/` 下的索引
+- 重新生成 `data/indexes/` 下的索引
 
 It does not handle:
 

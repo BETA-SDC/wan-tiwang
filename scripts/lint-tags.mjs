@@ -1,7 +1,6 @@
-import path from "node:path";
-import { readJsonl, relativePath, repoRoot, walkFiles } from "./lib.mjs";
+import { questionsRoot, readJsonl, relativePath, walkFiles } from "./lib.mjs";
 
-const questionFiles = walkFiles(path.join(repoRoot, "questions"), (file) => file.endsWith(".jsonl"));
+const questionFiles = walkFiles(questionsRoot, (file) => file.endsWith(".jsonl"));
 const tagPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const issues = [];
 const tagCounts = new Map();

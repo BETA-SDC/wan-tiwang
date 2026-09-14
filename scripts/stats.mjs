@@ -1,7 +1,7 @@
 import path from "node:path";
-import { readJson, repoRoot } from "./lib.mjs";
+import { indexesRoot, readJson } from "./lib.mjs";
 
-const stats = readJson(path.join(repoRoot, "indexes/stats.json"));
+const stats = readJson(path.join(indexesRoot, "stats.json"));
 
 function printSection(title, values) {
   console.log(`\n${title}`);

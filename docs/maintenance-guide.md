@@ -6,9 +6,9 @@ This guide focuses on keeping Wan Ti Wang readable and maintainable at around 10
 
 ## One-Command Health Check
 
-After editing questions, taxonomy, media metadata, packs, playlists, docs, or scripts, run:
+After editing questions, taxonomy, media metadata, docs, or scripts, run:
 
-修改题目、分类、媒体元数据、题包、推荐列表、文档或脚本后，运行：
+修改题目、分类、媒体元数据、文档或脚本后，运行：
 
 ```bash
 npm run wtw -- check
@@ -27,7 +27,7 @@ node scripts/build-index.mjs
 
 ## Readability Rules
 
-- Store questions under `questions/<primary>/<secondary>/<topic>.jsonl`.
+- Store questions under `data/questions/<primary>/<secondary>/<topic>.jsonl`.
 - Category filters are hierarchical in the admin UI; each `.` creates another filter level.
 - Keep one complete question per line.
 - Keep files topic-focused; split files when they become hard to review.
@@ -37,7 +37,7 @@ node scripts/build-index.mjs
 
 中文规则：
 
-- 题目放在 `questions/<一级分类>/<二级分类>/<具体主题>.jsonl`。
+- 题目放在 `data/questions/<一级分类>/<二级分类>/<具体主题>.jsonl`。
 - 管理界面里的分类筛选是分层的；分类 ID 里每多一个 `.`，就会多一层筛选。
 - 每一行是一道完整题目。
 - 文件尽量聚焦一个主题；太长或太杂时拆分。
@@ -63,22 +63,22 @@ Recommended metadata:
 {"id":"img-science-astronomy-moon-surface-001","type":"image","path":"media/images/science/astronomy/moon-surface-001.webp","thumbnail":"media/thumbnails/img-science-astronomy-moon-surface-001.webp","title":"Moon Surface","alt":"月球表面照片","source":{"type":"local","url":"","license":"unknown"},"tags":["moon","space","astronomy"],"status":"published"}
 ```
 
-This makes questions searchable by `media.id`, `kind`, and bilingual `hint`, while `media-meta/` remains the source of paths, thumbnails, source, and license.
+This makes questions searchable by `media.id`, `kind`, and bilingual `hint`, while `data/media-meta/` remains the source of paths, thumbnails, source, and license.
 
-这样题目可以通过 `media.id`、`kind` 和双语 `hint` 搜索；`media-meta/` 仍然负责路径、缩略图、来源和许可。
+这样题目可以通过 `media.id`、`kind` 和双语 `hint` 搜索；`data/media-meta/` 仍然负责路径、缩略图、来源和许可。
 
 ## Generated Indexes
 
 `npm run build:index` generates:
 
-- `indexes/by-id.json`
-- `indexes/by-category.json`
-- `indexes/by-tag.json`
-- `indexes/by-mood.json`
-- `indexes/by-occasion.json`
-- `indexes/by-format.json`
-- `indexes/by-media.json`
-- `indexes/stats.json`
+- `data/indexes/by-id.json`
+- `data/indexes/by-category.json`
+- `data/indexes/by-tag.json`
+- `data/indexes/by-mood.json`
+- `data/indexes/by-occasion.json`
+- `data/indexes/by-format.json`
+- `data/indexes/by-media.json`
+- `data/indexes/stats.json`
 
 `by-media.json` maps each media ID to the questions that reference it.
 

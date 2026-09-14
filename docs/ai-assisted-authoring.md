@@ -64,7 +64,7 @@ Topic:
 <describe the topic>
 
 Target category:
-<category id from taxonomy/categories.json>
+<category id from data/taxonomy/categories.json>
 
 Tone:
 <funny / surprising / easygoing / hardcore / nostalgic / weird>
@@ -93,7 +93,7 @@ Count:
 <描述主题>
 
 目标分类：
-<taxonomy/categories.json 中的分类 ID>
+<data/taxonomy/categories.json 中的分类 ID>
 
 语气：
 <funny / surprising / easygoing / hardcore / nostalgic / weird>
@@ -140,7 +140,7 @@ Suggested review checklist:
 - Is there exactly one best answer?
 - Does the English version preserve the same meaning as the Chinese version?
 - Does the reveal feel fun rather than textbook-like?
-- Does the category exist in `taxonomy/categories.json`?
+- Does the category exist in `data/taxonomy/categories.json`?
 - Are tags lowercase English slugs when possible?
 - Is `status` still `draft` until reviewed?
 
@@ -150,7 +150,7 @@ Suggested review checklist:
 - 是否只有一个最合理答案？
 - 英文版本和中文版本意思是否一致？
 - `reveal` 是否有趣，而不是像课本解释？
-- 分类是否存在于 `taxonomy/categories.json`？
+- 分类是否存在于 `data/taxonomy/categories.json`？
 - 标签是否尽量使用英文小写 slug？
 - 未审核前是否保持 `status: "draft"`？
 
@@ -163,7 +163,7 @@ AI 不应该凭空编造媒体路径。媒体题需要先提供本地相对路�
 Recommended order:
 
 1. Put the file under `media/`.
-2. Ask AI to draft the `media-meta/*.jsonl` line.
+2. Ask AI to draft the `data/media-meta/*.jsonl` line.
 3. Review source and license.
 4. Ask AI to add the question referencing the `media_id`.
 5. Run `npm run wtw -- check`.
@@ -171,7 +171,7 @@ Recommended order:
 推荐顺序：
 
 1. 将文件放入 `media/`。
-2. 让 AI 生成 `media-meta/*.jsonl` 元数据行。
+2. 让 AI 生成 `data/media-meta/*.jsonl` 元数据行。
 3. 人工检查来源和许可。
 4. 让 AI 生成引用该 `media_id` 的题目。
 5. 运行 `npm run wtw -- check`。

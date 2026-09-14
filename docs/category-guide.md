@@ -31,11 +31,11 @@ Use tags for cross-cutting reuse:
 Question files should normally follow the category tree:
 
 ```text
-questions/<primary-category>/<secondary-category>/<topic>.jsonl
+data/questions/<primary-category>/<secondary-category>/<topic>.jsonl
 ```
 
 题目文件建议跟随分类树存放：
 
 ```text
-questions/<一级分类>/<二级分类>/<具体主题>.jsonl
+data/questions/<一级分类>/<二级分类>/<具体主题>.jsonl
 ```

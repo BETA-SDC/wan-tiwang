@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { readJson, readJsonl, relativePath, repoRoot, walkFiles } from "./lib.mjs";
+import { questionsRoot, readJson, readJsonl, relativePath, repoRoot, taxonomyRoot, walkFiles } from "./lib.mjs";
 
 function argValue(name) {
   const index = process.argv.indexOf(name);
@@ -15,11 +15,10 @@ const rl = readline.createInterface({ input, output });
 const queuedInput = !input.isTTY && fromJsonSource !== "-" ? fs.readFileSync(0, "utf8").split(/\r?\n/) : [];
 let inputEnded = false;
 
-const categories = readJson(path.join(repoRoot, "taxonomy/categories.json")).categories;
-const formats = readJson(path.join(repoRoot, "taxonomy/formats.json")).formats;
-const moods = readJson(path.join(repoRoot, "taxonomy/moods.json")).moods;
-const occasions = readJson(path.join(repoRoot, "taxonomy/occasions.json")).occasions;
-const secondLevelCategories = categories.filter((category) => category.parent);
+const categories = readJson(path.join(taxonomyRoot, "categories.json")).categories;
+const formats = readJson(path.join(taxonomyRoot, "formats.json")).formats;
+const moods = readJson(path.join(taxonomyRoot, "moods.json")).moods;
+const occasions = readJson(path.join(taxonomyRoot, "occasions.json")).occasions;
 const isDryRun = process.argv.includes("--dry-run");
 
 function slugify(value) {
@@ -105,7 +104,7 @@ async function askMultiSelect(title, items, fallbackIds = []) {
 }
 
 function existingQuestionIds() {
-  const files = walkFiles(path.join(repoRoot, "questions"), (file) => file.endsWith(".jsonl"));
+  const files = walkFiles(questionsRoot, (file) => file.endsWith(".jsonl"));
   const ids = new Set();
 
   for (const file of files) {
@@ -134,7 +133,7 @@ function nextQuestionId(categoryId, ids) {
 
 function defaultQuestionFile(categoryId, topicSlug) {
   const parts = categoryId.split(".");
-  return path.join(repoRoot, "questions", ...parts, `${topicSlug || "mixed"}.jsonl`);
+  return path.join(questionsRoot, ...parts, `${topicSlug || "mixed"}.jsonl`);
 }
 
 function resolveTargetPath(question, targetRelative) {
@@ -152,8 +151,8 @@ function normalizeQuestion(inputQuestion) {
     throw new Error("Question is missing category.");
   }
 
-  if (!secondLevelCategories.some((category) => category.id === question.category)) {
-    throw new Error(`Unknown or non-secondary category: ${question.category}`);
+  if (!categories.some((category) => category.id === question.category)) {
+    throw new Error(`Unknown category: ${question.category}`);
   }
 
   if (!question.type) {
@@ -227,7 +226,7 @@ async function main() {
   console.log("Wan Ti Wang question authoring helper");
   console.log("All player-facing fields require zh-CN and en-US.\n");
 
-  const category = await chooseFromList("Categories", secondLevelCategories);
+  const category = await chooseFromList("Categories", categories);
   const format = await chooseFromList("Question types", formats);
   const ids = existingQuestionIds();
   const id = nextQuestionId(category.id, ids);

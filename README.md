@@ -4,42 +4,40 @@ Wan Ti Wang is a repository framework for a fun trivia question bank. It is desi
 
 万题王是一个“趣味答题”题库框架，不是严肃考试系统。它适合朋友聚会、每日一题、直播互动、主题挑战、小游戏和轻量知识娱乐。
 
-This repository stores question data, taxonomy definitions, media metadata, packs, playlists, generated indexes, and maintenance scripts. Actual media files are intentionally kept local and ignored by Git for now; questions and media metadata should reference them with relative paths.
+This repository stores question data, taxonomy definitions, media metadata, generated indexes, and maintenance scripts. Actual media files are intentionally kept local and ignored by Git for now; questions and media metadata should reference them with relative paths.
 
-本仓库存放题目数据、分类体系、媒体元数据、题包、推荐列表、自动生成索引和维护脚本。媒体文件本体暂时只保存在本地并被 Git 忽略；题目和媒体元数据中统一使用相对路径引用。
+本仓库存放题目数据、分类体系、媒体元数据、自动生成索引和维护脚本。媒体文件本体暂时只保存在本地并被 Git 忽略；题目和媒体元数据中统一使用相对路径引用。
 
 ## Repository Layout
 
 ```text
-docs/          Design notes and contribution guides
-schema/        JSON Schema files for validation
-taxonomy/      Controlled categories, formats, moods, and occasions
-questions/     Question data, organized by broad topic
-media/         Local media files ignored by Git
-media-meta/    Versioned metadata for local media
-packs/         Reusable quiz packs and themed rounds
-playlists/     Feed-like content lists for apps
-indexes/       Generated lookup indexes
-scripts/       Validation, indexing, and sampling utilities
-templates/     Copyable question draft templates
-skills/        AI assistant instructions for this repository
 admin/         Local browser-based management UI
+data/          Versioned question-bank data and definitions
+  questions/   Question JSONL files, organized by topic
+  media-meta/  Versioned metadata for local media
+  taxonomy/    Controlled categories, formats, moods, and occasions
+  indexes/     Generated lookup indexes
+  schema/      JSON Schema files for validation
+  templates/   Copyable question draft templates
+docs/          Design notes and contribution guides
+media/         Local media files ignored by Git
+scripts/       Validation, indexing, sampling, and UI server utilities
+skills/        AI assistant instructions for this repository
 ```
 
 ```text
-docs/          设计说明和贡献指南
-schema/        用于校验的 JSON Schema
-taxonomy/      分类、题型、氛围、使用场景等受控词表
-questions/     按主题整理的题目数据
-media/         本地媒体文件，暂时不提交到 Git
-media-meta/    媒体元数据，会提交到 Git
-packs/         可复用题包和主题局
-playlists/     面向应用首页或推荐流的列表
-indexes/       自动生成的快速查询索引
-scripts/       校验、索引构建和随机抽题脚本
-templates/     可复制的题目草稿模板
-skills/        面向 AI 助手的仓库操作说明
 admin/         本地浏览器管理界面
+data/          进入 Git 的题库数据和定义
+  questions/   按主题整理的题目 JSONL 文件
+  media-meta/  媒体元数据，会提交到 Git
+  taxonomy/    分类、题型、氛围、使用场景等受控词表
+  indexes/     自动生成的快速查询索引
+  schema/      用于校验的 JSON Schema
+  templates/   可复制的题目草稿模板
+docs/          设计说明和贡献指南
+media/         本地媒体文件，暂时不提交到 Git
+scripts/       校验、索引、随机抽题和 UI 服务脚本
+skills/        面向 AI 助手的仓库操作说明
 ```
 
 ## Design Principles
@@ -120,3 +118,7 @@ For tag naming specifically, see [Tag Guide](docs/tag-guide.md).
 For the visual management interface, see [Admin UI Guide](docs/ui-guide.md).
 
 可视化管理界面说明见 [Admin UI Guide](docs/ui-guide.md)。
+
+For versioned data layout, see [Data Directory](data/README.md).
+
+题库数据目录说明见 [Data Directory](data/README.md)。

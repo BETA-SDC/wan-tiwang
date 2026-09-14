@@ -46,13 +46,13 @@ You can also prepare one question as a normal JSON object, then let the helper a
 
 也可以先写一个普通 JSON 对象，再交给脚本追加到正确的 JSONL 文件中。
 
-Start from one of the files in `templates/`:
+Start from one of the files in `data/templates/`:
 
-可以从 `templates/` 里的模板开始：
+可以从 `data/templates/` 里的模板开始：
 
 ```text
-templates/single-choice-question.json
-templates/true-false-question.json
+data/templates/single-choice-question.json
+data/templates/true-false-question.json
 ```
 
 ```bash
@@ -80,13 +80,13 @@ You can also add a question by editing JSONL directly. Create or open a topic fi
 也可以完全手写 JSONL。先在对应二级分类目录下创建或打开主题文件：
 
 ```text
-questions/<primary-category>/<secondary-category>/<topic>.jsonl
+data/questions/<primary-category>/<secondary-category>/<topic>.jsonl
 ```
 
 Example:
 
 ```text
-questions/science/astronomy/moon.jsonl
+data/questions/science/astronomy/moon.jsonl
 ```
 
 Append one complete question object as one line:
@@ -129,6 +129,6 @@ For the early stage, prefer text-only questions. Media questions can be added la
 
 早期建议优先写纯文本题。等媒体元数据流程稳定后，再逐步加入图片、音频和视频题。
 
-For media questions, register metadata in `media-meta/` first, then reference the media ID from the question.
+For media questions, register metadata in `data/media-meta/` first, then reference the media ID from the question.
 
-如果是媒体题，先在 `media-meta/` 登记媒体元数据，再在题目中引用媒体 ID。
+如果是媒体题，先在 `data/media-meta/` 登记媒体元数据，再在题目中引用媒体 ID。

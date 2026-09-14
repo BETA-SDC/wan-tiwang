@@ -12,20 +12,20 @@ Use this skill when working on the Wan Ti Wang repository, especially for AI-ass
 - This is a fun trivia bank, not a formal testing system.
 - Every question must have Chinese and English player-facing text.
 - Player-facing localized text uses `{ "zh-CN": "...", "en-US": "..." }`.
-- Question source data lives under `questions/<primary>/<secondary>/<topic>.jsonl`.
+- Question source data lives under `data/questions/<primary>/<secondary>/<topic>.jsonl`.
 - Category IDs may be hierarchical, such as `science.astronomy`; the admin UI filters each dot-separated level separately.
-- Media files under `media/` are ignored by Git; versioned media metadata lives under `media-meta/`.
-- Generated indexes under `indexes/` are rebuilt by script and should not be edited by hand.
+- Media files under `media/` are ignored by Git; versioned media metadata lives under `data/media-meta/`.
+- Generated indexes under `data/indexes/` are rebuilt by script and should not be edited by hand.
 - A local admin UI exists for humans, while CLI commands remain preferred for AI automation.
 
 ## Before Editing
 
 Read the relevant local files instead of guessing:
 
-- `taxonomy/categories.json` for category IDs
-- `taxonomy/formats.json` for question types
-- `taxonomy/moods.json` for moods
-- `taxonomy/occasions.json` for occasions
+- `data/taxonomy/categories.json` for category IDs
+- `data/taxonomy/formats.json` for question types
+- `data/taxonomy/moods.json` for moods
+- `data/taxonomy/occasions.json` for occasions
 - `docs/question-format.md` for question shape
 - `docs/media-guide.md` for media references
 - `docs/maintenance-guide.md` for tag standards, duplicate checks, and generated indexes
@@ -48,7 +48,7 @@ Read the relevant local files instead of guessing:
 ## Media Rules
 
 - Do not invent local media paths.
-- If adding a media question, create or update the appropriate `media-meta/*.jsonl` entry first.
+- If adding a media question, create or update the appropriate `data/media-meta/*.jsonl` entry first.
 - Questions should reference media by ID with `media: [{ "id": "...", "role": "question" }]`.
 - For readability, media references should include `kind` and bilingual `hint` when practical.
 - Media paths in metadata must be relative to the repository root.
@@ -56,7 +56,7 @@ Read the relevant local files instead of guessing:
 
 ## Maintenance Commands
 
-After code, documentation, question, taxonomy, media metadata, pack, or playlist changes, run:
+After code, documentation, question, taxonomy, or media metadata changes, run:
 
 ```bash
 npm run wtw -- check

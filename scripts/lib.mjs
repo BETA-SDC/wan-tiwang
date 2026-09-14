@@ -2,6 +2,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 export const repoRoot = path.resolve(new URL("..", import.meta.url).pathname);
+export const dataRoot = path.join(repoRoot, "data");
+export const questionsRoot = path.join(dataRoot, "questions");
+export const mediaMetaRoot = path.join(dataRoot, "media-meta");
+export const taxonomyRoot = path.join(dataRoot, "taxonomy");
+export const indexesRoot = path.join(dataRoot, "indexes");
 
 export function walkFiles(dir, predicate) {
   if (!fs.existsSync(dir)) return [];

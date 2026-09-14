@@ -1,5 +1,5 @@
 import path from "node:path";
-import { readJson, repoRoot } from "./lib.mjs";
+import { indexesRoot, readJson } from "./lib.mjs";
 
 const args = new Map();
 for (let index = 2; index < process.argv.length; index += 2) {
@@ -10,16 +10,16 @@ const count = Number(args.get("--count") ?? 10);
 const category = args.get("--category");
 const type = args.get("--type");
 
-const byId = readJson(path.join(repoRoot, "indexes/by-id.json"));
+const byId = readJson(path.join(indexesRoot, "by-id.json"));
 let ids = Object.keys(byId);
 
 if (category) {
-  const byCategory = readJson(path.join(repoRoot, "indexes/by-category.json"));
+  const byCategory = readJson(path.join(indexesRoot, "by-category.json"));
   ids = ids.filter((id) => (byCategory[category] ?? []).includes(id));
 }
 
 if (type) {
-  const byFormat = readJson(path.join(repoRoot, "indexes/by-format.json"));
+  const byFormat = readJson(path.join(indexesRoot, "by-format.json"));
   ids = ids.filter((id) => (byFormat[type] ?? []).includes(id));
 }
 

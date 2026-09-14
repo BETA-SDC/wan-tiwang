@@ -1,7 +1,7 @@
 import path from "node:path";
-import { readJsonl, relativePath, repoRoot, walkFiles, writeJson } from "./lib.mjs";
+import { indexesRoot, questionsRoot, readJsonl, relativePath, walkFiles, writeJson } from "./lib.mjs";
 
-const questionFiles = walkFiles(path.join(repoRoot, "questions"), (file) => file.endsWith(".jsonl"));
+const questionFiles = walkFiles(questionsRoot, (file) => file.endsWith(".jsonl"));
 
 const byId = {};
 const byCategory = {};
@@ -47,13 +47,13 @@ for (const file of questionFiles) {
   }
 }
 
-writeJson(path.join(repoRoot, "indexes/by-id.json"), byId);
-writeJson(path.join(repoRoot, "indexes/by-category.json"), byCategory);
-writeJson(path.join(repoRoot, "indexes/by-tag.json"), byTag);
-writeJson(path.join(repoRoot, "indexes/by-mood.json"), byMood);
-writeJson(path.join(repoRoot, "indexes/by-occasion.json"), byOccasion);
-writeJson(path.join(repoRoot, "indexes/by-format.json"), byFormat);
-writeJson(path.join(repoRoot, "indexes/by-media.json"), byMedia);
-writeJson(path.join(repoRoot, "indexes/stats.json"), stats);
+writeJson(path.join(indexesRoot, "by-id.json"), byId);
+writeJson(path.join(indexesRoot, "by-category.json"), byCategory);
+writeJson(path.join(indexesRoot, "by-tag.json"), byTag);
+writeJson(path.join(indexesRoot, "by-mood.json"), byMood);
+writeJson(path.join(indexesRoot, "by-occasion.json"), byOccasion);
+writeJson(path.join(indexesRoot, "by-format.json"), byFormat);
+writeJson(path.join(indexesRoot, "by-media.json"), byMedia);
+writeJson(path.join(indexesRoot, "stats.json"), stats);
 
 console.log(`Built indexes for ${stats.total} question(s).`);
