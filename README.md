@@ -143,6 +143,10 @@ For the separate slide-style question generator and standalone HTML export, see 
 
 独立题目可视化生成器和 HTML 演示文件导出说明见 [Slide Generator Guide](docs/slide-generator-guide.md)。
 
+For the current implementation status and planned improvements, see [Project Status](docs/project-status.md).
+
+当前实现状态和后续改进方向见 [Project Status](docs/project-status.md)。
+
 For versioned data layout, see [Data Directory](data/README.md).
 
 题库数据目录说明见 [Data Directory](data/README.md)。
