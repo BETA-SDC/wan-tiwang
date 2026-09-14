@@ -119,9 +119,9 @@ For the visual management interface, see [Admin UI Guide](docs/ui-guide.md).
 
 可视化管理界面说明见 [Admin UI Guide](docs/ui-guide.md)。
 
-For the slide-style question generator, see [Slide Generator Guide](docs/slide-generator-guide.md).
+For the separate slide-style question generator and standalone HTML export, see [Slide Generator Guide](docs/slide-generator-guide.md).
 
-题目可视化生成器说明见 [Slide Generator Guide](docs/slide-generator-guide.md)。
+独立题目可视化生成器和 HTML 演示文件导出说明见 [Slide Generator Guide](docs/slide-generator-guide.md)。
 
 For versioned data layout, see [Data Directory](data/README.md).
 

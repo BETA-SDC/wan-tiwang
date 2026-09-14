@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wan Ti Wang Question Preview</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body class="previewPage">
+    <header class="topbar">
+      <div>
+        <h1>Question Preview</h1>
+        <p id="questionMeta">单题预览</p>
+      </div>
+      <div class="actions">
+        <label class="inlineControl">Language
+          <select id="questionLocale">
+            <option value="zh-CN">zh-CN</option>
+            <option value="en-US">en-US</option>
+            <option value="bilingual">Bilingual 双语</option>
+          </select>
+        </label>
+        <a class="buttonLink" href="/">Admin</a>
+        <a class="buttonLink" href="/slides/">Slides</a>
+        <button id="toggleRevealButton" type="button">Show Reveal</button>
+      </div>
+    </header>
+    <main class="singlePreview">
+      <div class="slideStage">
+        <div id="questionPreviewDeck" class="slideDeck"></div>
+      </div>
+    </main>
+    <script type="module" src="/question/app.js"></script>
+  </body>
+</html>

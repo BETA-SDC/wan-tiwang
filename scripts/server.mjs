@@ -3,10 +3,12 @@ import http from "node:http";
 import path from "node:path";
 import { spawn } from "node:child_process";
 import { indexesRoot, mediaMetaRoot, questionsRoot, readJson, readJsonl, relativePath, repoRoot, taxonomyRoot, walkFiles } from "./lib.mjs";
+import { standaloneDeckHtml } from "./slides/export-html.mjs";
 
 const port = Number(process.env.PORT ?? 5177);
 const maxRequestBytes = Number(process.env.MAX_REQUEST_BYTES ?? 200_000_000);
 const adminRoot = path.join(repoRoot, "admin");
+const exportsRoot = path.join(repoRoot, "exports");
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -33,7 +35,7 @@ function sendText(response, status, text) {
 
 function safeJoin(root, urlPath) {
   const joined = path.normalize(path.join(root, decodeURIComponent(urlPath)));
-  if (!joined.startsWith(root)) return null;
+  if (joined !== root && !joined.startsWith(`${root}${path.sep}`)) return null;
   return joined;
 }
 
@@ -218,6 +220,40 @@ async function handleApi(request, response, url) {
     return sendJson(response, 200, { total: media.length, media });
   }
 
+  const questionMatch = url.pathname.match(/^\/api\/questions\/([^/]+)$/);
+  if (questionMatch && request.method === "GET") {
+    const id = decodeURIComponent(questionMatch[1]);
+    const found = loadQuestions().find((question) => question.id === id);
+    if (!found) return sendJson(response, 404, { error: `Question not found: ${id}` });
+    return sendJson(response, 200, { question: found });
+  }
+
+  if (request.method === "POST" && url.pathname === "/api/slides/export") {
+    const body = JSON.parse(await readBody(request));
+    const requestedIds = Array.isArray(body.ids) ? body.ids : [];
+    const byId = new Map(loadQuestions().map((question) => [question.id, question]));
+    const questions = requestedIds.map((id) => byId.get(id)).filter(Boolean);
+    if (questions.length === 0) throw new Error("No valid question IDs provided for export.");
+    const title = body.title || `wan-ti-wang-slides-${new Date().toISOString().slice(0, 10)}`;
+    const slug = normalizeSlug(title) || "wan-ti-wang-slides";
+    const fileName = `${slug}-${Date.now()}.html`;
+    const relativeFile = path.join("exports", "slides", fileName);
+    const targetFile = path.join(repoRoot, relativeFile);
+    const html = standaloneDeckHtml(questions, loadMedia(), {
+      title,
+      locale: body.locale || "zh-CN",
+      revealMode: body.revealMode || "hidden"
+    });
+    fs.mkdirSync(path.dirname(targetFile), { recursive: true });
+    fs.writeFileSync(targetFile, html);
+    return sendJson(response, 201, {
+      ok: true,
+      file: relativePath(targetFile),
+      url: `/${relativeFile.replaceAll(path.sep, "/")}`,
+      count: questions.length
+    });
+  }
+
   if (request.method === "POST" && url.pathname === "/api/media") {
     const body = JSON.parse(await readBody(request));
     const type = body.type;
@@ -266,7 +302,6 @@ async function handleApi(request, response, url) {
     return sendJson(response, 201, { ok: true, id: question.id, file: relativePath(targetFile) });
   }
 
-  const questionMatch = url.pathname.match(/^\/api\/questions\/([^/]+)$/);
   if (questionMatch && request.method === "PUT") {
     const id = decodeURIComponent(questionMatch[1]);
     const body = JSON.parse(await readBody(request));
@@ -294,9 +329,15 @@ function serveStatic(response, url) {
   if (pathname.startsWith("/media/")) {
     root = repoRoot;
     pathname = pathname.slice(1);
+  } else if (pathname.startsWith("/exports/")) {
+    root = exportsRoot;
+    pathname = pathname.replace(/^\/exports\//, "");
   }
 
-  const file = safeJoin(root, pathname.replace(/^\//, ""));
+  let file = safeJoin(root, pathname.replace(/^\//, ""));
+  if (file && fs.existsSync(file) && fs.statSync(file).isDirectory()) {
+    file = path.join(file, "index.html");
+  }
   if (!file || !fs.existsSync(file) || fs.statSync(file).isDirectory()) return sendText(response, 404, "Not found");
 
   response.writeHead(200, { "Content-Type": contentTypes[path.extname(file)] ?? "application/octet-stream" });

@@ -22,7 +22,7 @@ http://127.0.0.1:5177
 
 - `Browse`: search and filter questions.
 - `Editor`: create a new draft or edit an existing question with either a form or raw JSON.
-- `Slides`: generate a slide-style deck from selected or filtered questions.
+- `Open Slides`: open the separate slide generator page at `/slides/`.
 - `Media`: inspect media metadata.
 - `Check`: run the same maintenance checks used by the CLI.
 
@@ -30,7 +30,7 @@ http://127.0.0.1:5177
 
 - `Browse`：搜索和筛选题目。
 - `Editor`：用表单或原始 JSON 新建、编辑题目。
-- `Slides`：把勾选或筛选后的题目生成幻灯片式展示稿。
+- `Open Slides`：打开 `/slides/` 独立题目可视化生成器页面。
 - `Media`：查看媒体元数据。
 - `Check`：运行和 CLI 相同的维护检查。
 
@@ -77,6 +77,10 @@ When `Image`, `Audio`, or `Video` is checked, the form shows a media section for
 Changing fields, switching between `Form` and `JSON`, and selecting local media files do not write data. The UI only writes question data, uploaded media files, and media metadata after `Save` is clicked.
 
 修改字段、切换 `Form` / `JSON`、选择本地媒体文件都不会写入数据。只有点击 `Save` 后，UI 才会写入题目、上传媒体文件和媒体元数据。
+
+Question cards in `Browse` have a `Preview` link that opens `/question/?id=<question-id>` for a single-question slide preview.
+
+`Browse` 里的题目卡片有 `Preview` 链接，会打开 `/question/?id=<题目ID>` 单题幻灯片预览。
 
 ## CLI Remains Available
 
