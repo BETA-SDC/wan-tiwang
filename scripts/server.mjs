@@ -5,6 +5,7 @@ import { spawn } from "node:child_process";
 import { readJson, readJsonl, relativePath, repoRoot, walkFiles } from "./lib.mjs";
 
 const port = Number(process.env.PORT ?? 5177);
+const maxRequestBytes = Number(process.env.MAX_REQUEST_BYTES ?? 200_000_000);
 const adminRoot = path.join(repoRoot, "admin");
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
@@ -41,7 +42,7 @@ function readBody(request) {
     let body = "";
     request.on("data", (chunk) => {
       body += chunk;
-      if (body.length > 2_000_000) {
+      if (body.length > maxRequestBytes) {
         reject(new Error("Request body too large."));
         request.destroy();
       }
@@ -101,6 +102,34 @@ function nextQuestionId(categoryId, questions) {
   }
 
   return `${prefix}-${String(max + 1).padStart(6, "0")}`;
+}
+
+function nextMediaId(type, slug, media) {
+  const prefixByType = { image: "img", audio: "aud", video: "vid", thumbnail: "thumb" };
+  const prefix = `${prefixByType[type]}-${slug || type}`;
+  let max = 0;
+
+  for (const item of media) {
+    if (!item.id?.startsWith(`${prefix}-`)) continue;
+    const suffix = item.id.slice(prefix.length + 1);
+    if (/^[0-9]{3}$/.test(suffix)) max = Math.max(max, Number(suffix));
+  }
+
+  return `${prefix}-${String(max + 1).padStart(3, "0")}`;
+}
+
+function mediaDirectory(type) {
+  if (type === "image" || type === "thumbnail") return "images";
+  if (type === "audio") return "audio";
+  if (type === "video") return "video";
+  throw new Error(`Unsupported media type: ${type}`);
+}
+
+function mediaMetaFile(type) {
+  if (type === "image" || type === "thumbnail") return "images.jsonl";
+  if (type === "audio") return "audio.jsonl";
+  if (type === "video") return "video.jsonl";
+  throw new Error(`Unsupported media type: ${type}`);
 }
 
 function defaultQuestionFile(question) {
@@ -187,6 +216,41 @@ async function handleApi(request, response, url) {
   if (request.method === "GET" && url.pathname === "/api/media") {
     const media = loadMedia();
     return sendJson(response, 200, { total: media.length, media });
+  }
+
+  if (request.method === "POST" && url.pathname === "/api/media") {
+    const body = JSON.parse(await readBody(request));
+    const type = body.type;
+    const filename = path.basename(body.filename || "");
+    const extension = path.extname(filename).toLowerCase();
+    if (!["image", "audio", "video"].includes(type)) throw new Error(`Unsupported media type: ${type}`);
+    if (!extension) throw new Error("Uploaded media needs a file extension.");
+    if (!body.dataUrl || !body.dataUrl.includes(",")) throw new Error("Uploaded media is missing data.");
+
+    const title = (body.title || filename.replace(extension, "")).trim();
+    const slug = normalizeSlug(body.slug || title || filename.replace(extension, ""));
+    const id = nextMediaId(type, slug, loadMedia());
+    const relativeMediaPath = path.join("media", mediaDirectory(type), `${id}${extension}`);
+    const targetFile = path.join(repoRoot, relativeMediaPath);
+    const encoded = body.dataUrl.split(",").pop();
+
+    fs.mkdirSync(path.dirname(targetFile), { recursive: true });
+    fs.writeFileSync(targetFile, Buffer.from(encoded, "base64"));
+
+    const item = {
+      id,
+      type,
+      path: relativeMediaPath.replaceAll(path.sep, "/"),
+      title,
+      ...(body.alt ? { alt: body.alt } : {}),
+      source: { type: "local", note: "Uploaded from the local admin UI." },
+      tags: Array.isArray(body.tags) ? body.tags : [],
+      status: body.status || "draft"
+    };
+    const metaFile = path.join(repoRoot, "media-meta", mediaMetaFile(type));
+    fs.mkdirSync(path.dirname(metaFile), { recursive: true });
+    fs.appendFileSync(metaFile, `${JSON.stringify(item)}\n`);
+    return sendJson(response, 201, { ok: true, media: item });
   }
 
   if (request.method === "POST" && url.pathname === "/api/questions") {

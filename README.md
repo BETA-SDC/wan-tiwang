@@ -77,7 +77,7 @@ For the local management UI:
 npm run ui
 ```
 
-The UI includes a form editor for common question creation and keeps raw JSON editing for advanced cases.
+The UI includes a form editor for common question creation, optional local media upload/linking, and raw JSON editing for advanced cases.
 
 日常操作只需要先记住这个入口：
 
@@ -91,7 +91,7 @@ npm run wtw
 npm run ui
 ```
 
-管理界面提供常见题目的表单录入，也保留原始 JSON 编辑用于高级场景。
+管理界面提供常见题目的表单录入、可选本地媒体上传/关联，也保留原始 JSON 编辑用于高级场景。
 
 The console groups common tasks into content creation, maintenance, play testing, and overview.
 

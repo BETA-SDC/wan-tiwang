@@ -69,7 +69,7 @@ If `id` is omitted, the script generates the next ID for the category. If `topic
 
 如果省略 `id`，脚本会根据分类自动生成下一个 ID。如果提供 `topic`，脚本会用它决定默认文件名，然后从最终题目对象中移除该字段。
 
-The script will ask for category, question type, bilingual title, bilingual prompt, options, answer, reveal text, optional fun fact, tags, moods, occasions, and target JSONL file.
+The script will ask for category, answer type, bilingual title, bilingual prompt, options, answer, reveal text, optional fun fact, tags, moods, occasions, and target JSONL file.
 
 脚本会一步步询问分类、题型、中英文标题、中英文题干、选项、答案、解析、标签、氛围、使用场景和目标文件。
 

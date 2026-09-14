@@ -48,6 +48,12 @@ Questions should not depend on physical paths directly. They should reference me
 
 ## Media Question Workflow
 
+From the Admin UI, check `Image`, `Audio`, or `Video` in the question form, then choose an existing media item or upload a local file. The UI writes the file under `media/`, appends metadata under `media-meta/`, and links the generated media ID to the question.
+
+在管理界面中，可以在题目表单里勾选 `Image`、`Audio` 或 `Video`，然后选择已有媒体或上传本地文件。UI 会把文件写入 `media/`，把元数据追加到 `media-meta/`，并把生成的媒体 ID 关联到题目。
+
+Manual workflow:
+
 1. Put the local media file under `media/`.
 2. Add one metadata line under `media-meta/images.jsonl`, `media-meta/audio.jsonl`, or `media-meta/video.jsonl`.
 3. Reference the media ID from the question.
@@ -81,8 +87,12 @@ Complete text-only part of an image question:
 图片题的题目主体示例：
 
 ```json
-{"id":"science-astronomy-000004","type":"image_guess","title":{"zh-CN":"这是谁家的表面","en-US":"Whose Surface Is This?"},"prompt":{"zh-CN":"这张图片最可能展示的是哪个天体的表面？","en-US":"Which celestial body's surface is most likely shown in this image?"},"media":[{"id":"img-science-astronomy-moon-surface-001","role":"question","kind":"image","hint":{"zh-CN":"月球表面照片","en-US":"moon surface photo"}}],"options":[{"id":"A","text":{"zh-CN":"月球","en-US":"The Moon"}},{"id":"B","text":{"zh-CN":"火星","en-US":"Mars"}},{"id":"C","text":{"zh-CN":"金星","en-US":"Venus"}},{"id":"D","text":{"zh-CN":"木星","en-US":"Jupiter"}}],"answer":["A"],"reveal":{"zh-CN":"答案是月球。月球表面有大量撞击坑。","en-US":"The answer is the Moon. Its surface has many impact craters."},"category":"science.astronomy","tags":["moon","space","image-guess"],"mood":["easygoing","surprising"],"occasion":["daily","party"],"play_time_sec":25,"status":"draft"}
+{"id":"science-astronomy-000004","type":"single_choice","title":{"zh-CN":"这是谁家的表面","en-US":"Whose Surface Is This?"},"prompt":{"zh-CN":"这张图片最可能展示的是哪个天体的表面？","en-US":"Which celestial body's surface is most likely shown in this image?"},"media":[{"id":"img-science-astronomy-moon-surface-001","role":"question","kind":"image","hint":{"zh-CN":"月球表面照片","en-US":"moon surface photo"}}],"options":[{"id":"A","text":{"zh-CN":"月球","en-US":"The Moon"}},{"id":"B","text":{"zh-CN":"火星","en-US":"Mars"}},{"id":"C","text":{"zh-CN":"金星","en-US":"Venus"}},{"id":"D","text":{"zh-CN":"木星","en-US":"Jupiter"}}],"answer":["A"],"reveal":{"zh-CN":"答案是月球。月球表面有大量撞击坑。","en-US":"The answer is the Moon. Its surface has many impact craters."},"category":"science.astronomy","tags":["moon","space","image-guess"],"mood":["easygoing","surprising"],"occasion":["daily","party"],"play_time_sec":25,"status":"draft"}
 ```
+
+In this example, `single_choice` is the answer type, while `image-guess` is a tag describing the play style.
+
+在这个例子里，`single_choice` 是作答方式，`image-guess` 标签才表示猜图玩法。
 
 `npm run wtw -- check` validates that the referenced media ID exists, optional `kind` matches the media metadata type, optional `hint` is bilingual, and media paths are relative. It does not currently verify that ignored local media files physically exist on disk.
 

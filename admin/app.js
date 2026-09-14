@@ -22,6 +22,11 @@ const elements = {
   formMood: document.querySelector("#formMood"),
   formOccasion: document.querySelector("#formOccasion"),
   optionsEditor: document.querySelector("#optionsEditor"),
+  answerLabel: document.querySelector("#answerLabel"),
+  useImageMedia: document.querySelector("#useImageMedia"),
+  useAudioMedia: document.querySelector("#useAudioMedia"),
+  useVideoMedia: document.querySelector("#useVideoMedia"),
+  mediaEditors: document.querySelector("#mediaEditors"),
   jsonEditor: document.querySelector("#jsonEditor"),
   editorMeta: document.querySelector("#editorMeta"),
   mediaList: document.querySelector("#mediaList"),
@@ -191,6 +196,26 @@ function localizedObject(zh, en) {
   return { "zh-CN": zh.trim(), "en-US": en.trim() };
 }
 
+function mediaLabel(kind) {
+  return { image: "Image 图片", audio: "Audio 音频", video: "Video 视频" }[kind] || kind;
+}
+
+function mediaAccept(kind) {
+  return { image: "image/*", audio: "audio/*", video: "video/*" }[kind] || "";
+}
+
+function mediaRole(kind) {
+  return { image: "question", audio: "question", video: "question" }[kind] || "question";
+}
+
+function mediaToggle(kind) {
+  return {
+    image: elements.useImageMedia,
+    audio: elements.useAudioMedia,
+    video: elements.useVideoMedia
+  }[kind];
+}
+
 function selectedValues(select) {
   return [...select.selectedOptions].map((item) => item.value);
 }
@@ -253,14 +278,147 @@ function readOptionsFromForm() {
 function showOptionsForType(type) {
   const shouldShow = ["single_choice", "multiple_choice", "true_false"].includes(type);
   elements.optionsEditor.closest(".formBlock").classList.toggle("hidden", !shouldShow);
+  const answerInput = elements.questionForm.answer;
   if (type === "true_false") {
     setOptions([
       { id: "T", text: localizedObject("真的", "True") },
       { id: "F", text: localizedObject("假的", "False") }
     ]);
+    answerInput.placeholder = "T or F";
+  } else if (type === "multiple_choice") {
+    answerInput.placeholder = "A,B";
   } else if (shouldShow && elements.optionsEditor.children.length === 0) {
     setOptions();
+    answerInput.placeholder = "A";
+  } else if (type === "fill_blank") {
+    answerInput.placeholder = "答案 / answer";
+  } else {
+    answerInput.placeholder = "Short answer";
   }
+}
+
+function mediaOptions(kind, selectedId = "") {
+  const options = [option("", "No existing media")];
+  let hasSelected = !selectedId;
+  for (const item of state.media.filter((media) => media.type === kind)) {
+    options.push(option(item.id, `${item.id} - ${item.title || item.path}`));
+    if (item.id === selectedId) hasSelected = true;
+  }
+  if (!hasSelected) options.push(option(selectedId, selectedId));
+  const select = document.createElement("select");
+  select.dataset.mediaField = "existing";
+  select.append(...options);
+  select.value = selectedId;
+  return select;
+}
+
+function mediaEditor(kind, mediaRef = {}) {
+  const block = document.createElement("div");
+  block.className = "mediaEditor";
+  block.dataset.kind = kind;
+
+  const heading = document.createElement("h3");
+  heading.textContent = mediaLabel(kind);
+  block.append(heading);
+
+  const existingLabel = document.createElement("label");
+  existingLabel.append("Use existing media", mediaOptions(kind, mediaRef.id || ""));
+  block.append(existingLabel);
+
+  for (const [labelText, field, value] of [
+    ["Hint zh-CN", "hint_zh", localized(mediaRef.hint, "zh-CN")],
+    ["Hint en-US", "hint_en", localized(mediaRef.hint, "en-US")],
+    ["Upload title", "title", ""],
+    ["Upload alt/description", "alt", ""],
+    ["Upload tags", "tags", ""]
+  ]) {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.dataset.mediaField = field;
+    input.value = value;
+    if (field === "tags") input.placeholder = "moon,space,image-guess";
+    label.append(labelText, input);
+    block.append(label);
+  }
+
+  const fileLabel = document.createElement("label");
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = mediaAccept(kind);
+  fileInput.dataset.mediaField = "file";
+  fileLabel.append("Upload new file", fileInput);
+  block.append(fileLabel);
+
+  return block;
+}
+
+function renderMediaEditors(mediaRefs = []) {
+  elements.mediaEditors.replaceChildren();
+  for (const kind of ["image", "audio", "video"]) {
+    const ref = mediaRefs.find((item) => item.kind === kind || state.media.find((media) => media.id === item.id)?.type === kind);
+    mediaToggle(kind).checked = Boolean(ref);
+    if (ref) elements.mediaEditors.append(mediaEditor(kind, ref));
+  }
+}
+
+function syncMediaEditor(kind) {
+  const existing = elements.mediaEditors.querySelector(`[data-kind="${kind}"]`);
+  if (mediaToggle(kind).checked && !existing) {
+    elements.mediaEditors.append(mediaEditor(kind));
+  } else if (!mediaToggle(kind).checked && existing) {
+    existing.remove();
+  }
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => resolve(reader.result));
+    reader.addEventListener("error", () => reject(reader.error));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function uploadMediaFromBlock(block) {
+  const file = block.querySelector('[data-media-field="file"]').files[0];
+  if (!file) return null;
+  const kind = block.dataset.kind;
+  const title = block.querySelector('[data-media-field="title"]').value.trim() || file.name.replace(/\.[^.]+$/, "");
+  const dataUrl = await readFileAsDataUrl(file);
+  const result = await requestJson("/api/media", {
+    method: "POST",
+    body: JSON.stringify({
+      type: kind,
+      filename: file.name,
+      title,
+      alt: block.querySelector('[data-media-field="alt"]').value.trim(),
+      tags: parseList(block.querySelector('[data-media-field="tags"]').value),
+      status: "draft",
+      dataUrl
+    })
+  });
+  return result.media;
+}
+
+async function readMediaRefsFromForm() {
+  const refs = [];
+  for (const block of elements.mediaEditors.querySelectorAll(".mediaEditor")) {
+    const uploaded = await uploadMediaFromBlock(block);
+    const selectedId = block.querySelector('[data-media-field="existing"]').value.trim();
+    const id = uploaded?.id || selectedId;
+    if (!id) continue;
+    const kind = uploaded?.type || block.dataset.kind;
+    const hintZh = block.querySelector('[data-media-field="hint_zh"]').value.trim();
+    const hintEn = block.querySelector('[data-media-field="hint_en"]').value.trim();
+    const ref = {
+      id,
+      role: mediaRole(kind),
+      kind
+    };
+    if (hintZh && hintEn) ref.hint = localizedObject(hintZh, hintEn);
+    refs.push(ref);
+  }
+  return refs;
 }
 
 function questionToForm(question) {
@@ -285,9 +443,10 @@ function questionToForm(question) {
   setSelectedValues(elements.formOccasion, question.occasion || ["daily"]);
   setOptions(question.options || []);
   showOptionsForType(form.type.value);
+  renderMediaEditors(question.media || []);
 }
 
-function formToQuestion() {
+async function formToQuestion() {
   const form = elements.questionForm;
   const { _file, _line, ...baseQuestion } = state.formBaseQuestion || state.selectedQuestion || {};
   for (const field of [
@@ -303,11 +462,13 @@ function formToQuestion() {
     "tags",
     "mood",
     "occasion",
+    "media",
     "play_time_sec",
     "status"
   ]) {
     delete baseQuestion[field];
   }
+  const media = await readMediaRefsFromForm();
   const question = {
     ...baseQuestion,
     ...(baseQuestion.id || state.selectedQuestion?.id ? { id: baseQuestion.id || state.selectedQuestion.id } : {}),
@@ -324,6 +485,7 @@ function formToQuestion() {
     tags: parseList(form.tags.value),
     mood: selectedValues(elements.formMood),
     occasion: selectedValues(elements.formOccasion),
+    ...(media.length > 0 ? { media } : {}),
     play_time_sec: Number(form.play_time_sec.value || 20),
     status: form.status.value
   };
@@ -407,9 +569,9 @@ async function refreshAll() {
 async function saveEditor() {
   let question;
   try {
-    question = state.editorMode === "form" ? formToQuestion() : JSON.parse(elements.jsonEditor.value);
+    question = state.editorMode === "form" ? await formToQuestion() : JSON.parse(elements.jsonEditor.value);
   } catch (error) {
-    alert(`Invalid JSON: ${error.message}`);
+    alert(`Cannot save: ${error.message}`);
     return;
   }
   const isExisting = Boolean(state.selectedQuestion?.id);
@@ -418,6 +580,8 @@ async function saveEditor() {
   const result = await requestJson(url, { method, body: JSON.stringify(question) });
   elements.editorMeta.textContent = `${result.id} · ${result.file}`;
   await refreshAll();
+  const savedQuestion = state.questions.find((item) => item.id === result.id);
+  if (savedQuestion) editQuestion(savedQuestion);
 }
 
 async function runCheck() {
@@ -441,9 +605,9 @@ document.querySelector("#formModeButton").addEventListener("click", () => {
     alert(`Cannot switch to form: ${error.message}`);
   }
 });
-document.querySelector("#jsonModeButton").addEventListener("click", () => {
+document.querySelector("#jsonModeButton").addEventListener("click", async () => {
   try {
-    const question = formToQuestion();
+    const question = await formToQuestion();
     elements.jsonEditor.value = JSON.stringify(question, null, 2);
     setEditorMode("json");
   } catch (error) {
@@ -454,6 +618,9 @@ document.querySelector("#addOptionButton").addEventListener("click", () => {
   const id = String.fromCharCode(65 + elements.optionsEditor.children.length);
   addOptionRow({ id, text: localizedObject("", "") });
 });
+elements.useImageMedia.addEventListener("change", () => syncMediaEditor("image"));
+elements.useAudioMedia.addEventListener("change", () => syncMediaEditor("audio"));
+elements.useVideoMedia.addEventListener("change", () => syncMediaEditor("video"));
 elements.formType.addEventListener("change", () => showOptionsForType(elements.formType.value));
 document.querySelector("#formatButton").addEventListener("click", () => {
   try {

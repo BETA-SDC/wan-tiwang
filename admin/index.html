@@ -72,7 +72,7 @@
           </div>
           <form id="questionForm" class="questionForm">
             <div class="formGrid">
-              <label>Type <select name="type" id="formType"></select></label>
+              <label>Answer type <select name="type" id="formType"></select></label>
               <label>Category <select name="category" id="formCategory"></select></label>
               <label>Status
                 <select name="status">
@@ -84,7 +84,7 @@
               </label>
               <label>Topic file <input name="topic" placeholder="mixed"></label>
               <label>Play time <input name="play_time_sec" type="number" min="1" value="20"></label>
-              <label>Answer <input name="answer" placeholder="A or A,B"></label>
+              <label id="answerLabel">Answer <input name="answer" placeholder="A or A,B"></label>
             </div>
 
             <div class="localizedGrid">
@@ -107,6 +107,21 @@
                 <button id="addOptionButton" type="button">Add Option</button>
               </div>
               <div id="optionsEditor" class="optionsEditor"></div>
+            </section>
+
+            <section class="formBlock">
+              <div class="sectionHeader compact">
+                <div>
+                  <h2>Media</h2>
+                  <p>可选关联图片、音频或视频；文件保存在本地 media/，Git 只记录元数据。</p>
+                </div>
+              </div>
+              <div class="mediaToggles">
+                <label class="checkLabel"><input type="checkbox" id="useImageMedia"> Image 图片</label>
+                <label class="checkLabel"><input type="checkbox" id="useAudioMedia"> Audio 音频</label>
+                <label class="checkLabel"><input type="checkbox" id="useVideoMedia"> Video 视频</label>
+              </div>
+              <div id="mediaEditors" class="mediaEditors"></div>
             </section>
 
             <div class="formGrid">

@@ -50,17 +50,27 @@ http://127.0.0.1:5177
 
 ## Form and JSON Modes
 
-Use `Form` mode for common text-only questions. It covers type, category, bilingual title, bilingual prompt, options, answer, reveal, fun fact, tags, moods, occasions, play time, status, and topic file name.
+Use `Form` mode for common questions. It covers answer type, category, bilingual title, bilingual prompt, options, answer, reveal, fun fact, optional image/audio/video links, tags, moods, occasions, play time, status, and topic file name.
 
-Use `JSON` mode for advanced cases such as media references, uncommon question types, or fields that the form does not expose yet.
+Use `JSON` mode for uncommon fields that the form does not expose yet.
 
-表单模式适合常见纯文本题，覆盖题型、分类、中英文标题、中英文题干、选项、答案、解析、趣味补充、标签、氛围、场景、时间、状态和 topic 文件名。
+表单模式适合常见题目，覆盖答题类型、分类、中英文标题、中英文题干、选项、答案、解析、趣味补充、可选图片/音频/视频关联、标签、氛围、场景、时间、状态和 topic 文件名。
 
-JSON 模式适合媒体引用、不常见题型，或表单暂时没有暴露的高级字段。
+JSON 模式适合处理表单暂时没有暴露的高级字段。
 
 When editing an existing question in Form mode, unexposed fields are preserved where possible.
 
 用表单编辑已有题目时，表单没有展示的字段会尽量保留。
+
+## Answer Types and Media
+
+`Answer type` describes how the player answers: single choice, multiple choice, true/false, fill in the blank, or short answer. Guess-the-image, listen-and-guess, and watch-and-answer are handled by media references plus tags, not by separate answer types.
+
+`Answer type` 表示玩家怎么作答：单选、多选、判断、填空或简答。猜图、听音频猜、看视频回答属于媒体玩法，通过媒体引用和标签表达，不再单独作为题型。
+
+When `Image`, `Audio`, or `Video` is checked, the form shows a media section for that kind. You can choose an existing media item or upload a new local file. Uploaded files are written under `media/`, which is ignored by Git, and metadata is appended to `media-meta/*.jsonl`.
+
+勾选 `Image`、`Audio` 或 `Video` 后，表单会显示对应的媒体区域。你可以选择已有媒体，也可以上传新的本地文件。上传文件会写入被 Git 忽略的 `media/`，同时自动追加一条 `media-meta/*.jsonl` 元数据。
 
 ## CLI Remains Available
 

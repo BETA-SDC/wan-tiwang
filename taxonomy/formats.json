@@ -5,13 +5,6 @@
     { "id": "multiple_choice", "name": "Multiple Choice" },
     { "id": "true_false", "name": "True or False" },
     { "id": "fill_blank", "name": "Fill in the Blank" },
-    { "id": "guess", "name": "Open Guess" },
-    { "id": "odd_one_out", "name": "Odd One Out" },
-    { "id": "ranking_guess", "name": "Ranking Guess" },
-    { "id": "closer", "name": "Which Is Closer" },
-    { "id": "image_guess", "name": "Image Guess" },
-    { "id": "audio_guess", "name": "Audio Guess" },
-    { "id": "video_guess", "name": "Video Guess" },
-    { "id": "scenario_choice", "name": "Scenario Choice" }
+    { "id": "short_answer", "name": "Short Answer" }
   ]
 }

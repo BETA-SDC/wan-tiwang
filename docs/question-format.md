@@ -76,7 +76,7 @@ Use `status: "published"` only when the question is ready for random sampling.
 字段说明：
 
 - `id`：全局唯一 ID，创建后尽量不要修改。
-- `type`：题型，例如 `single_choice`、`image_guess`、`audio_guess`。
+- `type`：答题交互类型，例如 `single_choice`、`multiple_choice`、`true_false`、`fill_blank`、`short_answer`。图片题、听音频猜题、视频题不要作为 type，而是通过 `media` 引用和 `tags` 表达。
 - `title`：卡片标题，可以比题干更有趣。
 - `prompt`：正式题干，玩家看到的主要问题。
 - `options`：选项，选择题类题型使用。
