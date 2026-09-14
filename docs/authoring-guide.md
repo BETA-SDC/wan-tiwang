@@ -69,6 +69,42 @@ The script will ask for category, question type, bilingual title, bilingual prom
 
 脚本会一步步询问分类、题型、中英文标题、中英文题干、选项、答案、解析、标签、氛围、使用场景和目标文件。
 
+## Manual JSONL Workflow
+
+You can also add a question by editing JSONL directly. Create or open a topic file under the matching second-level category:
+
+也可以完全手写 JSONL。先在对应二级分类目录下创建或打开主题文件：
+
+```text
+questions/<primary-category>/<secondary-category>/<topic>.jsonl
+```
+
+Example:
+
+```text
+questions/science/astronomy/moon.jsonl
+```
+
+Append one complete question object as one line:
+
+每一行是一道完整题目：
+
+```json
+{"id":"science-astronomy-000003","type":"single_choice","title":{"zh-CN":"月亮其实在干嘛","en-US":"What Is the Moon Doing?"},"prompt":{"zh-CN":"月亮绕着哪个天体运行？","en-US":"What object does the Moon orbit?"},"options":[{"id":"A","text":{"zh-CN":"地球","en-US":"Earth"}},{"id":"B","text":{"zh-CN":"太阳","en-US":"The Sun"}}],"answer":["A"],"reveal":{"zh-CN":"答案是地球。月亮是地球的天然卫星。","en-US":"The answer is Earth. The Moon is Earth's natural satellite."},"category":"science.astronomy","tags":["moon","space"],"mood":["easygoing"],"occasion":["daily"],"play_time_sec":20,"status":"draft"}
+```
+
+After manual editing, run:
+
+手写完成后运行：
+
+```bash
+npm run wtw -- check
+```
+
+This validates the source files and rebuilds generated indexes.
+
+这个命令会校验源文件，并重新生成索引。
+
 ## Recommended Habits
 
 - Use the script for first drafts.
@@ -90,3 +126,7 @@ The script will ask for category, question type, bilingual title, bilingual prom
 For the early stage, prefer text-only questions. Media questions can be added later once the media metadata workflow is stable.
 
 早期建议优先写纯文本题。等媒体元数据流程稳定后，再逐步加入图片、音频和视频题。
+
+For media questions, register metadata in `media-meta/` first, then reference the media ID from the question.
+
+如果是媒体题，先在 `media-meta/` 登记媒体元数据，再在题目中引用媒体 ID。

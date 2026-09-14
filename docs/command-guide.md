@@ -43,6 +43,61 @@ npm run wtw -- help
 
 也可以直接调用子命令，适合熟悉流程之后快速操作。
 
+## Check Command
+
+Use this after adding or editing questions or media metadata:
+
+新增或修改题目、媒体元数据后，运行：
+
+```bash
+npm run wtw -- check
+```
+
+It runs:
+
+它会依次运行：
+
+```bash
+node scripts/validate.mjs
+node scripts/build-index.mjs
+```
+
+It handles:
+
+- validating JSONL syntax
+- checking duplicate question IDs
+- checking known categories, question types, moods, and occasions
+- checking bilingual `zh-CN` and `en-US` player-facing fields
+- checking that question media references exist in `media-meta/`
+- checking that media paths are relative
+- rebuilding generated indexes under `indexes/`
+
+它会处理：
+
+- 校验 JSONL 语法
+- 检查题目 ID 是否重复
+- 检查分类、题型、氛围、场景是否合法
+- 检查玩家可见文本是否包含 `zh-CN` 和 `en-US`
+- 检查题目引用的媒体 ID 是否已登记在 `media-meta/`
+- 检查媒体路径是否为相对路径
+- 重新生成 `indexes/` 下的索引
+
+It does not handle:
+
+- automatic translation
+- fact checking
+- Git commit or push
+- media compression
+- verifying that ignored local media files exist on disk
+
+它不会处理：
+
+- 自动翻译
+- 事实核查
+- Git 提交或推送
+- 媒体压缩
+- 检查被 Git 忽略的本地媒体文件是否真实存在
+
 ## Lower-Level Scripts
 
 The original scripts are still available for automation, CI, or advanced use:

@@ -38,6 +38,48 @@ Questions should not depend on physical paths directly. They should reference me
 }
 ```
 
+## Media Question Workflow
+
+1. Put the local media file under `media/`.
+2. Add one metadata line under `media-meta/images.jsonl`, `media-meta/audio.jsonl`, or `media-meta/video.jsonl`.
+3. Reference the media ID from the question.
+4. Run `npm run wtw -- check`.
+
+中文流程：
+
+1. 把本地媒体文件放到 `media/`。
+2. 在 `media-meta/images.jsonl`、`media-meta/audio.jsonl` 或 `media-meta/video.jsonl` 里新增一行元数据。
+3. 在题目里引用这个媒体 ID。
+4. 运行 `npm run wtw -- check`。
+
+Media metadata example:
+
+媒体元数据示例：
+
+```json
+{"id":"img-science-astronomy-moon-surface-001","type":"image","path":"media/images/science/astronomy/moon-surface-001.webp","thumbnail":"media/thumbnails/img-science-astronomy-moon-surface-001.webp","title":"Moon Surface","alt":"月球表面照片","source":{"type":"local","url":"","license":"unknown"},"tags":["moon","space","astronomy"],"status":"published"}
+```
+
+Question reference example:
+
+题目引用示例：
+
+```json
+"media":[{"id":"img-science-astronomy-moon-surface-001","role":"question"}]
+```
+
+Complete text-only part of an image question:
+
+图片题的题目主体示例：
+
+```json
+{"id":"science-astronomy-000004","type":"image_guess","title":{"zh-CN":"这是谁家的表面","en-US":"Whose Surface Is This?"},"prompt":{"zh-CN":"这张图片最可能展示的是哪个天体的表面？","en-US":"Which celestial body's surface is most likely shown in this image?"},"media":[{"id":"img-science-astronomy-moon-surface-001","role":"question"}],"options":[{"id":"A","text":{"zh-CN":"月球","en-US":"The Moon"}},{"id":"B","text":{"zh-CN":"火星","en-US":"Mars"}},{"id":"C","text":{"zh-CN":"金星","en-US":"Venus"}},{"id":"D","text":{"zh-CN":"木星","en-US":"Jupiter"}}],"answer":["A"],"reveal":{"zh-CN":"答案是月球。月球表面有大量撞击坑。","en-US":"The answer is the Moon. Its surface has many impact craters."},"category":"science.astronomy","tags":["moon","space","image-guess"],"mood":["easygoing","surprising"],"occasion":["daily","party"],"play_time_sec":25,"status":"draft"}
+```
+
+`npm run wtw -- check` validates that the referenced media ID exists and that media paths are relative. It does not currently verify that ignored local media files physically exist on disk.
+
+`npm run wtw -- check` 会校验题目引用的媒体 ID 是否存在，以及媒体路径是否为相对路径。它目前不会检查被 Git 忽略的本地媒体文件是否真实存在。
+
 推荐规则：
 
 - 图片优先使用 `.webp`，必要时使用 `.png` 或 `.jpg`。
