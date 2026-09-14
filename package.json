@@ -1,0 +1,15 @@
+{
+  "name": "wan-ti-wang",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A fun trivia question bank framework.",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "build:index": "node scripts/build-index.mjs",
+    "sample": "node scripts/sample.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

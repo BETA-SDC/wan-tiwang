@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/wan-ti-wang/media.schema.json",
+  "title": "Wan Ti Wang Media",
+  "type": "object",
+  "required": ["id", "type", "path", "title", "status"],
+  "additionalProperties": true,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(img|aud|vid|thumb)-[a-z0-9]+(?:-[a-z0-9]+)*-[0-9]{3}$"
+    },
+    "type": {
+      "enum": ["image", "audio", "video", "thumbnail"]
+    },
+    "path": {
+      "type": "string"
+    },
+    "thumbnail": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "alt": {
+      "type": "string"
+    },
+    "duration_sec": {
+      "type": "number",
+      "minimum": 0
+    },
+    "source": {
+      "type": "object"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "status": {
+      "enum": ["draft", "published", "deprecated"]
+    }
+  }
+}

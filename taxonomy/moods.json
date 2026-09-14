@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "moods": [
+    { "id": "funny", "name": "Funny" },
+    { "id": "surprising", "name": "Surprising" },
+    { "id": "easygoing", "name": "Easygoing" },
+    { "id": "hardcore", "name": "Hardcore" },
+    { "id": "nostalgic", "name": "Nostalgic" },
+    { "id": "weird", "name": "Weird" },
+    { "id": "beautiful", "name": "Beautiful" },
+    { "id": "debate", "name": "Debate Starter" }
+  ]
+}

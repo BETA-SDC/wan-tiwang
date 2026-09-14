@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "licenses": [
+    { "id": "original", "name": "Original Content" },
+    { "id": "cc0-1.0", "name": "CC0 1.0" },
+    { "id": "cc-by-4.0", "name": "CC BY 4.0" },
+    { "id": "cc-by-sa-4.0", "name": "CC BY-SA 4.0" },
+    { "id": "public-domain", "name": "Public Domain" },
+    { "id": "permission-required", "name": "Permission Required" },
+    { "id": "unknown", "name": "Unknown" }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "occasions": [
+    { "id": "daily", "name": "Daily Play" },
+    { "id": "party", "name": "Party" },
+    { "id": "stream", "name": "Live Stream" },
+    { "id": "family", "name": "Family" },
+    { "id": "classroom-warmup", "name": "Classroom Warmup" },
+    { "id": "challenge", "name": "Challenge" },
+    { "id": "icebreaker", "name": "Icebreaker" }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "categories": [
+    { "id": "general", "name": "General Trivia" },
+    { "id": "general.weird-facts", "name": "Weird Facts", "parent": "general" },
+    { "id": "general.everyday-trivia", "name": "Everyday Trivia", "parent": "general" },
+    { "id": "general.brain-teasers", "name": "Brain Teasers", "parent": "general" },
+
+    { "id": "history", "name": "History and Civilization" },
+    { "id": "history.ancient-china", "name": "Ancient China", "parent": "history" },
+    { "id": "history.modern-china", "name": "Modern China", "parent": "history" },
+    { "id": "history.world-history", "name": "World History", "parent": "history" },
+    { "id": "history.figures", "name": "Historical Figures", "parent": "history" },
+    { "id": "history.oddities", "name": "Historical Oddities", "parent": "history" },
+
+    { "id": "geography", "name": "Geography and the World" },
+    { "id": "geography.countries", "name": "Countries and Regions", "parent": "geography" },
+    { "id": "geography.cities", "name": "Cities", "parent": "geography" },
+    { "id": "geography.landmarks", "name": "Landmarks", "parent": "geography" },
+    { "id": "geography.nature", "name": "Natural Geography", "parent": "geography" },
+
+    { "id": "science", "name": "Natural Science" },
+    { "id": "science.physics", "name": "Physics", "parent": "science" },
+    { "id": "science.chemistry", "name": "Chemistry", "parent": "science" },
+    { "id": "science.biology", "name": "Biology", "parent": "science" },
+    { "id": "science.astronomy", "name": "Astronomy", "parent": "science" },
+    { "id": "science.earth-science", "name": "Earth Science", "parent": "science" },
+
+    { "id": "technology", "name": "Technology and Internet" },
+    { "id": "technology.computers", "name": "Computers", "parent": "technology" },
+    { "id": "technology.internet", "name": "Internet Culture and Systems", "parent": "technology" },
+    { "id": "technology.ai", "name": "Artificial Intelligence", "parent": "technology" },
+    { "id": "technology.gadgets", "name": "Gadgets", "parent": "technology" },
+    { "id": "technology.inventions", "name": "Inventions", "parent": "technology" },
+
+    { "id": "humanities", "name": "Humanities" },
+    { "id": "humanities.literature", "name": "Literature", "parent": "humanities" },
+    { "id": "humanities.philosophy", "name": "Philosophy", "parent": "humanities" },
+    { "id": "humanities.mythology", "name": "Mythology", "parent": "humanities" },
+    { "id": "humanities.religion", "name": "Religion and Culture", "parent": "humanities" },
+    { "id": "humanities.classics", "name": "Classics", "parent": "humanities" },
+
+    { "id": "arts", "name": "Arts and Aesthetics" },
+    { "id": "arts.painting", "name": "Painting", "parent": "arts" },
+    { "id": "arts.music", "name": "Music", "parent": "arts" },
+    { "id": "arts.architecture", "name": "Architecture", "parent": "arts" },
+    { "id": "arts.design", "name": "Design", "parent": "arts" },
+
+    { "id": "pop-culture", "name": "Pop Culture" },
+    { "id": "pop-culture.movies", "name": "Movies", "parent": "pop-culture" },
+    { "id": "pop-culture.tv", "name": "TV and Variety Shows", "parent": "pop-culture" },
+    { "id": "pop-culture.celebrities", "name": "Celebrities", "parent": "pop-culture" },
+    { "id": "pop-culture.memes", "name": "Memes", "parent": "pop-culture" },
+
+    { "id": "games", "name": "Games and Anime" },
+    { "id": "games.video-games", "name": "Video Games", "parent": "games" },
+    { "id": "games.board-games", "name": "Board Games", "parent": "games" },
+    { "id": "games.anime", "name": "Anime", "parent": "games" },
+    { "id": "games.esports", "name": "Esports", "parent": "games" },
+    { "id": "games.specific-titles", "name": "Specific Titles", "parent": "games" },
+
+    { "id": "life", "name": "Life and Leisure" },
+    { "id": "life.food", "name": "Food and Drinks", "parent": "life" },
+    { "id": "life.health", "name": "Health Common Sense", "parent": "life" },
+    { "id": "life.sports", "name": "Sports", "parent": "life" },
+    { "id": "life.animals", "name": "Animals", "parent": "life" },
+    { "id": "life.plants", "name": "Plants", "parent": "life" },
+    { "id": "life.travel", "name": "Travel", "parent": "life" },
+
+    { "id": "language", "name": "Language and Wordplay" },
+    { "id": "language.chinese", "name": "Chinese", "parent": "language" },
+    { "id": "language.idioms", "name": "Idioms and Sayings", "parent": "language" },
+    { "id": "language.english", "name": "English", "parent": "language" },
+    { "id": "language.wordplay", "name": "Wordplay", "parent": "language" },
+    { "id": "language.dialects", "name": "Dialects", "parent": "language" },
+
+    { "id": "brain", "name": "Puzzles and Reasoning" },
+    { "id": "brain.riddles", "name": "Riddles", "parent": "brain" },
+    { "id": "brain.logic", "name": "Logic", "parent": "brain" },
+    { "id": "brain.lateral-thinking", "name": "Lateral Thinking", "parent": "brain" },
+    { "id": "brain.math-puzzles", "name": "Math Puzzles", "parent": "brain" },
+    { "id": "brain.visual-puzzles", "name": "Visual Puzzles", "parent": "brain" }
+  ]
+}
