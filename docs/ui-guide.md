@@ -20,19 +20,27 @@ http://127.0.0.1:5177
 
 ## Main Views
 
-- `Browse`: search and filter questions.
-- `Editor`: create a new draft or edit an existing question with either a form or raw JSON.
-- `Open Slides`: open the separate slide generator page at `/slides/`.
-- `Media`: inspect media metadata.
-- `Check`: run the same maintenance checks used by the CLI.
+- `Home`: task shortcuts for the most common workflows.
+- `Question Library`: search, filter, preview, edit, and select questions for a deck.
+- `Question Editor`: create a new draft or edit an existing question with either a form or raw JSON.
+- `Slide Generator`: open the separate deck-building page at `/slides/`.
+- `Media Library`: inspect media metadata.
+- `Settings`: review the controlled category, answer type, mood, and occasion vocabularies.
+- `Maintenance`: run the same checks used by the CLI.
 
 中文说明：
 
-- `Browse`：搜索和筛选题目。
-- `Editor`：用表单或原始 JSON 新建、编辑题目。
-- `Open Slides`：打开 `/slides/` 独立题目可视化生成器页面。
-- `Media`：查看媒体元数据。
-- `Check`：运行和 CLI 相同的维护检查。
+- `Home`：通过快捷入口进入常用任务。
+- `Question Library`：搜索、筛选、预览、编辑和选择题目。
+- `Question Editor`：用表单或原始 JSON 新建、编辑题目。
+- `Slide Generator`：打开 `/slides/` 独立题目可视化生成器页面。
+- `Media Library`：查看媒体元数据。
+- `Settings`：查看受控的分类、答题类型、氛围和场景词表。
+- `Maintenance`：运行和 CLI 相同的维护检查。
+
+The navigation is intentionally task-based. Filtering belongs to `Question Library`; category and answer-type definitions belong to `Settings`; deck assembly belongs to `Slide Generator`.
+
+导航按任务划分：筛选只放在 `Question Library`，分类和答题类型定义放在 `Settings`，演示稿组装放在 `Slide Generator`。
 
 ## Save Flow
 

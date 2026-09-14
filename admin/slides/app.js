@@ -187,6 +187,7 @@ async function init() {
   ]);
   state.questions = questions.questions;
   state.media = media.media;
+  if (state.selectedIds.size === 0) elements.slideSource.value = "filtered";
   renderPicker();
   buildSlides();
 }

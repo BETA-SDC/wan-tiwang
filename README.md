@@ -12,6 +12,10 @@ This repository stores question data, taxonomy definitions, media metadata, gene
 
 ```text
 admin/         Local browser-based management UI
+  index.html   Task-based admin shell and question library/editor views
+  shared/      Browser-side shared API, i18n, media, and question rendering
+  slides/      Standalone slide generator page and app
+  question/    Standalone single-question preview page and app
 data/          Versioned question-bank data and definitions
   questions/   Question JSONL files, organized by topic
   media-meta/  Versioned metadata for local media
@@ -21,12 +25,17 @@ data/          Versioned question-bank data and definitions
   templates/   Copyable question draft templates
 docs/          Design notes and contribution guides
 media/         Local media files ignored by Git
-scripts/       Validation, indexing, sampling, and UI server utilities
+scripts/       Validation, indexing, sampling, UI server, and export utilities
+  slides/      Standalone HTML deck generation
 skills/        AI assistant instructions for this repository
 ```
 
 ```text
 admin/         本地浏览器管理界面
+  index.html   按任务组织的管理台壳层、题库和编辑器
+  shared/      浏览器端共享 API、中英文、媒体和题目渲染逻辑
+  slides/      独立题目可视化生成器页面和逻辑
+  question/    独立单题预览页面和逻辑
 data/          进入 Git 的题库数据和定义
   questions/   按主题整理的题目 JSONL 文件
   media-meta/  媒体元数据，会提交到 Git
@@ -36,7 +45,8 @@ data/          进入 Git 的题库数据和定义
   templates/   可复制的题目草稿模板
 docs/          设计说明和贡献指南
 media/         本地媒体文件，暂时不提交到 Git
-scripts/       校验、索引、随机抽题和 UI 服务脚本
+scripts/       校验、索引、随机抽题、UI 服务和导出脚本
+  slides/      独立 HTML 演示文件生成逻辑
 skills/        面向 AI 助手的仓库操作说明
 ```
 

@@ -9,8 +9,8 @@ The Slide Generator is a separate page at `/slides/` for turning selected questi
 1. Use `Browse` filters to narrow the question pool, or tick specific questions in the list.
 2. Open `/slides/` from `Open Slides`.
 3. Choose a source:
-   - `Current filtered questions`: use the current Browse result.
-   - `Selected questions`: use only ticked questions.
+   - `Search results`: use the questions currently matching the generator search.
+   - `Selected from Library`: use only questions selected in the Question Library.
    - `All questions`: use the full bank.
 4. Set count, language, and reveal mode.
 5. Click `Build Preview` or `Shuffle Preview`.
@@ -23,8 +23,8 @@ The Slide Generator is a separate page at `/slides/` for turning selected questi
 1. 先用 `Browse` 筛选题目，或者在题目列表里勾选具体题目。
 2. 通过 `Open Slides` 打开 `/slides/`。
 3. 选择来源：
-   - `Current filtered questions`：使用当前筛选结果。
-   - `Selected questions`：只使用勾选的题目。
+   - `Search results`：使用生成器搜索当前匹配的题目。
+   - `Selected from Library`：只使用在 Question Library 中勾选的题目。
    - `All questions`：使用全部题目。
 4. 设置数量、语言和答案显示方式。
 5. 点击 `Build Preview` 或 `Shuffle Preview`。

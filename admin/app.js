@@ -20,6 +20,7 @@ const elements = {
   searchInput: document.querySelector("#searchInput"),
   questionList: document.querySelector("#questionList"),
   questionCount: document.querySelector("#questionCount"),
+  selectionSummary: document.querySelector("#selectionSummary"),
   clearSlideSelectionButton: document.querySelector("#clearSlideSelectionButton"),
   questionForm: document.querySelector("#questionForm"),
   formType: document.querySelector("#formType"),
@@ -35,11 +36,25 @@ const elements = {
   jsonEditor: document.querySelector("#jsonEditor"),
   editorMeta: document.querySelector("#editorMeta"),
   mediaList: document.querySelector("#mediaList"),
+  categoryTree: document.querySelector("#categoryTree"),
+  formatList: document.querySelector("#formatList"),
+  moodList: document.querySelector("#moodList"),
+  occasionList: document.querySelector("#occasionList"),
   checkOutput: document.querySelector("#checkOutput")
+};
+
+const viewMeta = {
+  home: ["Home", "Choose the task you want to do next."],
+  browse: ["Question Library", "Find, preview, edit, and select questions for a slide deck."],
+  editor: ["Question Editor", "Create or edit one bilingual question. Nothing is saved until Save is clicked."],
+  media: ["Media Library", "Inspect local media metadata. Uploaded files stay outside Git."],
+  settings: ["Settings", "Review categories, answer types, moods, and occasions."],
+  check: ["Maintenance", "Validate data, lint tags, detect duplicates, and rebuild indexes."]
 };
 
 function saveSlideSelection() {
   localStorage.setItem("wtw:selectedSlideIds", JSON.stringify([...state.selectedSlideIds]));
+  renderSelectionSummary();
 }
 
 function option(value, label) {
@@ -76,18 +91,66 @@ function renderStats() {
   }
 }
 
+function renderSelectionSummary() {
+  if (!elements.selectionSummary) return;
+  elements.selectionSummary.textContent = `${state.selectedSlideIds.size} selected for slides.`;
+}
+
+function categoryLabel(category) {
+  const parts = category.id.split(".");
+  const depth = Math.max(0, parts.length - 1);
+  const prefix = depth ? `${"  ".repeat(depth)}↳ ` : "";
+  return `${prefix}${category.name} (${category.id})`;
+}
+
+function taxonomyLabel(item) {
+  return `${item.name} (${item.id})`;
+}
+
 function renderFilters() {
   renderCategoryLevels();
   elements.typeFilter.replaceChildren(option("", "All types"));
-  for (const format of state.bootstrap.formats) elements.typeFilter.append(option(format.id, format.id));
+  for (const format of state.bootstrap.formats) elements.typeFilter.append(option(format.id, taxonomyLabel(format)));
   elements.formType.replaceChildren();
-  for (const format of state.bootstrap.formats) elements.formType.append(option(format.id, format.id));
+  for (const format of state.bootstrap.formats) elements.formType.append(option(format.id, taxonomyLabel(format)));
   elements.formCategory.replaceChildren();
-  for (const category of state.bootstrap.categories) elements.formCategory.append(option(category.id, `${category.id} - ${category.name}`));
+  for (const category of state.bootstrap.categories) elements.formCategory.append(option(category.id, categoryLabel(category)));
   elements.formMood.replaceChildren();
-  for (const mood of state.bootstrap.moods) elements.formMood.append(option(mood.id, mood.id));
+  for (const mood of state.bootstrap.moods) elements.formMood.append(option(mood.id, taxonomyLabel(mood)));
   elements.formOccasion.replaceChildren();
-  for (const occasion of state.bootstrap.occasions) elements.formOccasion.append(option(occasion.id, occasion.id));
+  for (const occasion of state.bootstrap.occasions) elements.formOccasion.append(option(occasion.id, taxonomyLabel(occasion)));
+  renderSettings();
+}
+
+function renderTaxonomyItems(target, items, label = taxonomyLabel) {
+  target.replaceChildren();
+  for (const item of items) {
+    const row = document.createElement("div");
+    row.className = "taxonomyItem";
+    const name = document.createElement("strong");
+    name.textContent = label(item);
+    row.append(name);
+    target.append(row);
+  }
+}
+
+function renderSettings() {
+  if (!state.bootstrap) return;
+  elements.categoryTree.replaceChildren();
+  for (const category of state.bootstrap.categories) {
+    const row = document.createElement("div");
+    row.className = "taxonomyItem";
+    row.classList.toggle("taxonomyChild", Boolean(category.parent));
+    const name = document.createElement("strong");
+    name.textContent = category.name;
+    const id = document.createElement("code");
+    id.textContent = category.id;
+    row.append(name, id);
+    elements.categoryTree.append(row);
+  }
+  renderTaxonomyItems(elements.formatList, state.bootstrap.formats);
+  renderTaxonomyItems(elements.moodList, state.bootstrap.moods);
+  renderTaxonomyItems(elements.occasionList, state.bootstrap.occasions);
 }
 
 function childCategories(parentId) {
@@ -137,6 +200,7 @@ function renderCategoryLevels() {
 
 function renderQuestions() {
   elements.questionCount.textContent = `${state.questions.length} shown · ${state.selectedSlideIds.size} selected`;
+  renderSelectionSummary();
   elements.questionList.replaceChildren();
   for (const question of state.questions) {
     const node = document.createElement("div");
@@ -216,8 +280,11 @@ function renderMedia() {
 }
 
 function switchView(name) {
-  document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.view === name));
+  document.querySelectorAll(".navItem[data-view]").forEach((tab) => tab.classList.toggle("active", tab.dataset.view === name));
   document.querySelectorAll(".view").forEach((view) => view.classList.toggle("active", view.id === `${name}View`));
+  const [title, subtitle] = viewMeta[name] || viewMeta.home;
+  document.querySelector("#viewTitle").textContent = title;
+  document.querySelector("#viewSubtitle").textContent = subtitle;
 }
 
 function setEditorMode(mode) {
@@ -635,10 +702,13 @@ async function runCheck() {
   renderStats();
 }
 
-document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => switchView(tab.dataset.view)));
+document.querySelectorAll(".navItem[data-view]").forEach((tab) => tab.addEventListener("click", () => switchView(tab.dataset.view)));
 document.querySelector("#applyFiltersButton").addEventListener("click", loadQuestions);
 document.querySelector("#refreshButton").addEventListener("click", refreshAll);
 document.querySelector("#newQuestionButton").addEventListener("click", newDraft);
+document.querySelector("#homeNewQuestionButton").addEventListener("click", newDraft);
+document.querySelector("#homeBrowseButton").addEventListener("click", () => switchView("browse"));
+document.querySelector("#homeMediaButton").addEventListener("click", () => switchView("media"));
 elements.clearSlideSelectionButton.addEventListener("click", () => {
   state.selectedSlideIds.clear();
   saveSlideSelection();
