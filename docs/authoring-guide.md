@@ -4,6 +4,10 @@ Adding trivia by hand can become repetitive because every question needs IDs, ca
 
 手动新增题目很容易累，因为每道题都要维护 ID、分类、中英文文本、答案、标签、氛围和场景。推荐先用辅助脚本生成，再按需要微调 JSONL。
 
+For AI-assisted drafting, translation, and review, see [AI-Assisted Authoring](ai-assisted-authoring.md).
+
+如果要使用 AI 辅助生成、翻译或审核题目，见 [AI-Assisted Authoring](ai-assisted-authoring.md)。
+
 ## Interactive Workflow
 
 Recommended entry:

@@ -22,6 +22,7 @@ playlists/     Feed-like content lists for apps
 indexes/       Generated lookup indexes
 scripts/       Validation, indexing, and sampling utilities
 templates/     Copyable question draft templates
+skills/        AI assistant instructions for this repository
 ```
 
 ```text
@@ -36,6 +37,7 @@ playlists/     面向应用首页或推荐流的列表
 indexes/       自动生成的快速查询索引
 scripts/       校验、索引构建和随机抽题脚本
 templates/     可复制的题目草稿模板
+skills/        面向 AI 助手的仓库操作说明
 ```
 
 ## Design Principles
@@ -84,3 +86,7 @@ This repository already includes a small bilingual sample set for trying the wor
 See [Command Guide](docs/command-guide.md) for the organized command structure.
 
 命令入口和分级说明见 [Command Guide](docs/command-guide.md)。
+
+For AI-assisted question drafting and review, see [AI-Assisted Authoring](docs/ai-assisted-authoring.md).
+
+AI 辅助生成、翻译、审核和导入流程见 [AI-Assisted Authoring](docs/ai-assisted-authoring.md)。
