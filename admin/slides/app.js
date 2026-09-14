@@ -1,6 +1,7 @@
 import { requestJson } from "../shared/api.js";
 import { localized } from "../shared/i18n.js";
 import { createQuestionSlide } from "../shared/question-view.js";
+import { mountAppShell } from "../shared/app-shell.js";
 
 const state = {
   questions: [],
@@ -181,6 +182,7 @@ function togglePresentation(force) {
 }
 
 async function init() {
+  mountAppShell();
   const [questions, media] = await Promise.all([
     requestJson("/api/questions?limit=10000"),
     requestJson("/api/media")
@@ -228,6 +230,12 @@ document.addEventListener("keydown", (event) => {
     renderSlides();
   }
   if (event.key === "Escape") togglePresentation(false);
+});
+document.addEventListener("wtw:selection-cleared", () => {
+  state.selectedIds.clear();
+  elements.slideSource.value = "filtered";
+  renderPicker();
+  buildSlides();
 });
 
 init().catch((error) => {

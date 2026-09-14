@@ -6,256 +6,42 @@
     <title>Wan Ti Wang Admin</title>
     <link rel="stylesheet" href="/styles.css">
   </head>
-  <body>
-    <main class="appShell">
-      <aside class="appNav">
-        <div class="brandBlock">
-          <h1>Wan Ti Wang</h1>
-          <p>万题王本地管理台</p>
-        </div>
-        <nav class="navStack" aria-label="Main views">
-          <button class="navItem active" data-view="home" type="button">Home</button>
-          <button class="navItem" data-view="browse" type="button">Question Library</button>
-          <button class="navItem" data-view="editor" type="button">Question Editor</button>
-          <a class="navItem navLink" href="/slides/">Slide Generator</a>
-          <button class="navItem" data-view="media" type="button">Media Library</button>
-          <button class="navItem" data-view="settings" type="button">Settings</button>
-          <button class="navItem" data-view="check" type="button">Maintenance</button>
-        </nav>
-        <section class="navPanel">
-          <h2>Bank Status</h2>
-          <div id="stats" class="stats"></div>
-        </section>
-        <section class="navPanel selectionPanel">
-          <h2>Slide Selection</h2>
-          <p id="selectionSummary">0 selected for slides.</p>
-          <div class="actions stackedActions">
-            <a class="buttonLink" href="/slides/">Open Generator</a>
-            <button id="clearSlideSelectionButton" type="button">Clear Selection</button>
-          </div>
-        </section>
-      </aside>
-
-      <section class="workspace">
-        <header class="workspaceHeader">
-          <div>
-            <h2 id="viewTitle">Home</h2>
-            <p id="viewSubtitle">Choose the task you want to do next.</p>
-          </div>
-          <div class="actions">
-            <button id="refreshButton" type="button">Refresh</button>
-            <button id="checkButton" type="button">Run Check</button>
-          </div>
-        </header>
-
-        <section id="homeView" class="view active">
-          <div class="quickActions">
-            <button class="taskButton" id="homeNewQuestionButton" type="button">
-              <strong>Create Question</strong>
-              <span>表单新建一道中英文题目</span>
-            </button>
-            <button class="taskButton" id="homeBrowseButton" type="button">
-              <strong>Browse Library</strong>
-              <span>搜索、筛选、预览和选择题目</span>
-            </button>
-            <a class="taskButton" href="/slides/">
-              <strong>Build Slides</strong>
-              <span>生成一题一页的 HTML 演示</span>
-            </a>
-            <button class="taskButton" id="homeMediaButton" type="button">
-              <strong>Manage Media</strong>
-              <span>查看本地图片、音频、视频元数据</span>
-            </button>
-          </div>
-          <section class="guidePanel">
-            <h2>Recommended Flow</h2>
-            <div class="flowSteps">
-              <span>Find or create</span>
-              <span>Edit bilingual content</span>
-              <span>Preview one question</span>
-              <span>Select for slides</span>
-              <span>Export HTML</span>
-            </div>
-            <p>题库维护按任务分流：找题在 Library，新建/编辑在 Editor，生成演示在 Slide Generator，分类和题型只在 Settings 查看和调整。</p>
-          </section>
-        </section>
-
-        <section id="browseView" class="view">
-          <div class="toolbarPanel">
-            <label>Search <input id="searchInput" type="search" placeholder="id, title, tag, keyword"></label>
-            <label>Category 分类层级 <div id="categoryLevels" class="categoryLevels"></div></label>
-            <label>Type <select id="typeFilter"></select></label>
-            <label>Status
-              <select id="statusFilter">
-                <option value="">All statuses</option>
-                <option value="draft">draft</option>
-                <option value="review">review</option>
-                <option value="published">published</option>
-                <option value="deprecated">deprecated</option>
-              </select>
-            </label>
-            <button id="applyFiltersButton" type="button">Apply Filters</button>
-          </div>
-          <div class="sectionHeader">
-            <div>
-              <h2>Questions</h2>
-              <p id="questionCount">Loading</p>
-            </div>
-            <div class="actions">
-              <button id="newQuestionButton" type="button">New Draft</button>
-              <a class="buttonLink" href="/slides/">Open Slides</a>
-            </div>
-          </div>
-          <div id="questionList" class="questionList"></div>
-        </section>
-
-        <section id="editorView" class="view">
-          <div class="sectionHeader">
-            <div>
-              <h2>Question Editor</h2>
-              <p id="editorMeta">Create or edit one bilingual question object.</p>
-            </div>
-            <div class="actions">
-              <button id="formModeButton" type="button">Form</button>
-              <button id="jsonModeButton" type="button">JSON</button>
-              <button id="formatButton" type="button">Format JSON</button>
-              <button id="saveButton" type="button">Save</button>
-            </div>
-          </div>
-          <form id="questionForm" class="questionForm">
-            <section class="formBlock">
-              <div class="sectionHeader compact">
-                <div>
-                  <h2>Basics</h2>
-                  <p>先定玩法、分类和保存状态。</p>
-                </div>
-              </div>
-              <div class="formGrid">
-                <label>Answer type <select name="type" id="formType"></select></label>
-                <label>Category <select name="category" id="formCategory"></select></label>
-                <label>Status
-                  <select name="status">
-                    <option value="draft">draft</option>
-                    <option value="review">review</option>
-                    <option value="published">published</option>
-                    <option value="deprecated">deprecated</option>
-                  </select>
-                </label>
-                <label>Topic file <input name="topic" placeholder="mixed"></label>
-                <label>Play time <input name="play_time_sec" type="number" min="1" value="20"></label>
-                <label id="answerLabel">Answer <input name="answer" placeholder="A or A,B"></label>
-              </div>
-            </section>
-
-            <section class="formBlock">
-              <div class="sectionHeader compact">
-                <div>
-                  <h2>Bilingual Content</h2>
-                  <p>所有题目都维护中英文版本。</p>
-                </div>
-              </div>
-              <div class="localizedGrid">
-                <label>Title zh-CN <input name="title_zh" required></label>
-                <label>Title en-US <input name="title_en" required></label>
-                <label>Prompt zh-CN <textarea name="prompt_zh" required></textarea></label>
-                <label>Prompt en-US <textarea name="prompt_en" required></textarea></label>
-                <label>Reveal zh-CN <textarea name="reveal_zh" required></textarea></label>
-                <label>Reveal en-US <textarea name="reveal_en" required></textarea></label>
-                <label>Fun fact zh-CN <textarea name="fun_fact_zh"></textarea></label>
-                <label>Fun fact en-US <textarea name="fun_fact_en"></textarea></label>
-              </div>
-            </section>
-
-            <section class="formBlock">
-              <div class="sectionHeader compact">
-                <div>
-                  <h2>Options</h2>
-                  <p>仅单选、多选、判断需要选项；答案使用选项 ID。</p>
-                </div>
-                <button id="addOptionButton" type="button">Add Option</button>
-              </div>
-              <div id="optionsEditor" class="optionsEditor"></div>
-            </section>
-
-            <section class="formBlock">
-              <div class="sectionHeader compact">
-                <div>
-                  <h2>Media</h2>
-                  <p>可选关联图片、音频或视频；文件保存在本地 media/，Git 只记录元数据。</p>
-                </div>
-              </div>
-              <div class="mediaToggles">
-                <label class="checkLabel"><input type="checkbox" id="useImageMedia"> Image 图片</label>
-                <label class="checkLabel"><input type="checkbox" id="useAudioMedia"> Audio 音频</label>
-                <label class="checkLabel"><input type="checkbox" id="useVideoMedia"> Video 视频</label>
-              </div>
-              <div id="mediaEditors" class="mediaEditors"></div>
-            </section>
-
-            <section class="formBlock">
-              <div class="sectionHeader compact">
-                <div>
-                  <h2>Play Metadata</h2>
-                  <p>标签用于搜索，氛围和场景用于后续组局推荐。</p>
-                </div>
-              </div>
-              <div class="formGrid">
-                <label>Tags <input name="tags" placeholder="moon,space,image-guess"></label>
-                <label>Moods <select name="mood" id="formMood" multiple></select></label>
-                <label>Occasions <select name="occasion" id="formOccasion" multiple></select></label>
-              </div>
-            </section>
-          </form>
-          <textarea id="jsonEditor" spellcheck="false"></textarea>
-          <p class="hint">保存后运行 Run Check，校验并重建索引。</p>
-        </section>
-
-        <section id="mediaView" class="view">
-          <div class="sectionHeader">
-            <div>
-              <h2>Media Library</h2>
-              <p>媒体文件本体保留在本地，Git 只维护元数据。</p>
-            </div>
-          </div>
-          <div id="mediaList" class="mediaList"></div>
-        </section>
-
-        <section id="settingsView" class="view">
-          <div class="settingsGrid">
-            <section class="formBlock">
-              <h2>Categories</h2>
-              <p class="hint">分类用于题目知识领域筛选，点号代表下一层筛选。</p>
-              <div id="categoryTree" class="taxonomyTree"></div>
-            </section>
-            <section class="formBlock">
-              <h2>Answer Types</h2>
-              <p class="hint">题型只表达玩家如何作答，不表达猜图、听音频等内容玩法。</p>
-              <div id="formatList" class="taxonomyList"></div>
-            </section>
-            <section class="formBlock">
-              <h2>Moods</h2>
-              <p class="hint">Mood 描述题目的感觉，适合趣味答题而不是考试难度。</p>
-              <div id="moodList" class="taxonomyList"></div>
-            </section>
-            <section class="formBlock">
-              <h2>Occasions</h2>
-              <p class="hint">Occasion 描述使用场景，方便以后按聚会、直播、课堂热身组题。</p>
-              <div id="occasionList" class="taxonomyList"></div>
-            </section>
-          </div>
-        </section>
-
-        <section id="checkView" class="view">
-          <div class="sectionHeader">
-            <div>
-              <h2>Maintenance Output</h2>
-              <p>Runs validate, tag lint, duplicate check, and index build.</p>
-            </div>
-          </div>
-          <pre id="checkOutput">Run Check to see output.</pre>
-        </section>
+  <body data-page="home" data-title="Home" data-subtitle="Choose the task you want to do next.">
+    <div id="pageActions">
+      <button id="refreshButton" type="button">Refresh</button>
+      <a class="buttonLink" href="/maintenance/">Run Check</a>
+    </div>
+    <section id="pageContent" class="pageContent">
+      <section class="quickActions">
+        <a class="taskButton" href="/editor/">
+          <strong>Create Question</strong>
+          <span>表单新建一道中英文题目</span>
+        </a>
+        <a class="taskButton" href="/questions/">
+          <strong>Browse Library</strong>
+          <span>搜索、筛选、预览和选择题目</span>
+        </a>
+        <a class="taskButton" href="/slides/">
+          <strong>Build Slides</strong>
+          <span>生成一题一页的 HTML 演示</span>
+        </a>
+        <a class="taskButton" href="/media/">
+          <strong>Manage Media</strong>
+          <span>查看本地图片、音频、视频元数据</span>
+        </a>
       </section>
-    </main>
-    <script type="module" src="/app.js"></script>
+      <section class="guidePanel">
+        <h2>Recommended Flow</h2>
+        <div class="flowSteps">
+          <span>Find or create</span>
+          <span>Edit bilingual content</span>
+          <span>Preview one question</span>
+          <span>Select for slides</span>
+          <span>Export HTML</span>
+        </div>
+        <p>题库维护按任务分流：找题在 Question Library，新建/编辑在 Question Editor，生成演示在 Slide Generator，分类和题型在 Settings。</p>
+      </section>
+    </section>
+    <script type="module" src="/home.js"></script>
   </body>
 </html>

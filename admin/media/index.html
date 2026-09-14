@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Media Library - Wan Ti Wang</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body data-page="media" data-title="Media Library" data-subtitle="Inspect local media metadata. Uploaded files stay outside Git.">
+    <div id="pageActions">
+      <a class="buttonLink" href="/editor/">Add Media From Editor</a>
+    </div>
+    <section id="pageContent" class="pageContent">
+      <div class="sectionHeader">
+        <div>
+          <h2>Local Media</h2>
+          <p>媒体文件本体在本地 media/，题目只保存稳定的媒体 ID。</p>
+        </div>
+        <p id="mediaCount" class="hint">Loading...</p>
+      </div>
+      <div id="mediaList" class="mediaList"></div>
+    </section>
+    <script type="module" src="/media/app.js"></script>
+  </body>
+</html>

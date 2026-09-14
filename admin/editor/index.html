@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Question Editor - Wan Ti Wang</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body data-page="editor" data-title="Question Editor" data-subtitle="Create or edit one bilingual question. Nothing is saved until Save is clicked.">
+    <div id="pageActions">
+      <button id="saveButton" type="button">Save</button>
+      <a class="buttonLink" href="/questions/">Back to Library</a>
+    </div>
+    <section id="pageContent" class="pageContent">
+      <div class="sectionHeader">
+        <div>
+          <p id="editorMeta">New draft. ID will be generated when saved.</p>
+        </div>
+        <div class="actions">
+          <button id="formModeButton" type="button">Form</button>
+          <button id="jsonModeButton" type="button">JSON</button>
+          <button id="formatButton" type="button">Format JSON</button>
+        </div>
+      </div>
+      <form id="questionForm" class="questionForm">
+        <section class="formBlock">
+          <div class="sectionHeader compact">
+            <div>
+              <h2>Basics</h2>
+              <p>先定玩家如何作答、题目归属和发布状态。</p>
+            </div>
+          </div>
+          <div class="formGrid">
+            <label>Answer type <select name="type" id="formType"></select></label>
+            <label>Category <select name="category" id="formCategory"></select></label>
+            <label>Status
+              <select name="status">
+                <option value="draft">draft</option>
+                <option value="review">review</option>
+                <option value="published">published</option>
+                <option value="deprecated">deprecated</option>
+              </select>
+            </label>
+            <label>Topic file <input name="topic" placeholder="mixed"></label>
+            <label>Play time <input name="play_time_sec" type="number" min="1" value="20"></label>
+            <label>Answer <input name="answer" placeholder="A or A,B"></label>
+          </div>
+        </section>
+        <section class="formBlock">
+          <div class="sectionHeader compact">
+            <div>
+              <h2>Bilingual Content</h2>
+              <p>每道题都需要中文和英文版本。</p>
+            </div>
+          </div>
+          <div class="localizedGrid">
+            <label>Title zh-CN <input name="title_zh" required></label>
+            <label>Title en-US <input name="title_en" required></label>
+            <label>Prompt zh-CN <textarea name="prompt_zh" required></textarea></label>
+            <label>Prompt en-US <textarea name="prompt_en" required></textarea></label>
+            <label>Reveal zh-CN <textarea name="reveal_zh" required></textarea></label>
+            <label>Reveal en-US <textarea name="reveal_en" required></textarea></label>
+            <label>Fun fact zh-CN <textarea name="fun_fact_zh"></textarea></label>
+            <label>Fun fact en-US <textarea name="fun_fact_en"></textarea></label>
+          </div>
+        </section>
+        <section class="formBlock">
+          <div class="sectionHeader compact">
+            <div>
+              <h2>Options</h2>
+              <p>单选、多选、判断使用选项 ID 作为答案。</p>
+            </div>
+            <button id="addOptionButton" type="button">Add Option</button>
+          </div>
+          <div id="optionsEditor" class="optionsEditor"></div>
+        </section>
+        <section class="formBlock">
+          <div class="sectionHeader compact">
+            <div>
+              <h2>Media</h2>
+              <p>勾选后选择已有媒体，或在点击 Save 时上传本地文件。</p>
+            </div>
+          </div>
+          <div class="mediaToggles">
+            <label class="checkLabel"><input type="checkbox" id="useImageMedia"> Image 图片</label>
+            <label class="checkLabel"><input type="checkbox" id="useAudioMedia"> Audio 音频</label>
+            <label class="checkLabel"><input type="checkbox" id="useVideoMedia"> Video 视频</label>
+          </div>
+          <div id="mediaEditors" class="mediaEditors"></div>
+        </section>
+        <section class="formBlock">
+          <div class="sectionHeader compact">
+            <div>
+              <h2>Play Metadata</h2>
+              <p>标签用于搜索，氛围和场景用于趣味组题。</p>
+            </div>
+          </div>
+          <div class="formGrid">
+            <label>Tags <input name="tags" placeholder="moon,space,image-guess"></label>
+            <label>Moods <select name="mood" id="formMood" multiple></select></label>
+            <label>Occasions <select name="occasion" id="formOccasion" multiple></select></label>
+          </div>
+        </section>
+      </form>
+      <textarea id="jsonEditor" spellcheck="false"></textarea>
+      <p id="saveStatus" class="hint">Changes stay local until Save is clicked.</p>
+    </section>
+    <script type="module" src="/editor/app.js"></script>
+  </body>
+</html>

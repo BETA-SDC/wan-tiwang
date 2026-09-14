@@ -97,6 +97,13 @@ body {
 .workspace {
   min-width: 0;
 }
+.pageContent {
+  min-width: 0;
+  padding: 18px;
+}
+.standaloneContent {
+  padding: 0;
+}
 .workspaceHeader {
   min-height: 72px;
   display: flex;
@@ -114,6 +121,12 @@ body {
 .workspaceHeader p {
   margin: 2px 0 0;
   color: var(--muted);
+}
+.breadcrumb {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
 }
 .quickActions {
   display: grid;
@@ -195,18 +208,8 @@ button:hover,
   color: white;
 }
 #saveButton:hover, #checkButton:hover, #formModeButton.active:hover, #jsonModeButton.active:hover { background: var(--accent-dark); }
-.topbar {
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
-.topbar h1, .topbar p, h2, p { margin: 0; }
-.topbar h1 { font-size: 18px; }
-.topbar p, .sectionHeader p, .hint { color: var(--muted); }
+h2, p { margin: 0; }
+.sectionHeader p, .hint { color: var(--muted); }
 .actions { display: flex; gap: 8px; }
 .inlineControl {
   display: inline-flex;
@@ -475,6 +478,37 @@ textarea {
   gap: 12px;
 }
 .questionTitle strong { overflow-wrap: anywhere; }
+.questionTitleLink {
+  color: var(--text);
+  text-decoration: none;
+}
+.questionTitleLink:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+.statusText {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.emptyState {
+  padding: 36px 18px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  text-align: center;
+}
+.noticePanel {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+}
+.noticePanel p {
+  color: var(--muted);
+}
 .meta, .tags {
   display: flex;
   flex-wrap: wrap;
@@ -634,7 +668,6 @@ textarea {
 body.presenting {
   background: #101828;
 }
-body.presenting .topbar,
 body.presenting .standaloneLayout > .panel,
 body.presenting .standaloneLayout .sectionHeader,
 body.presenting .questionPicker {
@@ -712,13 +745,6 @@ pre {
   .toolbarPanel {
     grid-template-columns: 1fr;
   }
-  .topbar {
-    height: auto;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-  }
   .standaloneLayout { grid-template-columns: 1fr; }
   .sectionHeader { flex-direction: column; }
   .formGrid,
@@ -742,7 +768,6 @@ pre {
   body {
     background: white;
   }
-  .topbar,
   .sectionHeader,
   .questionSlide.activeSlide {
     display: none;

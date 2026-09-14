@@ -12,8 +12,13 @@ This repository stores question data, taxonomy definitions, media metadata, gene
 
 ```text
 admin/         Local browser-based management UI
-  index.html   Task-based admin shell and question library/editor views
-  shared/      Browser-side shared API, i18n, media, and question rendering
+  index.html   Home dashboard
+  shared/      Shared app shell, API, i18n, media, and question rendering
+  questions/   Question library
+  editor/      Question editor
+  media/       Media library
+  settings/    Taxonomy reference
+  maintenance/Repository checks
   slides/      Standalone slide generator page and app
   question/    Standalone single-question preview page and app
 data/          Versioned question-bank data and definitions
@@ -32,8 +37,13 @@ skills/        AI assistant instructions for this repository
 
 ```text
 admin/         本地浏览器管理界面
-  index.html   按任务组织的管理台壳层、题库和编辑器
-  shared/      浏览器端共享 API、中英文、媒体和题目渲染逻辑
+  index.html   首页任务总览
+  shared/      共享应用壳层、API、中英文、媒体和题目渲染逻辑
+  questions/   题库浏览和筛选
+  editor/      题目编辑器
+  media/       媒体库
+  settings/    分类和受控词表
+  maintenance/仓库检查
   slides/      独立题目可视化生成器页面和逻辑
   question/    独立单题预览页面和逻辑
 data/          进入 Git 的题库数据和定义

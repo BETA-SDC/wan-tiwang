@@ -42,6 +42,21 @@ The navigation is intentionally task-based. Filtering belongs to `Question Libra
 
 导航按任务划分：筛选只放在 `Question Library`，分类和答题类型定义放在 `Settings`，演示稿组装放在 `Slide Generator`。
 
+Every feature is a separate page with the same navigation shell. Use the left navigation to move between major areas, `Back to Library` on a question preview/editor when returning to the question list, and `Back to Home` on standalone areas. The browser URL is also a stable entry point:
+
+每个功能都是独立页面，并共享同一套导航壳层。单题预览和编辑器使用 `Back to Library` 返回题库，其他独立功能使用 `Back to Home`；浏览器地址本身也是稳定入口：
+
+```text
+/                 Home
+/questions/       Question Library
+/editor/          Question Editor
+/question/?id=   Single question preview
+/slides/          Slide Generator
+/media/            Media Library
+/settings/         Settings
+/maintenance/     Maintenance
+```
+
 ## Save Flow
 
 1. Create or edit a question in `Editor`.

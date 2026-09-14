@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maintenance - Wan Ti Wang</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body data-page="maintenance" data-title="Maintenance" data-subtitle="Validate data, lint tags, detect duplicates, and rebuild indexes.">
+    <div id="pageActions">
+      <button id="runCheckButton" type="button">Run Check</button>
+    </div>
+    <section id="pageContent" class="pageContent">
+      <section class="noticePanel">
+        <h2>Repository Maintenance</h2>
+        <p>这一步不会修改题目内容，只会检查结构、标签、重复题并重建索引。</p>
+      </section>
+      <pre id="checkOutput">Ready to run.</pre>
+    </section>
+    <script type="module" src="/maintenance/app.js"></script>
+  </body>
+</html>

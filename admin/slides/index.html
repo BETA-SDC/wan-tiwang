@@ -3,82 +3,77 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Wan Ti Wang Slides</title>
+    <title>Slide Generator - Wan Ti Wang</title>
     <link rel="stylesheet" href="/styles.css">
   </head>
-  <body>
-    <header class="topbar">
-      <div>
-        <h1>Slide Generator</h1>
-        <p>题目可视化生成器</p>
+  <body data-page="slides" data-title="Slide Generator" data-subtitle="Assemble and export one-question-per-slide HTML decks." data-back="/questions/" data-back-label="Back to Library">
+    <div id="pageActions">
+      <button id="buildSlidesButton" type="button">Build Preview</button>
+      <button id="exportSlidesButton" type="button">Export HTML</button>
+    </div>
+    <section id="pageContent" class="pageContent standaloneContent">
+      <div class="standaloneLayout">
+        <aside class="panel">
+          <h2>Deck Settings</h2>
+          <label>Deck title <input id="deckTitle" value="Wan Ti Wang Slides"></label>
+          <label>Question source
+            <select id="slideSource">
+              <option value="selected">Selected from Library</option>
+              <option value="filtered">Search results</option>
+              <option value="all">All questions</option>
+            </select>
+          </label>
+          <label>Search <input id="slideSearch" type="search" placeholder="id, title, tag, keyword"></label>
+          <label>Count <input id="slideCount" type="number" min="1" max="100" value="10"></label>
+          <label>Language
+            <select id="slideLocale">
+              <option value="zh-CN">zh-CN</option>
+              <option value="en-US">en-US</option>
+              <option value="bilingual">Bilingual 双语</option>
+            </select>
+          </label>
+          <label>Reveal
+            <select id="slideRevealMode">
+              <option value="hidden">Hidden until show</option>
+              <option value="inline">Inline on each slide</option>
+            </select>
+          </label>
+          <div class="actions stackedActions">
+            <button id="shuffleSlidesButton" type="button">Shuffle Preview</button>
+            <button id="presentSlidesButton" type="button">Present</button>
+            <button id="printSlidesButton" type="button">Print Preview</button>
+          </div>
+          <div id="exportStatus" class="exportResult">Only Export HTML writes a file.</div>
+        </aside>
+        <section class="content">
+          <div class="sectionHeader">
+            <div>
+              <h2>Question Picker</h2>
+              <p id="pickerStatus">Loading questions...</p>
+            </div>
+            <div class="actions">
+              <button id="selectAllButton" type="button">Select Shown</button>
+              <button id="clearSelectionButton" type="button">Clear</button>
+            </div>
+          </div>
+          <div id="slideQuestionPicker" class="questionPicker"></div>
+          <div class="sectionHeader slidePreviewHeader">
+            <div>
+              <h2>Preview</h2>
+              <p id="slideStatus">No slides yet.</p>
+            </div>
+            <div class="actions">
+              <button id="prevSlideButton" type="button">Previous</button>
+              <button id="nextSlideButton" type="button">Next</button>
+              <button id="toggleRevealButton" type="button">Show Reveal</button>
+            </div>
+          </div>
+          <div class="slideStage">
+            <div id="slideDeck" class="slideDeck"></div>
+          </div>
+        </section>
       </div>
-      <div class="actions">
-        <a class="buttonLink" href="/">Admin</a>
-        <button id="buildSlidesButton" type="button">Build Preview</button>
-        <button id="exportSlidesButton" type="button">Export HTML</button>
-      </div>
-    </header>
-    <main class="standaloneLayout">
-      <aside class="panel">
-        <h2>Deck Settings</h2>
-        <label>Deck title <input id="deckTitle" value="Wan Ti Wang Slides"></label>
-        <label>Question source
-          <select id="slideSource">
-            <option value="selected">Selected from Admin</option>
-            <option value="filtered">Filtered below</option>
-            <option value="all">All questions</option>
-          </select>
-        </label>
-        <label>Search <input id="slideSearch" type="search" placeholder="id, title, tag, keyword"></label>
-        <label>Count <input id="slideCount" type="number" min="1" max="100" value="10"></label>
-        <label>Language
-          <select id="slideLocale">
-            <option value="zh-CN">zh-CN</option>
-            <option value="en-US">en-US</option>
-            <option value="bilingual">Bilingual 双语</option>
-          </select>
-        </label>
-        <label>Reveal
-          <select id="slideRevealMode">
-            <option value="hidden">Hidden until show</option>
-            <option value="inline">Inline on each slide</option>
-          </select>
-        </label>
-        <div class="actions stackedActions">
-          <button id="shuffleSlidesButton" type="button">Shuffle Preview</button>
-          <button id="presentSlidesButton" type="button">Present</button>
-          <button id="printSlidesButton" type="button">Print Preview</button>
-        </div>
-        <div id="exportStatus" class="exportResult">Export writes an HTML file under exports/slides/.</div>
-      </aside>
-      <section class="content">
-        <div class="sectionHeader">
-          <div>
-            <h2>Question Picker</h2>
-            <p id="pickerStatus">Loading questions...</p>
-          </div>
-          <div class="actions">
-            <button id="selectAllButton" type="button">Select Shown</button>
-            <button id="clearSelectionButton" type="button">Clear</button>
-          </div>
-        </div>
-        <div id="slideQuestionPicker" class="questionPicker"></div>
-        <div class="sectionHeader slidePreviewHeader">
-          <div>
-            <h2>Preview</h2>
-            <p id="slideStatus">No slides yet.</p>
-          </div>
-          <div class="actions">
-            <button id="prevSlideButton" type="button">Previous</button>
-            <button id="nextSlideButton" type="button">Next</button>
-            <button id="toggleRevealButton" type="button">Show Reveal</button>
-          </div>
-        </div>
-        <div class="slideStage">
-          <div id="slideDeck" class="slideDeck"></div>
-        </div>
-      </section>
-    </main>
+    </section>
     <script type="module" src="/slides/app.js"></script>
   </body>
 </html>

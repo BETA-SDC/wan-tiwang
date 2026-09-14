@@ -326,7 +326,10 @@ function serveStatic(response, url) {
   let pathname = url.pathname === "/" ? "/index.html" : url.pathname;
   let root = adminRoot;
 
-  if (pathname.startsWith("/media/")) {
+  if (pathname === "/media" || pathname === "/media/") {
+    root = adminRoot;
+    pathname = "/media/";
+  } else if (pathname.startsWith("/media/")) {
     root = repoRoot;
     pathname = pathname.slice(1);
   } else if (pathname.startsWith("/exports/")) {

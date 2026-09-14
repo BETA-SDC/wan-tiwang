@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Settings - Wan Ti Wang</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body data-page="settings" data-title="Settings" data-subtitle="Review categories, answer types, moods, and occasions.">
+    <section id="pageContent" class="pageContent">
+      <div class="settingsGrid">
+        <section class="formBlock">
+          <h2>Categories</h2>
+          <p class="hint">知识领域分类，点号代表下一层筛选。</p>
+          <div id="categoryTree" class="taxonomyTree"></div>
+        </section>
+        <section class="formBlock">
+          <h2>Answer Types</h2>
+          <p class="hint">只表达玩家如何作答，不表达媒体玩法。</p>
+          <div id="formatList" class="taxonomyList"></div>
+        </section>
+        <section class="formBlock">
+          <h2>Moods</h2>
+          <p class="hint">描述题目的感觉，适合趣味答题。</p>
+          <div id="moodList" class="taxonomyList"></div>
+        </section>
+        <section class="formBlock">
+          <h2>Occasions</h2>
+          <p class="hint">描述适合的使用场景。</p>
+          <div id="occasionList" class="taxonomyList"></div>
+        </section>
+      </div>
+    </section>
+    <script type="module" src="/settings/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Question Library - Wan Ti Wang</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body data-page="library" data-title="Question Library" data-subtitle="Find, preview, edit, and select questions for a slide deck.">
+    <div id="pageActions">
+      <a class="buttonLink" href="/editor/">New Question</a>
+      <a class="buttonLink" href="/slides/">Open Slides</a>
+    </div>
+    <section id="pageContent" class="pageContent">
+      <section class="toolbarPanel">
+        <label>Search <input id="searchInput" type="search" placeholder="id, title, tag, keyword"></label>
+        <label>Category 分类层级 <div id="categoryLevels" class="categoryLevels"></div></label>
+        <label>Type <select id="typeFilter"></select></label>
+        <label>Status
+          <select id="statusFilter">
+            <option value="">All statuses</option>
+            <option value="draft">draft</option>
+            <option value="review">review</option>
+            <option value="published">published</option>
+            <option value="deprecated">deprecated</option>
+          </select>
+        </label>
+        <button id="applyFiltersButton" type="button">Apply Filters</button>
+      </section>
+      <div class="sectionHeader">
+        <div>
+          <h2>Questions</h2>
+          <p id="questionCount">Loading</p>
+        </div>
+        <div class="actions">
+          <button id="selectShownButton" type="button">Select Shown</button>
+          <button id="clearShownButton" type="button">Clear Shown</button>
+        </div>
+      </div>
+      <div id="questionList" class="questionList"></div>
+    </section>
+    <script type="module" src="/questions/app.js"></script>
+  </body>
+</html>

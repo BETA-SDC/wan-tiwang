@@ -1,6 +1,7 @@
 import { requestJson } from "../shared/api.js";
 import { localized } from "../shared/i18n.js";
 import { createQuestionSlide } from "../shared/question-view.js";
+import { mountAppShell } from "../shared/app-shell.js";
 
 const params = new URLSearchParams(location.search);
 const questionId = params.get("id");
@@ -12,6 +13,7 @@ const deck = document.querySelector("#questionPreviewDeck");
 const meta = document.querySelector("#questionMeta");
 const revealButton = document.querySelector("#toggleRevealButton");
 const localeSelect = document.querySelector("#questionLocale");
+const editLink = document.querySelector("#editQuestionLink");
 
 function render() {
   deck.replaceChildren();
@@ -28,6 +30,7 @@ function render() {
 }
 
 async function init() {
+  mountAppShell();
   if (!questionId) throw new Error("Missing question id.");
   const [questionResult, mediaResult] = await Promise.all([
     requestJson(`/api/questions/${encodeURIComponent(questionId)}`),
@@ -37,6 +40,7 @@ async function init() {
   media = mediaResult.media;
   document.title = `${localized(question.title)} - Wan Ti Wang`;
   meta.textContent = `${question.id} · ${question.category}`;
+  editLink.href = `/editor/?id=${encodeURIComponent(question.id)}`;
   render();
 }
 
