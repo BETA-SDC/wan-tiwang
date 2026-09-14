@@ -2,6 +2,8 @@
 
 Indexes are generated from `questions/` and `media-meta/`.
 
+索引文件由 `questions/` 和 `media-meta/` 自动生成，用于快速查找、筛选和随机抽题。
+
 Run:
 
 ```bash
@@ -9,3 +11,5 @@ npm run build:index
 ```
 
 Do not edit generated index files by hand.
+
+不要手动修改索引文件。新增或修改题目后，运行 `npm run build:index` 重新生成。
