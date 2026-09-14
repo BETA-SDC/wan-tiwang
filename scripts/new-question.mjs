@@ -4,7 +4,16 @@ import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { readJson, readJsonl, relativePath, repoRoot, walkFiles } from "./lib.mjs";
 
+function argValue(name) {
+  const index = process.argv.indexOf(name);
+  if (index === -1) return undefined;
+  return process.argv[index + 1];
+}
+
+const fromJsonSource = argValue("--from-json");
 const rl = readline.createInterface({ input, output });
+const queuedInput = !input.isTTY && fromJsonSource !== "-" ? fs.readFileSync(0, "utf8").split(/\r?\n/) : [];
+let inputEnded = false;
 
 const categories = readJson(path.join(repoRoot, "taxonomy/categories.json")).categories;
 const formats = readJson(path.join(repoRoot, "taxonomy/formats.json")).formats;
@@ -12,12 +21,6 @@ const moods = readJson(path.join(repoRoot, "taxonomy/moods.json")).moods;
 const occasions = readJson(path.join(repoRoot, "taxonomy/occasions.json")).occasions;
 const secondLevelCategories = categories.filter((category) => category.parent);
 const isDryRun = process.argv.includes("--dry-run");
-
-function argValue(name) {
-  const index = process.argv.indexOf(name);
-  if (index === -1) return undefined;
-  return process.argv[index + 1];
-}
 
 function slugify(value) {
   return value
@@ -36,6 +39,15 @@ function localized(zh, en) {
 
 async function ask(message, fallback = "") {
   const suffix = fallback ? ` (${fallback})` : "";
+  if (queuedInput.length > 0) {
+    const answer = queuedInput.shift().trim();
+    console.log(`${message}${suffix}: ${answer}`);
+    return answer || fallback;
+  }
+  if (!input.isTTY) {
+    inputEnded = true;
+    return fallback;
+  }
   const answer = await rl.question(`${message}${suffix}: `);
   return answer.trim() || fallback;
 }
@@ -44,6 +56,9 @@ async function askRequired(message) {
   while (true) {
     const answer = await ask(message);
     if (answer) return answer;
+    if (inputEnded) {
+      throw new Error(`${message} is required, but input ended.`);
+    }
     console.log("Required. Please enter a value.");
   }
 }
@@ -200,11 +215,10 @@ async function askOptions(type) {
 }
 
 async function main() {
-  const fromJson = argValue("--from-json");
   const targetFromArgs = argValue("--target");
 
-  if (fromJson) {
-    const inputQuestion = readQuestionFromJson(fromJson);
+  if (fromJsonSource) {
+    const inputQuestion = readQuestionFromJson(fromJsonSource);
     const question = normalizeQuestion(inputQuestion);
     writeQuestion(question, resolveTargetPath(inputQuestion, targetFromArgs));
     return;

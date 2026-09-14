@@ -6,6 +6,18 @@ Adding trivia by hand can become repetitive because every question needs IDs, ca
 
 ## Interactive Workflow
 
+Recommended entry:
+
+```bash
+npm run wtw
+```
+
+推荐入口：
+
+```bash
+npm run wtw
+```
+
 Run:
 
 ```bash

@@ -5,10 +5,13 @@
   "description": "A fun trivia question bank framework.",
   "type": "module",
   "scripts": {
+    "wtw": "node scripts/wtw.mjs",
+    "start": "node scripts/wtw.mjs",
     "new:question": "node scripts/new-question.mjs",
     "validate": "node scripts/validate.mjs",
     "build:index": "node scripts/build-index.mjs",
-    "sample": "node scripts/sample.mjs"
+    "sample": "node scripts/sample.mjs",
+    "stats": "node scripts/stats.mjs"
   },
   "engines": {
     "node": ">=18"

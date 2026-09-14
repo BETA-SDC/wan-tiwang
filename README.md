@@ -61,17 +61,26 @@ templates/     可复制的题目草稿模板
 
 ## Quick Start
 
+For everyday work, start here:
+
 ```bash
-npm run new:question
-npm run validate
-npm run build:index
-npm run sample -- --count 10
+npm run wtw
 ```
 
-The initial framework does not include concrete questions yet.
+日常操作只需要先记住这个入口：
 
-当前框架暂时不包含具体题目，可以先从少量示例题开始逐步扩充。
+```bash
+npm run wtw
+```
 
-For easier authoring, use `npm run new:question` to create a bilingual question interactively.
+The console groups common tasks into content creation, maintenance, play testing, and overview.
 
-为了降低手动维护成本，可以用 `npm run new:question` 交互式新增双语题目。
+控制台会把常用操作分成内容创作、维护发布、试玩检查和总览信息几类。
+
+This repository already includes a small bilingual sample set for trying the workflow.
+
+仓库里已经有少量双语样题，可以先用来测试流程。
+
+See [Command Guide](docs/command-guide.md) for the organized command structure.
+
+命令入口和分级说明见 [Command Guide](docs/command-guide.md)。
