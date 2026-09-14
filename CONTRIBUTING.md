@@ -27,7 +27,7 @@ Wan Ti Wang is optimized for fun trivia, not formal testing. Contributions shoul
 
 ## Data Workflow
 
-1. Add or update question JSONL files under `questions/`.
+1. Run `npm run new:question` or add question JSONL files under `questions/`.
 2. Add media metadata under `media-meta/` when a question references local media.
 3. Run `npm run validate`.
 4. Run `npm run build:index`.
@@ -35,7 +35,7 @@ Wan Ti Wang is optimized for fun trivia, not formal testing. Contributions shoul
 
 ## 中文数据流程
 
-1. 在 `questions/` 下新增或修改 JSONL 题目文件。
+1. 运行 `npm run new:question`，或在 `questions/` 下新增、修改 JSONL 题目文件。
 2. 如果题目引用本地媒体，在 `media-meta/` 中添加对应媒体元数据。
 3. 运行 `npm run validate` 检查格式和引用关系。
 4. 运行 `npm run build:index` 重新生成索引。

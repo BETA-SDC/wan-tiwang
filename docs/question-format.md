@@ -4,6 +4,10 @@ Questions are stored as JSON Lines files under `questions/`. Each line is one JS
 
 题目保存在 `questions/` 目录下，采用 JSON Lines 格式。每一行是一道完整题目，方便追加、审阅和 Git diff。
 
+Use `npm run new:question` for most new entries. It generates the bilingual structure, question ID, and target JSONL line automatically.
+
+大多数新增题目建议使用 `npm run new:question`。脚本会自动生成双语结构、题目 ID 和目标 JSONL 行。
+
 Every question must provide both Chinese and English text for player-facing fields.
 
 每道题都必须提供中文和英文版本。玩家可见文本统一使用 `{ "zh-CN": "...", "en-US": "..." }`。

@@ -1,0 +1,43 @@
+{
+  "type": "true_false",
+  "category": "general.weird-facts",
+  "topic": "mixed",
+  "title": {
+    "zh-CN": "中文卡片标题",
+    "en-US": "English card title"
+  },
+  "prompt": {
+    "zh-CN": "判断真假：中文题干。",
+    "en-US": "True or false: English prompt."
+  },
+  "options": [
+    {
+      "id": "T",
+      "text": {
+        "zh-CN": "真的",
+        "en-US": "True"
+      }
+    },
+    {
+      "id": "F",
+      "text": {
+        "zh-CN": "假的",
+        "en-US": "False"
+      }
+    }
+  ],
+  "answer": ["T"],
+  "reveal": {
+    "zh-CN": "中文答案揭晓说明。",
+    "en-US": "English reveal text."
+  },
+  "fun_fact": {
+    "zh-CN": "中文趣味补充。",
+    "en-US": "English fun fact."
+  },
+  "tags": ["example"],
+  "mood": ["easygoing"],
+  "occasion": ["daily"],
+  "play_time_sec": 20,
+  "status": "draft"
+}

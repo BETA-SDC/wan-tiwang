@@ -1,0 +1,57 @@
+{
+  "type": "single_choice",
+  "category": "science.astronomy",
+  "topic": "space-trivia",
+  "title": {
+    "zh-CN": "中文卡片标题",
+    "en-US": "English card title"
+  },
+  "prompt": {
+    "zh-CN": "中文题干？",
+    "en-US": "English prompt?"
+  },
+  "options": [
+    {
+      "id": "A",
+      "text": {
+        "zh-CN": "中文选项 A",
+        "en-US": "English option A"
+      }
+    },
+    {
+      "id": "B",
+      "text": {
+        "zh-CN": "中文选项 B",
+        "en-US": "English option B"
+      }
+    },
+    {
+      "id": "C",
+      "text": {
+        "zh-CN": "中文选项 C",
+        "en-US": "English option C"
+      }
+    },
+    {
+      "id": "D",
+      "text": {
+        "zh-CN": "中文选项 D",
+        "en-US": "English option D"
+      }
+    }
+  ],
+  "answer": ["A"],
+  "reveal": {
+    "zh-CN": "中文答案揭晓说明。",
+    "en-US": "English reveal text."
+  },
+  "fun_fact": {
+    "zh-CN": "中文趣味补充。",
+    "en-US": "English fun fact."
+  },
+  "tags": ["example"],
+  "mood": ["easygoing"],
+  "occasion": ["daily"],
+  "play_time_sec": 20,
+  "status": "draft"
+}

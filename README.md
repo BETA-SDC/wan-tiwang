@@ -21,6 +21,7 @@ packs/         Reusable quiz packs and themed rounds
 playlists/     Feed-like content lists for apps
 indexes/       Generated lookup indexes
 scripts/       Validation, indexing, and sampling utilities
+templates/     Copyable question draft templates
 ```
 
 ```text
@@ -34,6 +35,7 @@ packs/         可复用题包和主题局
 playlists/     面向应用首页或推荐流的列表
 indexes/       自动生成的快速查询索引
 scripts/       校验、索引构建和随机抽题脚本
+templates/     可复制的题目草稿模板
 ```
 
 ## Design Principles
@@ -60,6 +62,7 @@ scripts/       校验、索引构建和随机抽题脚本
 ## Quick Start
 
 ```bash
+npm run new:question
 npm run validate
 npm run build:index
 npm run sample -- --count 10
@@ -68,3 +71,7 @@ npm run sample -- --count 10
 The initial framework does not include concrete questions yet.
 
 当前框架暂时不包含具体题目，可以先从少量示例题开始逐步扩充。
+
+For easier authoring, use `npm run new:question` to create a bilingual question interactively.
+
+为了降低手动维护成本，可以用 `npm run new:question` 交互式新增双语题目。
