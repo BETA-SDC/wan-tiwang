@@ -59,12 +59,16 @@ Manual workflow:
 3. Reference the media ID from the question.
 4. Run `npm run wtw -- check`.
 
+For AI-assisted media question drafting, use [data/templates/ai-media-question-pack.json](../data/templates/ai-media-question-pack.json). It keeps local files, media metadata, and question drafts separate so humans can review source and license before import.
+
 中文流程：
 
 1. 把本地媒体文件放到 `media/`。
 2. 在 `data/media-meta/images.jsonl`、`data/media-meta/audio.jsonl` 或 `data/media-meta/video.jsonl` 里新增一行元数据。
 3. 在题目里引用这个媒体 ID。
 4. 运行 `npm run wtw -- check`。
+
+AI 辅助生成媒体题时，可以使用 [data/templates/ai-media-question-pack.json](../data/templates/ai-media-question-pack.json)。这个模板把本地文件、媒体元数据和题目草稿分开，方便人工先审核来源和许可，再导入题目。
 
 Media metadata example:
 

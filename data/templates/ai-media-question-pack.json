@@ -1,0 +1,164 @@
+{
+  "media_files_to_place_locally": [
+    {
+      "kind": "image",
+      "suggested_relative_path": "media/images/science/astronomy/moon-surface-001.webp",
+      "note": "Put the actual local file here before importing the question. This file is ignored by Git."
+    }
+  ],
+  "media_metadata_jsonl": [
+    {
+      "id": "img-science-astronomy-moon-surface-001",
+      "type": "image",
+      "path": "media/images/science/astronomy/moon-surface-001.webp",
+      "thumbnail": "media/thumbnails/img-science-astronomy-moon-surface-001.webp",
+      "title": "Moon Surface",
+      "alt": "Moon surface photo with visible craters",
+      "source": {
+        "type": "local",
+        "url": "",
+        "license": "unknown",
+        "note": "Replace with real source and license before review."
+      },
+      "tags": ["moon", "space", "astronomy", "image-guess"],
+      "status": "draft"
+    }
+  ],
+  "question_drafts": [
+    {
+      "type": "single_choice",
+      "category": "science.astronomy",
+      "topic": "space-trivia",
+      "difficulty": "easy",
+      "title": {
+        "zh-CN": "这是谁家的表面",
+        "en-US": "Whose Surface Is This?"
+      },
+      "prompt": {
+        "zh-CN": "这张图片最可能展示的是哪个天体的表面？",
+        "en-US": "Which celestial body's surface is most likely shown in this image?"
+      },
+      "media": [
+        {
+          "id": "img-science-astronomy-moon-surface-001",
+          "role": "question",
+          "kind": "image",
+          "hint": {
+            "zh-CN": "月球表面照片",
+            "en-US": "moon surface photo"
+          }
+        }
+      ],
+      "options": [
+        {
+          "id": "A",
+          "text": {
+            "zh-CN": "月球",
+            "en-US": "The Moon"
+          }
+        },
+        {
+          "id": "B",
+          "text": {
+            "zh-CN": "木星",
+            "en-US": "Jupiter"
+          }
+        },
+        {
+          "id": "C",
+          "text": {
+            "zh-CN": "太阳",
+            "en-US": "The Sun"
+          }
+        },
+        {
+          "id": "D",
+          "text": {
+            "zh-CN": "土星环",
+            "en-US": "Saturn's rings"
+          }
+        }
+      ],
+      "answer": ["A"],
+      "reveal": {
+        "zh-CN": "图中可见大量撞击坑，最符合月球表面的典型特征。",
+        "en-US": "The many visible impact craters best match the typical appearance of the Moon's surface."
+      },
+      "fun_fact": {
+        "zh-CN": "月球没有像地球那样活跃的风雨侵蚀，所以许多撞击坑能保存很久。",
+        "en-US": "The Moon lacks Earth's active wind and rain erosion, so many impact craters remain visible for a long time."
+      },
+      "tags": ["moon", "space", "image-guess"],
+      "mood": ["surprising"],
+      "occasion": ["daily", "party"],
+      "play_time_sec": 25,
+      "status": "draft"
+    },
+    {
+      "type": "single_choice",
+      "category": "history.world-history",
+      "topic": "image-options",
+      "difficulty": "medium",
+      "title": {
+        "zh-CN": "哪张图是正确选项",
+        "en-US": "Which Image Is the Correct Option?"
+      },
+      "prompt": {
+        "zh-CN": "根据题干线索，选择正确的图片选项。",
+        "en-US": "Choose the correct image option based on the clue."
+      },
+      "options": [
+        {
+          "id": "A",
+          "text": {
+            "zh-CN": "选项 A",
+            "en-US": "Option A"
+          },
+          "media": [
+            {
+              "id": "img-history-world-history-example-option-a-001",
+              "role": "option",
+              "kind": "image",
+              "hint": {
+                "zh-CN": "图片选项 A",
+                "en-US": "image option A"
+              }
+            }
+          ]
+        },
+        {
+          "id": "B",
+          "text": {
+            "zh-CN": "选项 B",
+            "en-US": "Option B"
+          },
+          "media": [
+            {
+              "id": "img-history-world-history-example-option-b-001",
+              "role": "option",
+              "kind": "image",
+              "hint": {
+                "zh-CN": "图片选项 B",
+                "en-US": "image option B"
+              }
+            }
+          ]
+        }
+      ],
+      "answer": ["A"],
+      "reveal": {
+        "zh-CN": "正确图片是 A。导入前请把示例媒体 ID 替换成真实登记过的媒体 ID。",
+        "en-US": "The correct image is A. Replace the example media IDs with real registered media IDs before import."
+      },
+      "fun_fact": {
+        "zh-CN": "当图片本身就是选项时，媒体引用要放在 options[].media 里。",
+        "en-US": "When the image itself is an option, put the media reference in options[].media."
+      },
+      "tags": ["image-option", "visual-quiz"],
+      "mood": ["surprising"],
+      "occasion": ["party", "challenge"],
+      "play_time_sec": 35,
+      "status": "draft"
+    }
+  ]
+}

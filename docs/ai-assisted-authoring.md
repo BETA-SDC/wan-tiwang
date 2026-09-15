@@ -248,21 +248,77 @@ AI should not invent media paths. For media questions, provide the local relativ
 
 AI 不应该凭空编造媒体路径。媒体题需要先提供本地相对路径、媒体类型、来源和许可信息。
 
+Use [data/templates/ai-media-question-pack.json](../data/templates/ai-media-question-pack.json) when asking another AI to draft media-backed questions. It shows three separate parts:
+
+- `media_files_to_place_locally`: where the real ignored media files should be placed under `media/`.
+- `media_metadata_jsonl`: metadata lines to review and append to `data/media-meta/images.jsonl`, `audio.jsonl`, or `video.jsonl`.
+- `question_drafts`: question JSON objects that reference the registered media IDs.
+
+让其他 AI 生成媒体题时，建议使用 [data/templates/ai-media-question-pack.json](../data/templates/ai-media-question-pack.json)。它分成三部分：
+
+- `media_files_to_place_locally`：真实媒体文件应该放到 `media/` 下哪里。
+- `media_metadata_jsonl`：审核后追加到 `data/media-meta/images.jsonl`、`audio.jsonl` 或 `video.jsonl` 的元数据。
+- `question_drafts`：引用这些媒体 ID 的题目草稿。
+
+Do not import the whole media pack JSON directly with `--from-json`. The importer expects question objects only. First register media metadata, then import only the `question_drafts` array as a separate JSON file.
+
+不要把整个 media pack JSON 直接用 `--from-json` 导入。导入器只接收题目对象。请先登记媒体元数据，再把 `question_drafts` 单独保存成 JSON 数组导入。
+
 Recommended order:
 
 1. Put the file under `media/`.
 2. Ask AI to draft the `data/media-meta/*.jsonl` line.
 3. Review source and license.
-4. Ask AI to add the question referencing the `media_id`.
-5. Run `npm run wtw -- check`.
+4. Append reviewed metadata to the correct `data/media-meta/*.jsonl` file.
+5. Ask AI to add the question referencing the `media_id`, or save `question_drafts` as a question batch JSON.
+6. Run `npm run new:question -- --from-json <question-batch>.json --dry-run`.
+7. If the dry run is correct, import it without `--dry-run`.
+8. Run `npm run wtw -- check`.
 
 推荐顺序：
 
 1. 将文件放入 `media/`。
 2. 让 AI 生成 `data/media-meta/*.jsonl` 元数据行。
 3. 人工检查来源和许可。
-4. 让 AI 生成引用该 `media_id` 的题目。
-5. 运行 `npm run wtw -- check`。
+4. 把审核后的元数据追加到对应的 `data/media-meta/*.jsonl`。
+5. 让 AI 生成引用该 `media_id` 的题目，或把 `question_drafts` 单独保存成题目批量 JSON。
+6. 先运行 `npm run new:question -- --from-json <question-batch>.json --dry-run`。
+7. 试运行无误后，去掉 `--dry-run` 正式导入。
+8. 运行 `npm run wtw -- check`。
+
+Use question-level `media` when the media is shared prompt material, such as “listen to this audio and answer.” Use `options[].media` when the media belongs to a specific answer option, such as “which image is correct?”
+
+题干共用材料使用题目级 `media`，例如“听这段音频回答”。如果媒体属于某个选项本身，例如“哪张图片正确”，则使用 `options[].media`。
+
+Copyable media prompt:
+
+可复制媒体题提示词：
+
+```text
+You are drafting media-backed questions for Wan Ti Wang.
+
+Return exactly one valid JSON object with:
+- media_files_to_place_locally
+- media_metadata_jsonl
+- question_drafts
+
+Rules:
+- Do not invent real source/license details. Use license "unknown" if not provided.
+- All media paths must be relative paths under media/.
+- Media IDs must be stable English slugs, prefixed by img-, aud-, vid-, or thumb-.
+- Question drafts must not include id.
+- Every player-facing text must have zh-CN and en-US.
+- If media is part of the prompt, put it in question.media with role "question".
+- If media is an answer option, put it in options[].media with role "option".
+- Use tags such as image-guess, image-option, listen-and-guess, watch-and-answer.
+- Keep status "draft".
+
+Media files I will provide:
+<list file names, media kind, rough topic, source/license if known>
+
+Question count:
+<number>
+```
 
 ## Guardrails
 
