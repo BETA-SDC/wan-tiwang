@@ -13,8 +13,8 @@ function sendResult(response, result, fallbackStatus = 200) {
   return sendJson(response, fallbackStatus, result);
 }
 
-function route(method, path, handler, status) {
-  return { method, path, handler, status };
+function route(method, path, handler, options = {}) {
+  return { method, path, handler, ...options };
 }
 
 const routes = [
@@ -30,8 +30,8 @@ const routes = [
     decodeURIComponent(params[1]),
     body
   )),
-  route("POST", "/api/check", () => runMaintenance(), 200),
-  route("POST", "/api/feedback/import", ({ body }) => importFeedback(body), 200)
+  route("POST", "/api/check", () => runMaintenance(), { status: 200, body: false }),
+  route("POST", "/api/feedback/import", ({ body }) => importFeedback(body), { status: 200 })
 ];
 
 function matchRoute(request, url) {
@@ -47,7 +47,9 @@ export function createApiHandler({ maxRequestBytes }) {
     if (!selected) return sendJson(response, 404, { error: "API route not found." });
 
     const params = typeof selected.path === "string" ? [] : url.pathname.match(selected.path);
-    const body = ["POST", "PUT", "PATCH"].includes(request.method)
+    const body = selected.body === false
+      ? undefined
+      : ["POST", "PUT", "PATCH"].includes(request.method)
       ? await readJsonBody(request, maxRequestBytes)
       : undefined;
     const result = await selected.handler({ body, params, request, response, url });
