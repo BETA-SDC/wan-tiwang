@@ -147,19 +147,27 @@ export function standaloneDeckHtml(questions, media, options = {}) {
     const slides = [...document.querySelectorAll(".questionSlide")];
     let current = 0;
     let reveal = ${options.revealMode === "inline" ? "true" : "false"};
+    const revealMode = ${JSON.stringify(options.revealMode || "hidden")};
+    function move(delta) {
+      const next = Math.max(0, Math.min(slides.length - 1, current + delta));
+      if (next !== current && revealMode === "auto_hide") reveal = false;
+      current = next;
+      render();
+    }
     function render() {
       slides.forEach((slide, index) => slide.classList.toggle("active", index === current));
       document.querySelector("#status").textContent = slides.length ? String(current + 1) + " / " + slides.length : "0 / 0";
-      document.querySelector("#reveal").textContent = reveal ? "Hide Reveal" : "Show Reveal";
+      document.querySelector("#reveal").disabled = revealMode === "inline";
+      document.querySelector("#reveal").textContent = revealMode === "inline" ? "Reveal Inline" : reveal ? "Hide Reveal" : "Show Reveal";
       const activeReveal = slides[current]?.querySelector(".slideReveal");
       if (activeReveal && ${options.revealMode === "inline" ? "false" : "true"}) activeReveal.classList.toggle("hidden", !reveal);
     }
-    document.querySelector("#prev").addEventListener("click", () => { current = Math.max(0, current - 1); render(); });
-    document.querySelector("#next").addEventListener("click", () => { current = Math.min(slides.length - 1, current + 1); render(); });
+    document.querySelector("#prev").addEventListener("click", () => move(-1));
+    document.querySelector("#next").addEventListener("click", () => move(1));
     document.querySelector("#reveal").addEventListener("click", () => { reveal = !reveal; render(); });
     document.addEventListener("keydown", (event) => {
-      if (event.key === "ArrowLeft") { current = Math.max(0, current - 1); render(); }
-      if (event.key === "ArrowRight") { current = Math.min(slides.length - 1, current + 1); render(); }
+      if (event.key === "ArrowLeft") move(-1);
+      if (event.key === "ArrowRight") move(1);
       if (event.key.toLowerCase() === "r") { reveal = !reveal; render(); }
     });
     render();
@@ -417,18 +425,26 @@ function render() {
   const slides = [...document.querySelectorAll(".questionSlide")];
   slides.forEach((slide, index) => slide.classList.toggle("active", index === current));
   document.querySelector("#status").textContent = slides.length ? String(current + 1) + " / " + slides.length : "0 / 0";
-  document.querySelector("#reveal").textContent = reveal ? "Hide Reveal" : "Show Reveal";
+  document.querySelector("#reveal").disabled = manifest.revealMode === "inline";
+  document.querySelector("#reveal").textContent = manifest.revealMode === "inline" ? "Reveal Inline" : reveal ? "Hide Reveal" : "Show Reveal";
   const activeReveal = slides[current]?.querySelector(".slideReveal");
   if (activeReveal && manifest.revealMode !== "inline") activeReveal.classList.toggle("hidden", !reveal);
 }
 
+function move(delta) {
+  const next = Math.max(0, Math.min(questions.length - 1, current + delta));
+  if (next !== current && manifest.revealMode === "auto_hide") reveal = false;
+  current = next;
+  render();
+}
+
 document.querySelector("#deck").replaceChildren(...questions.map(questionSlide));
-document.querySelector("#prev").addEventListener("click", () => { current = Math.max(0, current - 1); render(); });
-document.querySelector("#next").addEventListener("click", () => { current = Math.min(questions.length - 1, current + 1); render(); });
+document.querySelector("#prev").addEventListener("click", () => move(-1));
+document.querySelector("#next").addEventListener("click", () => move(1));
 document.querySelector("#reveal").addEventListener("click", () => { reveal = !reveal; render(); });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowLeft") { current = Math.max(0, current - 1); render(); }
-  if (event.key === "ArrowRight") { current = Math.min(questions.length - 1, current + 1); render(); }
+  if (event.key === "ArrowLeft") move(-1);
+  if (event.key === "ArrowRight") move(1);
   if (event.key.toLowerCase() === "r") { reveal = !reveal; render(); }
 });
 render();

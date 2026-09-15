@@ -77,6 +77,7 @@ exports/slides/<deck-name>/
 - Preview and Present do not write files. Only `Export Folder` creates a folder under `exports/slides/`.
 - Exported decks copy the referenced media into the export folder. If media is missing locally, the export result reports the missing count and those items will show broken media.
 - `Hidden until show` keeps answers hidden until `Show Reveal` is clicked.
+- `Auto-hide on question change` also keeps answers hidden, and hides the answer again whenever you move to another question.
 - `Inline on each slide` is useful for review decks.
 - Arrow keys move between slides in the Slides view.
 - `R` toggles reveal, and `Esc` exits Present mode.
@@ -88,6 +89,7 @@ exports/slides/<deck-name>/
 - 预览和演示模式不会写入文件，只有点击 `Export Folder` 才会在 `exports/slides/` 下生成文件夹。
 - 导出演示会复制本次使用到的媒体文件。如果本地媒体缺失，导出结果会显示缺失数量，对应位置会显示断开的媒体。
 - `Hidden until show` 会默认隐藏答案，点击 `Show Reveal` 才显示。
+- `Auto-hide on question change` 也会默认隐藏答案，并且每次切换题目都会重新收起答案，适合现场主持答题。
 - `Inline on each slide` 适合审题或复习场景。
 - 在 Slides 视图中可以用左右方向键翻页。
 - `R` 切换答案显示，`Esc` 退出 Present 模式。

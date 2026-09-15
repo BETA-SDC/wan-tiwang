@@ -13,20 +13,24 @@ const deck = document.querySelector("#questionPreviewDeck");
 const meta = document.querySelector("#questionMeta");
 const revealButton = document.querySelector("#toggleRevealButton");
 const localeSelect = document.querySelector("#questionLocale");
+const revealModeSelect = document.querySelector("#questionRevealMode");
 const editLink = document.querySelector("#editQuestionLink");
 
 function render() {
+  const revealMode = revealModeSelect.value;
   deck.replaceChildren();
   if (!question) return;
   const slide = createQuestionSlide({
     question,
     media,
     locale: localeSelect.value,
-    revealVisible
+    revealVisible,
+    revealMode
   });
   slide.classList.add("activeSlide");
   deck.append(slide);
-  revealButton.textContent = revealVisible ? "Hide Reveal" : "Show Reveal";
+  revealButton.disabled = revealMode === "inline";
+  revealButton.textContent = revealMode === "inline" ? "Reveal Inline" : revealVisible ? "Hide Reveal" : "Show Reveal";
 }
 
 async function init() {
@@ -49,6 +53,10 @@ revealButton.addEventListener("click", () => {
   render();
 });
 localeSelect.addEventListener("change", render);
+revealModeSelect.addEventListener("change", () => {
+  revealVisible = revealModeSelect.value === "inline";
+  render();
+});
 
 init().catch((error) => {
   deck.innerHTML = `<pre class="error">${error.stack || error.message}</pre>`;

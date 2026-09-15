@@ -89,6 +89,7 @@ function renderPicker() {
 }
 
 function renderSlides() {
+  const revealMode = elements.slideRevealMode.value;
   elements.slideDeck.replaceChildren();
   if (state.slideQuestions.length === 0) {
     const empty = document.createElement("div");
@@ -107,12 +108,14 @@ function renderSlides() {
     index: state.currentSlide,
     total: state.slideQuestions.length,
     revealVisible: state.revealVisible,
-    revealMode: elements.slideRevealMode.value
+    revealMode
   });
   slide.classList.add("activeSlide");
   elements.slideDeck.append(slide);
   elements.slideStatus.textContent = `${state.currentSlide + 1} / ${state.slideQuestions.length}`;
-  document.querySelector("#toggleRevealButton").textContent = state.revealVisible ? "Hide Reveal" : "Show Reveal";
+  const revealButton = document.querySelector("#toggleRevealButton");
+  revealButton.disabled = revealMode === "inline";
+  revealButton.textContent = revealMode === "inline" ? "Reveal Inline" : state.revealVisible ? "Hide Reveal" : "Show Reveal";
 }
 
 function shuffleItems(items) {
@@ -134,6 +137,11 @@ function buildSlides({ shuffle = false } = {}) {
   if (shuffle) questions = shuffleItems(questions);
   state.slideQuestions = questions.slice(0, count);
   state.currentSlide = 0;
+  state.revealVisible = elements.slideRevealMode.value === "inline";
+  renderSlides();
+}
+
+function syncRevealForMode() {
   state.revealVisible = elements.slideRevealMode.value === "inline";
   renderSlides();
 }
@@ -171,7 +179,10 @@ async function exportSlides() {
 
 function moveSlide(delta) {
   if (state.slideQuestions.length === 0) return;
-  state.currentSlide = Math.max(0, Math.min(state.slideQuestions.length - 1, state.currentSlide + delta));
+  const nextSlide = Math.max(0, Math.min(state.slideQuestions.length - 1, state.currentSlide + delta));
+  const changed = nextSlide !== state.currentSlide;
+  state.currentSlide = nextSlide;
+  if (changed && elements.slideRevealMode.value === "auto_hide") state.revealVisible = false;
   renderSlides();
 }
 
@@ -221,7 +232,7 @@ document.querySelector("#clearSelectionButton").addEventListener("click", () => 
 });
 elements.slideSearch.addEventListener("input", renderPicker);
 elements.slideLocale.addEventListener("change", renderSlides);
-elements.slideRevealMode.addEventListener("change", renderSlides);
+elements.slideRevealMode.addEventListener("change", syncRevealForMode);
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") moveSlide(-1);
   if (event.key === "ArrowRight") moveSlide(1);
