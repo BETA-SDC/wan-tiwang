@@ -92,7 +92,7 @@ Recommended beginner path:
 1. Open [nodejs.org](https://nodejs.org/).
 2. Download the LTS version for your system.
 3. Install it with the default options.
-4. Close and reopen Terminal.
+4. Close and reopen Terminal on macOS, or PowerShell / Command Prompt on Windows.
 5. Check the installation:
 
 ```bash
@@ -105,7 +105,7 @@ npm --version
 1. 打开 [nodejs.org](https://nodejs.org/)。
 2. 下载适合自己系统的 LTS 版本。
 3. 按默认选项安装。
-4. 关闭并重新打开终端。
+4. macOS 关闭并重新打开 Terminal；Windows 关闭并重新打开 PowerShell 或命令提示符。
 5. 检查是否安装成功：
 
 ```bash
@@ -123,6 +123,10 @@ If `node` works but `npm` does not, you can still start the UI with direct Node 
 
 ## Quick Start
 
+Most commands are the same on macOS and Windows. The main difference is how to set an environment variable such as `PORT`.
+
+大多数命令在 macOS 和 Windows 上一样。主要差异是设置环境变量，例如 `PORT`。
+
 For everyday visual work, start the local UI:
 
 ```bash
@@ -137,6 +141,29 @@ node scripts/server.mjs
 
 Open the local URL printed in the terminal, usually `http://127.0.0.1:5177`. Keep the terminal running while using the UI, and stop it with `Ctrl+C`.
 
+If port `5177` is already occupied, choose another port:
+
+macOS / Linux:
+
+```bash
+PORT=5180 npm run ui
+PORT=5180 node scripts/server.mjs
+```
+
+Windows PowerShell:
+
+```powershell
+$env:PORT=5180; npm run ui
+$env:PORT=5180; node scripts/server.mjs
+```
+
+Windows Command Prompt:
+
+```bat
+set PORT=5180 && npm run ui
+set PORT=5180 && node scripts\server.mjs
+```
+
 日常可视化操作，先启动本地 UI：
 
 ```bash
@@ -150,6 +177,29 @@ node scripts/server.mjs
 ```
 
 然后打开终端输出的本地地址，通常是 `http://127.0.0.1:5177`。使用 UI 时保持终端运行，需要停止时按 `Ctrl+C`。
+
+如果 `5177` 端口被占用，可以换端口：
+
+macOS / Linux:
+
+```bash
+PORT=5180 npm run ui
+PORT=5180 node scripts/server.mjs
+```
+
+Windows PowerShell:
+
+```powershell
+$env:PORT=5180; npm run ui
+$env:PORT=5180; node scripts/server.mjs
+```
+
+Windows 命令提示符：
+
+```bat
+set PORT=5180 && npm run ui
+set PORT=5180 && node scripts\server.mjs
+```
 
 The UI includes a form editor for common question creation, optional local media upload/linking, slide export, feedback import, and raw JSON editing for advanced cases.
 

@@ -32,6 +32,10 @@ If this command is missing, install Node.js first. Installing Node.js normally a
 
 如果没有 `node` 命令，需要先安装 Node.js。通常安装 Node.js 会同时安装 `npm`，但本项目也可以直接用 `node` 启动。
 
+Command examples are mostly the same on macOS and Windows. The main difference is environment variables such as `PORT`.
+
+命令示例在 macOS 和 Windows 上大多一样。主要差异是环境变量写法，例如 `PORT`。
+
 ## Level 1: Start the UI
 
 Recommended command:
@@ -68,28 +72,84 @@ Open that URL in a browser. Keep the terminal window open while using the UI. St
 
 终端会输出一个本地地址，通常是 `http://127.0.0.1:5177`。在浏览器打开它。使用 UI 时不要关闭终端；需要停止服务时按 `Ctrl+C`。
 
-If port `5177` is already occupied:
+If port `5177` is already occupied, choose another port.
+
+macOS / Linux:
 
 ```bash
 PORT=5180 node scripts/server.mjs
 ```
 
-如果 `5177` 端口被占用，可以换端口：
+Windows PowerShell:
+
+```powershell
+$env:PORT=5180; node scripts/server.mjs
+```
+
+Windows Command Prompt:
+
+```bat
+set PORT=5180 && node scripts\server.mjs
+```
+
+如果 `5177` 端口被占用，可以换端口。
+
+macOS / Linux：
 
 ```bash
 PORT=5180 node scripts/server.mjs
 ```
 
-The npm equivalent is:
+Windows PowerShell：
+
+```powershell
+$env:PORT=5180; node scripts/server.mjs
+```
+
+Windows 命令提示符：
+
+```bat
+set PORT=5180 && node scripts\server.mjs
+```
+
+The npm equivalents are:
+
+macOS / Linux:
 
 ```bash
 PORT=5180 npm run ui
+```
+
+Windows PowerShell:
+
+```powershell
+$env:PORT=5180; npm run ui
+```
+
+Windows Command Prompt:
+
+```bat
+set PORT=5180 && npm run ui
 ```
 
 对应的 npm 启动方式是：
 
+macOS / Linux：
+
 ```bash
 PORT=5180 npm run ui
+```
+
+Windows PowerShell：
+
+```powershell
+$env:PORT=5180; npm run ui
+```
+
+Windows 命令提示符：
+
+```bat
+set PORT=5180 && npm run ui
 ```
 
 ## Level 2: Use the UI for Daily Work
