@@ -163,6 +163,142 @@
     "file": "data/questions/brain/math-puzzles/science-expansion-001.jsonl",
     "line": 4
   },
+  "brain-math-puzzles-000011": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 1
+  },
+  "brain-math-puzzles-000012": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 2
+  },
+  "brain-math-puzzles-000013": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 3
+  },
+  "brain-math-puzzles-000014": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 4
+  },
+  "brain-math-puzzles-000015": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 5
+  },
+  "brain-math-puzzles-000016": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 6
+  },
+  "brain-math-puzzles-000017": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 7
+  },
+  "brain-math-puzzles-000018": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 8
+  },
+  "brain-math-puzzles-000019": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 9
+  },
+  "brain-math-puzzles-000020": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 10
+  },
+  "brain-math-puzzles-000021": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 11
+  },
+  "brain-math-puzzles-000022": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 12
+  },
+  "brain-math-puzzles-000023": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 13
+  },
+  "brain-math-puzzles-000024": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 14
+  },
+  "brain-math-puzzles-000025": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 15
+  },
+  "brain-math-puzzles-000026": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 16
+  },
+  "brain-math-puzzles-000027": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 17
+  },
+  "brain-math-puzzles-000028": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 18
+  },
+  "brain-math-puzzles-000029": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 19
+  },
+  "brain-math-puzzles-000030": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 20
+  },
+  "brain-math-puzzles-000031": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 21
+  },
+  "brain-math-puzzles-000032": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 22
+  },
+  "brain-math-puzzles-000033": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 23
+  },
+  "brain-math-puzzles-000034": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 24
+  },
+  "brain-math-puzzles-000035": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 25
+  },
+  "brain-math-puzzles-000036": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 26
+  },
+  "brain-math-puzzles-000037": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 27
+  },
+  "brain-math-puzzles-000038": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 28
+  },
+  "brain-math-puzzles-000039": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 29
+  },
+  "brain-math-puzzles-000040": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 30
+  },
+  "brain-math-puzzles-000041": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 31
+  },
+  "brain-math-puzzles-000042": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 32
+  },
+  "brain-math-puzzles-000043": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 33
+  },
+  "brain-math-puzzles-000044": {
+    "file": "data/questions/brain/math-puzzles/university-expansion-001.jsonl",
+    "line": 34
+  },
   "games-anime-000001": {
     "file": "data/questions/games/anime/broad-expansion-001.jsonl",
     "line": 1
@@ -1035,6 +1171,138 @@
     "file": "data/questions/science/chemistry/science-expansion-001.jsonl",
     "line": 10
   },
+  "science-chemistry-000017": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 1
+  },
+  "science-chemistry-000018": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 2
+  },
+  "science-chemistry-000019": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 3
+  },
+  "science-chemistry-000020": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 4
+  },
+  "science-chemistry-000021": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 5
+  },
+  "science-chemistry-000022": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 6
+  },
+  "science-chemistry-000023": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 7
+  },
+  "science-chemistry-000024": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 8
+  },
+  "science-chemistry-000025": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 9
+  },
+  "science-chemistry-000026": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 10
+  },
+  "science-chemistry-000027": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 11
+  },
+  "science-chemistry-000028": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 12
+  },
+  "science-chemistry-000029": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 13
+  },
+  "science-chemistry-000030": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 14
+  },
+  "science-chemistry-000031": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 15
+  },
+  "science-chemistry-000032": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 16
+  },
+  "science-chemistry-000033": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 17
+  },
+  "science-chemistry-000034": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 18
+  },
+  "science-chemistry-000035": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 19
+  },
+  "science-chemistry-000036": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 20
+  },
+  "science-chemistry-000037": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 21
+  },
+  "science-chemistry-000038": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 22
+  },
+  "science-chemistry-000039": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 23
+  },
+  "science-chemistry-000040": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 24
+  },
+  "science-chemistry-000041": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 25
+  },
+  "science-chemistry-000042": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 26
+  },
+  "science-chemistry-000043": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 27
+  },
+  "science-chemistry-000044": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 28
+  },
+  "science-chemistry-000045": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 29
+  },
+  "science-chemistry-000046": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 30
+  },
+  "science-chemistry-000047": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 31
+  },
+  "science-chemistry-000048": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 32
+  },
+  "science-chemistry-000049": {
+    "file": "data/questions/science/chemistry/university-expansion-001.jsonl",
+    "line": 33
+  },
   "science-earth-science-000007": {
     "file": "data/questions/science/earth-science/hard-science-expansion-001.jsonl",
     "line": 1
@@ -1154,6 +1422,138 @@
   "science-physics-000014": {
     "file": "data/questions/science/physics/science-expansion-001.jsonl",
     "line": 12
+  },
+  "science-physics-000020": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 1
+  },
+  "science-physics-000021": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 2
+  },
+  "science-physics-000022": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 3
+  },
+  "science-physics-000023": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 4
+  },
+  "science-physics-000024": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 5
+  },
+  "science-physics-000025": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 6
+  },
+  "science-physics-000026": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 7
+  },
+  "science-physics-000027": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 8
+  },
+  "science-physics-000028": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 9
+  },
+  "science-physics-000029": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 10
+  },
+  "science-physics-000030": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 11
+  },
+  "science-physics-000031": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 12
+  },
+  "science-physics-000032": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 13
+  },
+  "science-physics-000033": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 14
+  },
+  "science-physics-000034": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 15
+  },
+  "science-physics-000035": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 16
+  },
+  "science-physics-000036": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 17
+  },
+  "science-physics-000037": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 18
+  },
+  "science-physics-000038": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 19
+  },
+  "science-physics-000039": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 20
+  },
+  "science-physics-000040": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 21
+  },
+  "science-physics-000041": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 22
+  },
+  "science-physics-000042": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 23
+  },
+  "science-physics-000043": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 24
+  },
+  "science-physics-000044": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 25
+  },
+  "science-physics-000045": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 26
+  },
+  "science-physics-000046": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 27
+  },
+  "science-physics-000047": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 28
+  },
+  "science-physics-000048": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 29
+  },
+  "science-physics-000049": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 30
+  },
+  "science-physics-000050": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 31
+  },
+  "science-physics-000051": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 32
+  },
+  "science-physics-000052": {
+    "file": "data/questions/science/physics/university-expansion-001.jsonl",
+    "line": 33
   },
   "society-economics-000006": {
     "file": "data/questions/society/economics/humanities-expansion-001.jsonl",

@@ -1,22 +1,22 @@
 {
-  "total": 316,
+  "total": 416,
   "with_media": 3,
   "by_status": {
-    "review": 232,
+    "review": 332,
     "published": 84
   },
   "by_type": {
-    "single_choice": 263,
+    "single_choice": 354,
     "true_false": 18,
-    "multiple_choice": 9,
+    "multiple_choice": 10,
     "fill_blank": 19,
-    "numeric": 5,
+    "numeric": 13,
     "short_answer": 2
   },
   "by_difficulty": {
-    "medium": 94,
-    "easy": 80,
-    "hard": 76
+    "medium": 163,
+    "easy": 72,
+    "hard": 115
   },
   "by_category": {
     "arts.architecture": 1,
@@ -25,7 +25,7 @@
     "arts.painting": 5,
     "brain.lateral-thinking": 2,
     "brain.logic": 5,
-    "brain.math-puzzles": 10,
+    "brain.math-puzzles": 44,
     "games.anime": 5,
     "games.board-games": 5,
     "games.esports": 10,
@@ -58,9 +58,9 @@
     "pop-culture.tv": 5,
     "science.astronomy": 15,
     "science.biology": 18,
-    "science.chemistry": 16,
+    "science.chemistry": 49,
     "science.earth-science": 11,
-    "science.physics": 19,
+    "science.physics": 52,
     "society.economics": 6,
     "society.education": 1,
     "society.law": 4,
