@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { indexesRoot, mediaMetaRoot, questionsRoot, readJson, readJsonl, relativePath, repoRoot, taxonomyRoot, walkFiles } from "./lib.mjs";
 import { folderDeckFiles, usedMediaForQuestions } from "./slides/export-html.mjs";
 
@@ -208,6 +208,24 @@ function runMaintenance() {
   }, Promise.resolve({ ok: true, code: 0, output }));
 }
 
+function openFolder(folder) {
+  const target = safePath(repoRoot, folder);
+  const exportsSlidesRoot = path.join(exportsRoot, "slides");
+  if (!target || target !== exportsSlidesRoot && !target.startsWith(`${exportsSlidesRoot}${path.sep}`)) {
+    throw new Error("Only exported slide folders can be opened.");
+  }
+  if (!fs.existsSync(target) || !fs.statSync(target).isDirectory()) throw new Error(`Folder not found: ${folder}`);
+
+  const command = process.platform === "darwin"
+    ? "open"
+    : process.platform === "win32"
+      ? "explorer"
+      : "xdg-open";
+  const result = spawnSync(command, [target], { cwd: repoRoot, stdio: "ignore" });
+  if (result.error) throw result.error;
+  if (result.status !== 0) throw new Error(`Open folder command failed with code ${result.status}.`);
+}
+
 async function handleApi(request, response, url) {
   if (request.method === "GET" && url.pathname === "/api/bootstrap") {
     return sendJson(response, 200, {
@@ -352,6 +370,12 @@ async function handleApi(request, response, url) {
     fs.mkdirSync(path.dirname(metaFile), { recursive: true });
     fs.appendFileSync(metaFile, `${JSON.stringify(item)}\n`);
     return sendJson(response, 201, { ok: true, media: item });
+  }
+
+  if (request.method === "POST" && url.pathname === "/api/open-folder") {
+    const body = JSON.parse(await readBody(request));
+    openFolder(body.folder || "");
+    return sendJson(response, 200, { ok: true, folder: body.folder });
   }
 
   if (request.method === "POST" && url.pathname === "/api/questions") {

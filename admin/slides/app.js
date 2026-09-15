@@ -162,7 +162,7 @@ async function exportSlides() {
 
   elements.exportStatus.replaceChildren();
   const label = document.createElement("strong");
-  label.textContent = `Generated ${result.count} slide(s)`;
+  label.textContent = `Export complete: ${result.count} slide(s)`;
   const download = document.createElement("a");
   download.href = result.url;
   download.textContent = "Open Deck";
@@ -171,10 +171,34 @@ async function exportSlides() {
   open.target = "_blank";
   open.rel = "noreferrer";
   open.textContent = "Open in New Tab";
+  const folderButton = document.createElement("button");
+  folderButton.type = "button";
+  folderButton.textContent = "Open Folder";
+  const openFolder = async () => {
+    folderButton.disabled = true;
+    try {
+      await requestJson("/api/open-folder", {
+        method: "POST",
+        body: JSON.stringify({ folder: result.folder })
+      });
+      folderButton.textContent = "Folder Opened";
+    } catch (error) {
+      folderButton.textContent = "Open Failed";
+      elements.exportStatus.querySelector("small").textContent += ` · open folder failed: ${error.message}`;
+    } finally {
+      setTimeout(() => {
+        folderButton.disabled = false;
+        folderButton.textContent = "Open Folder";
+      }, 1800);
+    }
+  };
+  folderButton.addEventListener("click", openFolder);
   const file = document.createElement("small");
   const missing = result.media?.missing?.length ? ` · missing media: ${result.media.missing.length}` : "";
   file.textContent = `${result.folder} · media copied: ${result.media?.copied ?? 0}/${result.media?.total ?? 0}${missing}`;
-  elements.exportStatus.append(label, download, open, file);
+  elements.exportStatus.append(label, download, open, folderButton, file);
+  openFolder();
+  window.alert(`Export complete.\n\nFolder: ${result.folder}`);
 }
 
 function moveSlide(delta) {

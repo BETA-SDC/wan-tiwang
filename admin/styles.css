@@ -555,6 +555,9 @@ textarea {
   width: fit-content;
   color: var(--accent-dark);
 }
+.exportResult button {
+  width: fit-content;
+}
 .exportResult small {
   overflow-wrap: anywhere;
 }

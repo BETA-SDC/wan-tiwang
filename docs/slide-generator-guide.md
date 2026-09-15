@@ -17,7 +17,7 @@ The Slide Generator is a separate page at `/slides/` for turning selected questi
 6. Use `Previous`, `Next`, and `Show Reveal`.
 7. Use `Present` for a slide-like full-stage view, or `Print` for one question per printed page.
 8. In exported decks, players can click choice options and confirm an answer, then use `Download Feedback` to export answer counts.
-9. Click `Export Folder` to write a deck folder under `exports/slides/`, then use the generated `Open Deck` link.
+9. Click `Export Folder` to write a deck folder under `exports/slides/`. The app shows a success popup, tries to open the folder, and provides `Open Deck`, `Open in New Tab`, and `Open Folder` actions.
 
 中文流程：
 
@@ -32,7 +32,7 @@ The Slide Generator is a separate page at `/slides/` for turning selected questi
 6. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示。
 7. 使用 `Present` 进入类似幻灯片的展示模式，或用 `Print` 按“一题一页”打印。
 8. 在导出的演示中，玩家可以点击选择题选项并确认答案，再用 `Download Feedback` 导出作答统计。
-9. 点击 `Export Folder`，把演示文件夹写到 `exports/slides/`，然后使用生成的 `Open Deck` 链接。
+9. 点击 `Export Folder`，把演示文件夹写到 `exports/slides/`。管理台会弹出成功提示、尝试打开所在文件夹，并提供 `Open Deck`、`Open in New Tab` 和 `Open Folder` 操作。
 
 ## Export Folder
 
@@ -77,6 +77,7 @@ exports/slides/<deck-name>/
 - One slide displays one question.
 - A single question can be previewed directly at `/question/?id=<question-id>`.
 - Preview and Present do not write files. Only `Export Folder` creates a folder under `exports/slides/`.
+- After export, the local admin server can open the generated folder in the operating system file manager.
 - Exported decks copy the referenced media into the export folder. If media is missing locally, the export result reports the missing count and those items will show broken media.
 - Exported decks can record local answer feedback for choice questions. `Download Feedback` saves a JSON file with answered and correct counts; import it from `Maintenance` to add those counts back to question `feedback`.
 - `Hidden until show` keeps answers hidden until `Show Reveal` is clicked.
@@ -90,6 +91,7 @@ exports/slides/<deck-name>/
 - 一页只显示一道题。
 - 单题可以通过 `/question/?id=<题目ID>` 直接预览。
 - 预览和演示模式不会写入文件，只有点击 `Export Folder` 才会在 `exports/slides/` 下生成文件夹。
+- 导出后，本地管理服务可以在系统文件管理器里打开生成的文件夹。
 - 导出演示会复制本次使用到的媒体文件。如果本地媒体缺失，导出结果会显示缺失数量，对应位置会显示断开的媒体。
 - 导出演示可以在本地记录选择题作答反馈。`Download Feedback` 会保存包含回答次数和答对次数的 JSON；在 `Maintenance` 页面导入后，会把这些计数累加回题目的 `feedback` 字段。
 - `Hidden until show` 会默认隐藏答案，点击 `Show Reveal` 才显示。
