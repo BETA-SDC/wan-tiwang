@@ -14,6 +14,17 @@ After editing questions, taxonomy, media metadata, docs, or scripts, run:
 npm run wtw -- check
 ```
 
+Without npm, run the same steps directly in this order:
+
+没有 npm 时，按同样顺序直接运行：
+
+```bash
+node scripts/validate.mjs
+node scripts/lint-tags.mjs
+node scripts/dedupe.mjs
+node scripts/build-index.mjs
+```
+
 This currently runs:
 
 它目前会依次执行：

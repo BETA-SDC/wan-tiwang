@@ -12,21 +12,41 @@ npm run wtw
 npm run wtw
 ```
 
-For a visual local interface, use:
+For most human users, start with the visual local interface:
 
 ```bash
 npm run ui
 ```
 
-如果想用可视化本地界面，运行：
+多数人工操作建议先用可视化本地界面：
 
 ```bash
 npm run ui
 ```
+
+If npm is not available, run the same UI server directly:
+
+```bash
+node scripts/server.mjs
+```
+
+如果没有 npm，可以直接启动同一个 UI 服务：
+
+```bash
+node scripts/server.mjs
+```
+
+Open the printed local URL, usually `http://127.0.0.1:5177`.
+
+打开终端输出的本地地址，通常是 `http://127.0.0.1:5177`。
 
 The UI includes a form editor for common question fields and a JSON editor for advanced edits.
 
 UI 内置表单编辑器处理常见题目字段，也保留 JSON 编辑器处理高级修改。
+
+For a UI-first, step-by-step operating manual, see [Operations Guide](operations-guide.md).
+
+如果需要从启动 UI 到导出、导入反馈的完整分级手册，见 [Operations Guide](operations-guide.md)。
 
 ## Menu Levels
 
@@ -135,3 +155,18 @@ npm run stats
 ```
 
 底层脚本仍然保留，适合自动化、CI 或更细的工程操作。
+
+Without npm, call the Node scripts directly:
+
+```bash
+node scripts/server.mjs
+node scripts/wtw.mjs
+node scripts/validate.mjs
+node scripts/lint-tags.mjs
+node scripts/dedupe.mjs
+node scripts/build-index.mjs
+node scripts/sample.mjs
+node scripts/stats.mjs
+```
+
+没有 npm 时，可以直接调用 Node 脚本。

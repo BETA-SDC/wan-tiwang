@@ -12,11 +12,37 @@ Run:
 npm run ui
 ```
 
+Without npm, run:
+
+```bash
+node scripts/server.mjs
+```
+
 Open the local URL printed by the command, usually:
 
 ```text
 http://127.0.0.1:5177
 ```
+
+Keep the terminal open while using the UI. Stop it with `Ctrl+C`.
+
+中文启动方式：
+
+```bash
+npm run ui
+```
+
+如果没有 npm：
+
+```bash
+node scripts/server.mjs
+```
+
+打开终端输出的本地地址，通常是 `http://127.0.0.1:5177`。使用 UI 时保持终端运行；停止服务按 `Ctrl+C`。
+
+For a full step-by-step operations manual, see [Operations Guide](operations-guide.md).
+
+完整分级操作手册见 [Operations Guide](operations-guide.md)。
 
 ## Main Views
 
@@ -72,6 +98,30 @@ Every feature is a separate page with the same navigation shell. Use the left na
 3. 点击 `Run Check`。
 4. 查看校验输出。
 5. 确认无误后提交并推送。
+
+## Feedback Import
+
+Feedback comes from exported slide decks. In an exported deck, players click options, click `Confirm Answer`, then click `Download Feedback`.
+
+To import it:
+
+1. Open `Maintenance`.
+2. Choose the downloaded `*-answer-feedback.json` file in `Answer Feedback Import`.
+3. Click `Import Feedback`.
+4. Review the result.
+5. Click `Run Check`.
+
+反馈来自导出的演示。玩家在演示中点击选项，点击 `Confirm Answer`，再点击 `Download Feedback` 下载反馈 JSON。
+
+导入方式：
+
+1. 打开 `Maintenance`。
+2. 在 `Answer Feedback Import` 里选择下载的 `*-answer-feedback.json`。
+3. 点击 `Import Feedback`。
+4. 查看结果。
+5. 点击 `Run Check`。
+
+导入只会累加题目的 `feedback.answered_count` 和 `feedback.correct_count`，不会自动修改难度。
 
 ## Form and JSON Modes
 

@@ -4,6 +4,34 @@ The Slide Generator is a separate page at `/slides/` for turning selected questi
 
 题目可视化生成器是 `/slides/` 独立页面，用来把选中的题目组装成轻量展示稿，并可以导出文件夹形式的演示包到 `exports/slides/`。它不会修改题目数据。
 
+Start the admin UI first:
+
+```bash
+npm run ui
+```
+
+Without npm:
+
+```bash
+node scripts/server.mjs
+```
+
+Open the printed local URL, then go to `/slides/`.
+
+先启动管理 UI：
+
+```bash
+npm run ui
+```
+
+没有 npm 时：
+
+```bash
+node scripts/server.mjs
+```
+
+打开终端输出的本地地址，然后进入 `/slides/`。
+
 ## Workflow
 
 1. Use `Browse` filters to narrow the question pool, or tick specific questions in the list.
@@ -71,6 +99,46 @@ exports/slides/<deck-name>/
 `questions.json` and `media.json` are intended for reading, auditing, and reuse. `deck-data.js` mirrors the same data so the deck can load without a local web server in stricter browsers.
 
 `questions.json` 和 `media.json` 方便检查和复用；`deck-data.js` 只是为了让一些浏览器在没有本地服务器时也能加载同一份数据。
+
+## Answer Feedback
+
+Exported decks can collect simple answer feedback for choice questions.
+
+导出的演示可以为选择题收集简单作答反馈。
+
+In the exported deck:
+
+1. Click one or more options.
+2. Click `Confirm Answer`.
+3. Continue through the deck.
+4. Click `Download Feedback`.
+5. Save the downloaded `*-answer-feedback.json` file.
+
+在导出演示中：
+
+1. 点击一个或多个选项。
+2. 点击 `Confirm Answer`。
+3. 继续完成演示。
+4. 点击 `Download Feedback`。
+5. 保存下载的 `*-answer-feedback.json` 文件。
+
+Back in the admin UI:
+
+1. Open `Maintenance`.
+2. Choose the downloaded feedback JSON under `Answer Feedback Import`.
+3. Click `Import Feedback`.
+4. Click `Run Check`.
+
+回到管理 UI：
+
+1. 打开 `Maintenance`。
+2. 在 `Answer Feedback Import` 里选择下载的反馈 JSON。
+3. 点击 `Import Feedback`。
+4. 点击 `Run Check`。
+
+The import adds to each question's `feedback.answered_count` and `feedback.correct_count`. It does not automatically change `difficulty`.
+
+导入会累加每道题的 `feedback.answered_count` 和 `feedback.correct_count`，不会自动修改 `difficulty`。
 
 ## Notes
 

@@ -83,33 +83,49 @@ skills/        面向 AI 助手的仓库操作说明
 
 ## Quick Start
 
-For everyday work, start here:
-
-```bash
-npm run wtw
-```
-
-For the local management UI:
+For everyday visual work, start the local UI:
 
 ```bash
 npm run ui
 ```
 
-The UI includes a form editor for common question creation, optional local media upload/linking, and raw JSON editing for advanced cases.
-
-日常操作只需要先记住这个入口：
+If npm is not available, start the same UI server directly:
 
 ```bash
-npm run wtw
+node scripts/server.mjs
 ```
 
-本地可视化管理界面：
+Open the local URL printed in the terminal, usually `http://127.0.0.1:5177`. Keep the terminal running while using the UI, and stop it with `Ctrl+C`.
+
+日常可视化操作，先启动本地 UI：
 
 ```bash
 npm run ui
 ```
 
-管理界面提供常见题目的表单录入、可选本地媒体上传/关联，也保留原始 JSON 编辑用于高级场景。
+如果没有 npm，也可以直接启动同一个 UI 服务：
+
+```bash
+node scripts/server.mjs
+```
+
+然后打开终端输出的本地地址，通常是 `http://127.0.0.1:5177`。使用 UI 时保持终端运行，需要停止时按 `Ctrl+C`。
+
+The UI includes a form editor for common question creation, optional local media upload/linking, slide export, feedback import, and raw JSON editing for advanced cases.
+
+管理界面提供常见题目的表单录入、可选本地媒体上传/关联、演示导出、反馈导入，也保留原始 JSON 编辑用于高级场景。
+
+For everyday CLI work, start here:
+
+```bash
+npm run wtw
+```
+
+日常 CLI 操作可以使用：
+
+```bash
+npm run wtw
+```
 
 The console groups common tasks into content creation, maintenance, play testing, and overview.
 
@@ -118,6 +134,10 @@ The console groups common tasks into content creation, maintenance, play testing
 This repository already includes a small bilingual sample set for trying the workflow.
 
 仓库里已经有少量双语样题，可以先用来测试流程。
+
+See [Operations Guide](docs/operations-guide.md) for the step-by-step UI-first workflow.
+
+分级操作手册见 [Operations Guide](docs/operations-guide.md)。
 
 See [Command Guide](docs/command-guide.md) for the organized command structure.
 
