@@ -244,7 +244,7 @@ Common flow:
    - `All questions`: use the whole bank.
 2. Set count, language, and reveal mode.
 3. Click `Build Preview` or `Shuffle Preview`.
-4. Use `Previous`, `Next`, and `Show Reveal` to preview, or use keyboard shortcuts: `Right`/`Space` for next, `Left` for previous, `F` for answer reveal, `W/A/S/D` to move option focus, and `Enter` to select the focused option.
+4. Use `Previous`, `Next`, and `Show Reveal` to preview, or use keyboard shortcuts: `Right`/`Space` for next, `Left` for previous, `F` for answer reveal, `W/A/S/D` to move option focus, `Enter` to select the focused option, and `1-9` to select by option order.
 5. Click `Export Folder`.
 6. Use `Open Deck` or `Open in New Tab`.
 
@@ -256,7 +256,7 @@ Common flow:
    - `All questions`：使用全题库。
 2. 设置数量、语言和答案显示方式。
 3. 点击 `Build Preview` 或 `Shuffle Preview`。
-4. 用 `Previous`、`Next`、`Show Reveal` 预览，也可以用快捷键：`Right`/`Space` 下一题，`Left` 上一题，`F` 显示答案，`W/A/S/D` 移动选项焦点，`Enter` 选择当前焦点选项。
+4. 用 `Previous`、`Next`、`Show Reveal` 预览，也可以用快捷键：`Right`/`Space` 下一题，`Left` 上一题，`F` 显示答案，`W/A/S/D` 移动选项焦点，`Enter` 选择当前焦点选项，`1-9` 按选项顺序选择。
 5. 点击 `Export Folder`。
 6. 使用 `Open Deck` 或 `Open in New Tab` 打开演示。
 

@@ -155,6 +155,7 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
   - `F` or `R`: show or hide the answer.
   - `Esc`: hide the answer; in Present mode, exits Present when the answer is already hidden.
   - `W/A/S/D`: move option focus by the on-screen layout.
+  - `1-9`: select an option by its on-screen order.
   - `Enter`: select the focused option; press again or use `Confirm Answer` to submit in exported decks.
   - `?`: show the shortcut help in exported decks.
 
@@ -173,5 +174,6 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
   - `F` 或 `R`：显示/隐藏答案。
   - `Esc`：隐藏答案；在 Present 模式中，如果答案已隐藏则退出 Present。
   - `W/A/S/D`：按界面布局移动选项焦点。
+  - `1-9`：按界面选项顺序选择。
   - `Enter`：选择当前焦点选项；在导出演示中再次按下或点击 `Confirm Answer` 提交答案。
   - `?`：在导出演示中显示快捷键帮助。

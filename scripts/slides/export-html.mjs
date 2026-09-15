@@ -256,7 +256,7 @@ function folderIndexHtml(title) {
       <button id="reveal" type="button">Show Reveal</button>
       <button id="downloadFeedback" type="button">Download Feedback</button>
     </div>
-    <span><span id="status"></span><span id="feedbackStatus"></span><span class="shortcutHint"> · ←/→ Space F WASD Enter ?</span></span>
+    <span><span id="status"></span><span id="feedbackStatus"></span><span class="shortcutHint"> · ←/→ Space F WASD 1-9 Enter ?</span></span>
   </footer>
   <script src="data/deck-data.js"></script>
   <script src="assets/deck.js"></script>
@@ -709,6 +709,15 @@ function selectFocusedOption() {
   return true;
 }
 
+function selectOptionByNumber(key) {
+  if (!/^[1-9]$/.test(key)) return false;
+  const item = optionElements()[Number(key) - 1];
+  if (!item) return false;
+  focusOptionElement(item);
+  item.click();
+  return true;
+}
+
 function confirmActiveAnswer() {
   const question = activeQuestion();
   if (!question || !question.options?.length) return false;
@@ -719,7 +728,7 @@ function confirmActiveAnswer() {
 }
 
 function showShortcutHelp() {
-  window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nMove option focus: W/A/S/D\\nSelect focused option: Enter\\nConfirm selected answer: Enter again or Confirm Answer\\nHide answer: Esc\\nHelp: ?");
+  window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nMove option focus: W/A/S/D\\nSelect option by number: 1-9\\nSelect focused option: Enter\\nConfirm selected answer: Enter again or Confirm Answer\\nHide answer: Esc\\nHelp: ?");
 }
 
 document.querySelector("#deck").replaceChildren(...questions.map(questionSlide));
@@ -764,6 +773,10 @@ document.addEventListener("keydown", (event) => {
   if (key === "?") {
     event.preventDefault();
     showShortcutHelp();
+    return;
+  }
+  if (selectOptionByNumber(key)) {
+    event.preventDefault();
     return;
   }
   if (lower === "w" && moveOptionFocus("up")) {

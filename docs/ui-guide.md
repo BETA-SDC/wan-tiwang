@@ -101,7 +101,7 @@ Every feature is a separate page with the same navigation shell. Use the left na
 
 ## Feedback Import
 
-Feedback comes from exported slide decks. In an exported deck, players click options or use `W/A/S/D` plus `Enter`, confirm with `Confirm Answer` or another `Enter`, then click `Download Feedback`.
+Feedback comes from exported slide decks. In an exported deck, players click options, use `1-9`, or use `W/A/S/D` plus `Enter`, confirm with `Confirm Answer` or another `Enter`, then click `Download Feedback`.
 
 To import it:
 
@@ -111,7 +111,7 @@ To import it:
 4. Review the result.
 5. Click `Run Check`.
 
-反馈来自导出的演示。玩家在演示中点击选项，或用 `W/A/S/D` 加 `Enter` 选择选项，再点击 `Confirm Answer` 或再次按 `Enter` 确认，最后点击 `Download Feedback` 下载反馈 JSON。
+反馈来自导出的演示。玩家在演示中点击选项、使用 `1-9`，或用 `W/A/S/D` 加 `Enter` 选择选项，再点击 `Confirm Answer` 或再次按 `Enter` 确认，最后点击 `Download Feedback` 下载反馈 JSON。
 
 导入方式：
 

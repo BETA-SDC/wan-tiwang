@@ -217,6 +217,14 @@ function selectFocusedOption() {
   return true;
 }
 
+function selectOptionByNumber(key) {
+  if (!/^[1-9]$/.test(key)) return false;
+  const option = currentQuestion()?.options?.[Number(key) - 1];
+  if (!option) return false;
+  toggleCurrentOption(option.id);
+  return true;
+}
+
 function shuffleItems(items) {
   return [...items]
     .map((item) => ({ item, sort: Math.random() }))
@@ -383,6 +391,10 @@ document.addEventListener("keydown", (event) => {
     return;
   }
   if (key === "Enter" && selectFocusedOption()) {
+    event.preventDefault();
+    return;
+  }
+  if (selectOptionByNumber(key)) {
     event.preventDefault();
   }
 });
