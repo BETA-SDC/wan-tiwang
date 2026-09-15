@@ -180,6 +180,22 @@ Question count:
 
 ## Importing AI Drafts
 
+The clearest human workflow is the local UI:
+
+最清晰的人工流程是使用本地可视化界面：
+
+1. Start the UI with `npm run ui`.
+2. Open `Import Questions`.
+3. Paste the reviewed JSON or choose the `.json` file.
+4. Click `Validate Draft`.
+5. Confirm the generated IDs and target files.
+6. Click `Import Draft`.
+7. Open `Maintenance` and click `Run Check`.
+
+CLI is still available for AI agents and automation.
+
+CLI 仍然保留给 AI agent 和自动化流程。
+
 For one JSON object:
 
 单个 JSON 对象导入：

@@ -49,6 +49,7 @@ For a full step-by-step operations manual, see [Operations Guide](operations-gui
 - `Home`: task shortcuts for the most common workflows.
 - `Question Library`: search, filter, preview, edit, and select questions for a deck.
 - `Question Editor`: create a new draft or edit an existing question with either a form or raw JSON.
+- `Import Questions`: validate and import reviewed JSON drafts from AI or manual batch authoring.
 - `Slide Generator`: open the separate deck-building page at `/slides/`.
 - `Media Library`: inspect media metadata.
 - `Settings`: review the controlled category, answer type, mood, and occasion vocabularies.
@@ -59,6 +60,7 @@ For a full step-by-step operations manual, see [Operations Guide](operations-gui
 - `Home`：通过快捷入口进入常用任务。
 - `Question Library`：搜索、筛选、预览、编辑和选择题目。
 - `Question Editor`：用表单或原始 JSON 新建、编辑题目。
+- `Import Questions`：检查并导入 AI 或人工批量整理后的 JSON 草稿。
 - `Slide Generator`：打开 `/slides/` 独立题目可视化生成器页面。
 - `Media Library`：查看媒体元数据。
 - `Settings`：查看受控的分类、答题类型、氛围和场景词表。
@@ -76,6 +78,7 @@ Every feature is a separate page with the same navigation shell. Use the left na
 /                 Home
 /questions/       Question Library
 /editor/          Question Editor
+/import/          Import Questions
 /question/?id=   Single question preview
 /slides/          Slide Generator
 /media/            Media Library
@@ -136,6 +139,34 @@ JSON 模式适合处理表单暂时没有暴露的高级字段。
 When editing an existing question in Form mode, unexposed fields are preserved where possible.
 
 用表单编辑已有题目时，表单没有展示的字段会尽量保留。
+
+## Question Draft Import
+
+Use `Import Questions` for reviewed AI drafts or other batch JSON. It accepts one question object, an array of question objects, or an object shaped like `{"questions":[...]}`.
+
+Flow:
+
+1. Give [AI One-File Question Brief](ai-one-file-question-brief.md) to the AI that drafts questions.
+2. Review the facts, answer, category, difficulty, tags, bilingual text, and media references.
+3. Open `Import Questions`.
+4. Paste JSON or choose a `.json` file.
+5. Click `Validate Draft`.
+6. If the generated IDs and target files look right, click `Import Draft`.
+7. Open `Maintenance` and run `Run Check`.
+
+`Validate Draft` does not write files. `Import Draft` writes JSONL question records only after the current pasted draft has passed validation.
+
+题目草稿导入：
+
+1. 把 [AI One-File Question Brief](ai-one-file-question-brief.md) 给负责出题的 AI。
+2. 人工审核事实、答案、分类、难度、标签、中英文文本和媒体引用。
+3. 打开 `Import Questions`。
+4. 粘贴 JSON，或选择 `.json` 文件。
+5. 点击 `Validate Draft`。
+6. 确认生成 ID 和目标文件无误后，点击 `Import Draft`。
+7. 打开 `Maintenance`，运行 `Run Check`。
+
+`Validate Draft` 不写文件。只有当前草稿通过检查后，`Import Draft` 才会写入 JSONL 题目记录。
 
 ## Answer Types and Media
 

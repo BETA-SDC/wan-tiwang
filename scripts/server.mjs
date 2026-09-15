@@ -14,6 +14,7 @@ const contentTypes = {
   ".css": "text/css; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
   ".webp": "image/webp",
   ".png": "image/png",
   ".jpg": "image/jpeg",
@@ -145,6 +146,96 @@ function defaultQuestionFile(question) {
   return path.join(questionsRoot, ...parts, `${normalizeSlug(question.topic || "mixed")}.jsonl`);
 }
 
+function importPayloadQuestions(body) {
+  if (Array.isArray(body)) return body;
+  if (Array.isArray(body?.questions)) return body.questions;
+  if (Array.isArray(body?.questions?.questions)) return body.questions.questions;
+  if (body?.questions && typeof body.questions === "object") return [body.questions];
+  if (body && typeof body === "object") return [body];
+  return [];
+}
+
+function questionIds(questions) {
+  return new Set(questions.map((question) => question.id).filter(Boolean));
+}
+
+function normalizedImportQuestion(inputQuestion, ids, categories, formats) {
+  if (!inputQuestion || typeof inputQuestion !== "object" || Array.isArray(inputQuestion)) {
+    throw new Error("Each imported question must be a JSON object.");
+  }
+
+  const question = { ...inputQuestion };
+  if (!question.category) throw new Error("Question is missing category.");
+  if (!categories.some((category) => category.id === question.category)) {
+    throw new Error(`Unknown category: ${question.category}`);
+  }
+
+  if (!question.type) throw new Error("Question is missing type.");
+  if (!formats.some((format) => format.id === question.type)) {
+    throw new Error(`Unknown question type: ${question.type}`);
+  }
+
+  if (question.id && ids.has(question.id)) {
+    throw new Error(`Question id already exists: ${question.id}`);
+  }
+
+  question.id ||= nextQuestionId(question.category, [...ids].map((id) => ({ id })));
+  ids.add(question.id);
+  delete question._file;
+  delete question._line;
+  delete question.targetFile;
+  delete question.topic;
+  return question;
+}
+
+function prepareQuestionImport(body) {
+  const categories = readJson(path.join(taxonomyRoot, "categories.json")).categories;
+  const formats = readJson(path.join(taxonomyRoot, "formats.json")).formats;
+  const existingQuestions = loadQuestions();
+  const ids = questionIds(existingQuestions);
+  const inputQuestions = importPayloadQuestions(body);
+  if (inputQuestions.length === 0) throw new Error("No question objects found.");
+
+  return inputQuestions.map((inputQuestion, index) => {
+    const question = normalizedImportQuestion(inputQuestion, ids, categories, formats);
+    const targetRelative = inputQuestion.targetFile || body?.targetFile;
+    const targetFile = targetRelative ? safePath(repoRoot, targetRelative) : defaultQuestionFile(inputQuestion);
+    if (!targetFile) throw new Error(`Unsafe target file for question ${index + 1}.`);
+    if (!targetFile.startsWith(questionsRoot)) {
+      throw new Error(`Target file must stay under data/questions: ${targetRelative}`);
+    }
+    return {
+      index,
+      question,
+      targetFile,
+      file: relativePath(targetFile)
+    };
+  });
+}
+
+function importSummary(prepared, dryRun) {
+  const filesByPath = new Map();
+  for (const item of prepared) {
+    const current = filesByPath.get(item.file) || { file: item.file, count: 0, ids: [] };
+    current.count += 1;
+    current.ids.push(item.question.id);
+    filesByPath.set(item.file, current);
+  }
+
+  return {
+    ok: true,
+    dryRun,
+    count: prepared.length,
+    files: [...filesByPath.values()],
+    questions: prepared.map((item) => ({
+      id: item.question.id,
+      category: item.question.category,
+      type: item.question.type,
+      file: item.file
+    }))
+  };
+}
+
 function rewriteJsonlLine(relativeFile, line, nextValue) {
   const file = path.join(repoRoot, relativeFile);
   const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
@@ -254,6 +345,21 @@ async function handleApi(request, response, url) {
   if (request.method === "GET" && url.pathname === "/api/media") {
     const media = loadMedia();
     return sendJson(response, 200, { total: media.length, media });
+  }
+
+  if (request.method === "POST" && url.pathname === "/api/questions/import") {
+    const body = JSON.parse(await readBody(request));
+    const dryRun = Boolean(body?.dryRun || url.searchParams.get("dryRun") === "true");
+    const prepared = prepareQuestionImport(body);
+
+    if (!dryRun) {
+      for (const item of prepared) {
+        fs.mkdirSync(path.dirname(item.targetFile), { recursive: true });
+        fs.appendFileSync(item.targetFile, `${JSON.stringify(item.question)}\n`);
+      }
+    }
+
+    return sendJson(response, dryRun ? 200 : 201, importSummary(prepared, dryRun));
   }
 
   const questionMatch = url.pathname.match(/^\/api\/questions\/([^/]+)$/);
@@ -435,6 +541,9 @@ function serveStatic(response, url) {
     root = adminRoot;
     pathname = "/media/";
   } else if (pathname.startsWith("/media/")) {
+    root = repoRoot;
+    pathname = pathname.slice(1);
+  } else if (pathname.startsWith("/docs/")) {
     root = repoRoot;
     pathname = pathname.slice(1);
   } else if (pathname.startsWith("/exports/")) {

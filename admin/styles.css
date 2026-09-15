@@ -130,7 +130,7 @@ body {
 }
 .quickActions {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 12px;
   margin-bottom: 20px;
 }
@@ -173,7 +173,7 @@ body {
 }
 .flowSteps {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 8px;
 }
 .flowSteps span {
@@ -211,6 +211,64 @@ button:hover,
 h2, p { margin: 0; }
 .sectionHeader p, .hint { color: var(--muted); }
 .actions { display: flex; gap: 8px; }
+.actions .fileControl {
+  max-width: 240px;
+}
+.importLayout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.importGuide {
+  display: grid;
+  gap: 12px;
+  position: sticky;
+  top: 16px;
+}
+.stepItem {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.stepItem:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.stepItem strong {
+  font-size: 14px;
+}
+.stepItem span {
+  color: var(--muted);
+}
+.importWorkspace {
+  padding: 16px;
+}
+.importTextarea {
+  min-height: 420px;
+  margin-bottom: 12px;
+}
+.importActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+#validateDraftButton,
+#importDraftButton {
+  border-color: var(--accent);
+}
+#importDraftButton:not(:disabled) {
+  background: var(--accent);
+  color: #ffffff;
+}
+.importResultPanel {
+  margin-bottom: 0;
+}
+.importResultPanel pre {
+  margin: 0;
+}
 .inlineControl {
   display: inline-flex;
   align-items: center;
@@ -852,6 +910,7 @@ pre {
   }
   .quickActions,
   .flowSteps,
+  .importLayout,
   .settingsGrid,
   .toolbarPanel {
     grid-template-columns: 1fr;

@@ -4,6 +4,7 @@ const routes = [
   ["home", "Home", "/", "任务总览"],
   ["library", "Question Library", "/questions/", "搜索、筛选和选择题目"],
   ["editor", "Question Editor", "/editor/", "新建或编辑中英文题目"],
+  ["import", "Import Questions", "/import/", "导入 AI 或人工整理的题目草稿"],
   ["slides", "Slide Generator", "/slides/", "组装并导出演示文件"],
   ["media", "Media Library", "/media/", "管理本地媒体元数据"],
   ["settings", "Settings", "/settings/", "查看分类和受控词表"],

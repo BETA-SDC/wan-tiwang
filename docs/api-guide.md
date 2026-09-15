@@ -24,6 +24,7 @@ http://127.0.0.1:5177
 | `GET` | `/api/questions` | List questions. Supports filters listed below. |
 | `GET` | `/api/questions/:id` | Load one question by ID. |
 | `POST` | `/api/questions` | Create one question. If `id` is omitted, the server generates the next ID from `category`. |
+| `POST` | `/api/questions/import` | Validate or import one reviewed question draft, an array, or `{"questions":[...]}`. |
 | `PUT` | `/api/questions/:id` | Replace one existing question record. |
 | `GET` | `/api/media` | List media metadata. |
 | `POST` | `/api/media` | Upload/register one local media item from a browser data URL. |
@@ -51,9 +52,12 @@ http://127.0.0.1:5177
 ```bash
 curl "http://127.0.0.1:5177/api/questions?categoryPrefix=science&difficulty=hard&limit=20"
 curl "http://127.0.0.1:5177/api/questions/science-physics-000020"
+curl -X POST "http://127.0.0.1:5177/api/questions/import?dryRun=true" \
+  -H "Content-Type: application/json" \
+  --data @draft-batch.json
 curl -X POST "http://127.0.0.1:5177/api/check"
 ```
 
-Question creation accepts the same JSON shape described in [Question Format](question-format.md). For AI-generated batches, prefer reviewing them in the UI or importing them with the documented authoring workflow instead of sending unreviewed AI output straight to the API.
+Question creation accepts the same JSON shape described in [Question Format](question-format.md). For AI-generated batches, prefer `Import Questions` in the UI. The import API accepts `dryRun: true`, which validates and reports generated IDs and target files without writing data.
 
-新建题目使用 [Question Format](question-format.md) 中说明的 JSON 结构。对于 AI 批量生成的题目，建议先在 UI 中审核，或按文档中的出题流程导入，不要把未经审核的 AI 输出直接写入 API。
+新建题目使用 [Question Format](question-format.md) 中说明的 JSON 结构。对于 AI 批量生成的题目，优先使用 UI 里的 `Import Questions`。导入 API 支持 `dryRun: true`，可以只检查并返回生成 ID 和目标文件，不写入数据。

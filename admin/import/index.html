@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Import Questions - Wan Ti Wang</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body data-page="import" data-title="Import Questions" data-subtitle="Paste or upload reviewed JSON drafts, validate them, then import into the bank.">
+    <div id="pageActions">
+      <a class="buttonLink" href="/docs/ai-one-file-question-brief.md" target="_blank" rel="noreferrer">AI Brief</a>
+      <a class="buttonLink" href="/editor/">Create One</a>
+      <a class="buttonLink" href="/maintenance/">Run Check</a>
+    </div>
+    <section id="pageContent" class="pageContent">
+      <section class="importLayout">
+        <aside class="panel importGuide">
+          <div class="stepItem">
+            <strong>1. Draft</strong>
+            <span>把 AI One-File Question Brief 给 AI，或人工整理成 JSON 对象/数组。</span>
+          </div>
+          <div class="stepItem">
+            <strong>2. Review</strong>
+            <span>人工检查事实、答案、分类、难度、标签、中英文和媒体引用。</span>
+          </div>
+          <div class="stepItem">
+            <strong>3. Validate</strong>
+            <span>先试运行，确认生成 ID 和目标 JSONL 文件。</span>
+          </div>
+          <div class="stepItem">
+            <strong>4. Import</strong>
+            <span>确认无误后写入题库，再去 Maintenance 运行检查。</span>
+          </div>
+        </aside>
+
+        <section class="content importWorkspace">
+          <div class="sectionHeader">
+            <div>
+              <h2>Question Draft JSON</h2>
+              <p>支持单个题目对象、题目数组，或 <code>{"questions":[...]}</code>。</p>
+            </div>
+            <div class="actions">
+              <input id="draftFile" class="fileControl" type="file" accept="application/json,.json">
+              <button id="clearDraftButton" type="button">Clear</button>
+            </div>
+          </div>
+          <textarea id="draftInput" class="importTextarea" spellcheck="false" placeholder="Paste reviewed question JSON here."></textarea>
+          <div class="importActions">
+            <button id="validateDraftButton" type="button">Validate Draft</button>
+            <button id="importDraftButton" type="button" disabled>Import Draft</button>
+            <a class="buttonLink" href="/questions/">Browse Imported</a>
+          </div>
+          <section class="panel importResultPanel">
+            <div class="sectionHeader">
+              <div>
+                <h2>Import Result</h2>
+                <p id="resultSummary">No draft checked yet.</p>
+              </div>
+            </div>
+            <pre id="importOutput">Paste JSON, then click Validate Draft.</pre>
+          </section>
+        </section>
+      </section>
+    </section>
+    <script type="module" src="/import/app.js"></script>
+  </body>
+</html>

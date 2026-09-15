@@ -159,6 +159,7 @@ Use the left navigation:
 - `Home`: start from common tasks.
 - `Question Library`: search, filter, preview, edit, and select questions.
 - `Question Editor`: create or edit questions.
+- `Import Questions`: paste/upload reviewed JSON drafts and import them after validation.
 - `Slide Generator`: assemble and export one-question-per-slide decks.
 - `Media Library`: inspect registered media metadata.
 - `Settings`: check categories, answer types, moods, and occasions.
@@ -169,6 +170,7 @@ Use the left navigation:
 - `Home`：常用任务入口。
 - `Question Library`：搜索、筛选、预览、编辑、选择题目。
 - `Question Editor`：新建或编辑题目。
+- `Import Questions`：粘贴/上传已审核 JSON 草稿，检查通过后导入。
 - `Slide Generator`：组装并导出一题一页的演示。
 - `Media Library`：查看媒体元数据。
 - `Settings`：查看分类、题型、氛围、场景词表。
@@ -206,7 +208,41 @@ Use `JSON` mode only for advanced fields or question shapes that the form does n
 
 只有在表单暂未覆盖的高级字段或特殊题型结构中，才建议使用 `JSON` 模式。
 
-## Level 4: Work With Media
+## Level 4: Import AI or Batch Drafts
+
+For AI-assisted or batch question creation, use `Import Questions` instead of manually creating each item.
+
+AI 辅助或批量创建题目时，优先使用 `Import Questions`，不用逐题手动新建。
+
+Recommended flow:
+
+1. Give [AI One-File Question Brief](ai-one-file-question-brief.md) to the AI that drafts questions.
+2. Ask for a JSON array of question objects.
+3. Review facts, answers, category IDs, difficulty, tags, bilingual wording, and media references.
+4. Open `Import Questions`.
+5. Paste the JSON or choose the `.json` file.
+6. Click `Validate Draft`.
+7. Confirm the generated IDs and target JSONL files.
+8. Click `Import Draft`.
+9. Open `Maintenance` and click `Run Check`.
+
+推荐流程：
+
+1. 把 [AI One-File Question Brief](ai-one-file-question-brief.md) 给负责出题的 AI。
+2. 让 AI 输出题目对象组成的 JSON 数组。
+3. 人工审核事实、答案、分类 ID、难度、标签、中英文措辞和媒体引用。
+4. 打开 `Import Questions`。
+5. 粘贴 JSON，或选择 `.json` 文件。
+6. 点击 `Validate Draft`。
+7. 确认生成 ID 和目标 JSONL 文件。
+8. 点击 `Import Draft`。
+9. 打开 `Maintenance`，点击 `Run Check`。
+
+`Validate Draft` is a dry run and does not write files. If any question in the batch is invalid, the whole import stops before writing.
+
+`Validate Draft` 是试运行，不会写入文件。如果批次中任何一道题不合法，整批都会在写入前停止。
+
+## Level 5: Work With Media
 
 Media files are local and ignored by Git. Media metadata is versioned in Git.
 
@@ -230,7 +266,7 @@ For media-backed questions, keep a short bilingual `hint` on the question refere
 
 媒体题建议在题目的媒体引用里保留简短双语 `hint`，这样不打开媒体文件也能搜索和理解题目。
 
-## Level 5: Generate and Export Slides
+## Level 6: Generate and Export Slides
 
 Open `Slide Generator`.
 
@@ -276,7 +312,7 @@ The exported deck is a folder containing HTML, CSS, JavaScript, question data, m
 
 导出的演示是一个文件夹，里面包含 HTML、CSS、JavaScript、题目数据、媒体元数据，以及本次演示用到的本地媒体副本。
 
-## Level 6: Collect and Import Answer Feedback
+## Level 7: Collect and Import Answer Feedback
 
 Exported slide decks can record local answer feedback for choice questions.
 
@@ -338,7 +374,7 @@ Feedback is only a reference for future difficulty tuning. It does not automatic
 
 反馈只是未来调整难度的参考，不会自动修改 `difficulty`。
 
-## Level 7: Maintenance Checks
+## Level 8: Maintenance Checks
 
 After changing questions, taxonomy, media metadata, scripts, or imported feedback, run:
 
@@ -374,7 +410,7 @@ The UI `Maintenance` page runs the same check pipeline through the local server.
 
 UI 的 `Maintenance` 页面也会通过本地服务运行同一套检查流程。
 
-## Level 8: CLI and AI Workflows
+## Level 9: CLI and AI Workflows
 
 The CLI is still useful for AI agents and advanced users.
 

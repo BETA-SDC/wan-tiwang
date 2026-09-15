@@ -44,6 +44,7 @@ admin/         Local browser-based management UI
   shared/      Shared app shell, API, i18n, media, and question rendering
   questions/   Question library
   editor/      Question editor
+  import/      Reviewed JSON question draft import
   media/       Media library
   settings/    Taxonomy reference
   maintenance/Repository checks
@@ -69,6 +70,7 @@ admin/         本地浏览器管理界面
   shared/      共享应用壳层、API、中英文、媒体和题目渲染逻辑
   questions/   题库浏览和筛选
   editor/      题目编辑器
+  import/      已审核题目 JSON 草稿导入
   media/       媒体库
   settings/    分类和受控词表
   maintenance/仓库检查
@@ -163,9 +165,9 @@ Open the local URL printed in the terminal, usually `http://127.0.0.1:5177/`. Ke
 
 打开终端输出的本地地址，通常是 `http://127.0.0.1:5177/`。使用 UI 时保持终端运行，需要停止时按 `Ctrl+C`。
 
-The UI includes a question library, form editor, optional media upload/linking, slide export, answer feedback import, repository checks, and raw JSON editing for advanced cases.
+The UI includes a question library, form editor, reviewed JSON draft import, optional media upload/linking, slide export, answer feedback import, repository checks, and raw JSON editing for advanced cases.
 
-管理界面提供题库浏览、表单录入、可选媒体上传/关联、演示导出、作答反馈导入、仓库检查，以及高级场景下的原始 JSON 编辑。
+管理界面提供题库浏览、表单录入、已审核 JSON 草稿导入、可选媒体上传/关联、演示导出、作答反馈导入、仓库检查，以及高级场景下的原始 JSON 编辑。
 
 For local API details, see [Local API Guide](docs/api-guide.md).
 
