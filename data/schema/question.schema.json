@@ -129,6 +129,15 @@
       "type": "array",
       "items": { "type": "string" }
     },
+    "feedback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["answered_count", "correct_count"],
+      "properties": {
+        "answered_count": { "type": "integer", "minimum": 0 },
+        "correct_count": { "type": "integer", "minimum": 0 }
+      }
+    },
     "media": {
       "type": "array",
       "items": {

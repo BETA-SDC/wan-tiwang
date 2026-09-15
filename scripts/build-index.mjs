@@ -17,7 +17,9 @@ const stats = {
   by_status: {},
   by_type: {},
   by_difficulty: {},
-  by_category: {}
+  by_category: {},
+  feedback_answered_total: 0,
+  feedback_correct_total: 0
 };
 
 function pushIndex(index, key, questionId) {
@@ -55,6 +57,8 @@ for (const file of questionFiles) {
     stats.by_type[question.type] = (stats.by_type[question.type] ?? 0) + 1;
     if (question.difficulty) stats.by_difficulty[question.difficulty] = (stats.by_difficulty[question.difficulty] ?? 0) + 1;
     stats.by_category[question.category] = (stats.by_category[question.category] ?? 0) + 1;
+    stats.feedback_answered_total += Number(question.feedback?.answered_count || 0);
+    stats.feedback_correct_total += Number(question.feedback?.correct_count || 0);
   }
 }
 

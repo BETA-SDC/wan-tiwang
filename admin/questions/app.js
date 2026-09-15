@@ -136,7 +136,10 @@ function renderQuestions() {
     prompt.textContent = localized(question.prompt);
     const meta = document.createElement("div");
     meta.className = "meta";
-    for (const value of [question.id, question.category, question.type, question.difficulty].filter(Boolean)) {
+    const feedbackText = question.feedback
+      ? `answered ${question.feedback.answered_count || 0} · correct ${question.feedback.correct_count || 0}`
+      : "";
+    for (const value of [question.id, question.category, question.type, question.difficulty, feedbackText].filter(Boolean)) {
       const item = document.createElement("span");
       item.textContent = value;
       meta.append(item);

@@ -240,8 +240,9 @@ function folderIndexHtml(title) {
       <button id="prev" type="button">Previous</button>
       <button id="next" type="button">Next</button>
       <button id="reveal" type="button">Show Reveal</button>
+      <button id="downloadFeedback" type="button">Download Feedback</button>
     </div>
-    <span id="status"></span>
+    <span><span id="status"></span><span id="feedbackStatus"></span></span>
   </footer>
   <script src="data/deck-data.js"></script>
   <script src="assets/deck.js"></script>
@@ -260,7 +261,10 @@ body { margin: 0; background: #101828; color: #18212f; font-family: Inter, ui-sa
 h1 { margin: 0; white-space: pre-line; font-size: 40px; line-height: 1.12; }
 .slidePrompt { margin: 0; white-space: pre-line; color: #344054; font-size: 28px; line-height: 1.35; }
 .slideOptions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 0; margin: 0; list-style: none; }
-.slideOptions li { display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 12px; min-height: 58px; padding: 10px 14px; border: 1px solid #d9dee7; border-radius: 8px; background: #f8fafc; }
+.slideOptions li { display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 12px; min-height: 58px; padding: 10px 14px; border: 1px solid #d9dee7; border-radius: 8px; background: #f8fafc; cursor: pointer; }
+.slideOptions li.selected { border-color: #0f766e; box-shadow: inset 0 0 0 2px #0f766e; }
+.slideOptions li.correct { border-color: #15803d; background: #f0fdf4; }
+.slideOptions li.incorrect { border-color: #b91c1c; background: #fef2f2; }
 .slideOptions span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #0f766e; color: #fff; font-weight: 800; }
 .optionBody { display: grid; gap: 8px; min-width: 0; }
 .optionBody img, .optionBody video { max-height: 160px; max-width: 100%; object-fit: contain; border-radius: 6px; background: #101828; }
@@ -282,6 +286,11 @@ h1 { margin: 0; white-space: pre-line; font-size: 40px; line-height: 1.12; }
 .slideReveal.hidden { display: none; }
 .slideReveal strong { color: #115e59; }
 .slideReveal p { margin: 0; white-space: pre-line; }
+.answerPanel { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: #344054; }
+.answerPanel:empty { display: none; }
+.answerPanel button { background: #0f766e; color: #fff; border-color: #0f766e; }
+.answerPanel button:disabled { background: #e4e7ec; border-color: #d0d5dd; color: #667085; cursor: not-allowed; }
+.answerPanel small { font-weight: 700; }
 .controls { position: fixed; left: 24px; right: 24px; bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #e4e7ec; }
 .controls div { display: flex; gap: 8px; }
 button { min-height: 38px; border: 1px solid #d9dee7; border-radius: 6px; background: #fff; color: #18212f; padding: 0 12px; cursor: pointer; font: inherit; }
@@ -302,8 +311,22 @@ function folderDeckJs() {
 const manifest = data.manifest || {};
 const questions = data.questions || [];
 const mediaById = new Map((data.media || []).map((item) => [item.id, item]));
+const storageKey = "wtw-feedback:" + (manifest.exported_at || manifest.title || location.pathname);
+const feedbackState = loadFeedbackState();
 let current = 0;
 let reveal = manifest.revealMode === "inline";
+
+function loadFeedbackState() {
+  try {
+    return JSON.parse(localStorage.getItem(storageKey)) || { events: [] };
+  } catch {
+    return { events: [] };
+  }
+}
+
+function saveFeedbackState() {
+  localStorage.setItem(storageKey, JSON.stringify(feedbackState));
+}
 
 function localized(value, locale = "zh-CN") {
   if (!value || typeof value !== "object") return "";
@@ -363,6 +386,66 @@ function formatAnswer(question) {
   }).join(", ");
 }
 
+function answerIds(question) {
+  return (question.answer || []).filter((answer) => typeof answer === "string").sort();
+}
+
+function sameAnswer(left, right) {
+  if (left.length !== right.length) return false;
+  return left.every((item, index) => item === right[index]);
+}
+
+function feedbackForQuestion(questionId) {
+  return feedbackState.events.find((event) => event.question_id === questionId);
+}
+
+function feedbackSummary() {
+  const questionsById = {};
+  for (const question of questions) {
+    questionsById[question.id] = {
+      answered_count: 0,
+      correct_count: 0
+    };
+  }
+  for (const event of feedbackState.events) {
+    questionsById[event.question_id] ??= { answered_count: 0, correct_count: 0 };
+    questionsById[event.question_id].answered_count += 1;
+    if (event.correct) questionsById[event.question_id].correct_count += 1;
+  }
+  const answered = feedbackState.events.length;
+  const correct = feedbackState.events.filter((event) => event.correct).length;
+  return {
+    format: "wan-ti-wang-answer-feedback-v1",
+    deck_title: manifest.title || "",
+    deck_exported_at: manifest.exported_at || "",
+    generated_at: new Date().toISOString(),
+    summary: {
+      answered_count: answered,
+      correct_count: correct
+    },
+    questions: questionsById,
+    events: feedbackState.events
+  };
+}
+
+function updateFeedbackStatus() {
+  const summary = feedbackSummary().summary;
+  document.querySelector("#feedbackStatus").textContent = " · answered " + summary.answered_count + ", correct " + summary.correct_count;
+}
+
+function downloadFeedback() {
+  const data = JSON.stringify(feedbackSummary(), null, 2);
+  const blob = new Blob([data + "\\n"], { type: "application/json" });
+  const link = document.createElement("a");
+  const slug = (manifest.title || "wan-ti-wang").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "wan-ti-wang";
+  link.href = URL.createObjectURL(blob);
+  link.download = slug + "-answer-feedback.json";
+  document.body.append(link);
+  link.click();
+  URL.revokeObjectURL(link.href);
+  link.remove();
+}
+
 function questionSlide(question, index) {
   const slide = document.createElement("article");
   slide.className = "questionSlide";
@@ -392,6 +475,10 @@ function questionSlide(question, index) {
   options.className = "slideOptions";
   for (const option of question.options || []) {
     const item = document.createElement("li");
+    item.dataset.optionId = option.id;
+    item.tabIndex = 0;
+    item.setAttribute("role", "button");
+    item.setAttribute("aria-pressed", "false");
     const marker = document.createElement("span");
     marker.textContent = option.id;
     const body = document.createElement("div");
@@ -407,6 +494,80 @@ function questionSlide(question, index) {
     options.append(item);
   }
 
+  const answerPanel = document.createElement("div");
+  answerPanel.className = "answerPanel";
+  if ((question.options || []).length > 0 && answerIds(question).length > 0) {
+    const confirm = document.createElement("button");
+    confirm.type = "button";
+    confirm.textContent = "Confirm Answer";
+    const result = document.createElement("small");
+    const existing = feedbackForQuestion(question.id);
+    const selected = new Set(existing?.selected || []);
+
+    function syncOptionState() {
+      for (const item of options.querySelectorAll("li")) {
+        const active = selected.has(item.dataset.optionId);
+        item.classList.toggle("selected", active);
+        item.setAttribute("aria-pressed", String(active));
+      }
+      confirm.disabled = selected.size === 0 || Boolean(feedbackForQuestion(question.id));
+    }
+
+    function markResult(event) {
+      if (!event) return;
+      const correctIds = new Set(answerIds(question));
+      for (const item of options.querySelectorAll("li")) {
+        const optionId = item.dataset.optionId;
+        item.classList.toggle("correct", correctIds.has(optionId));
+        item.classList.toggle("incorrect", event.selected.includes(optionId) && !correctIds.has(optionId));
+      }
+      result.textContent = event.correct ? "Correct recorded" : "Incorrect recorded";
+    }
+
+    function toggleOption(optionId) {
+      if (feedbackForQuestion(question.id)) return;
+      if (question.type === "multiple_choice") {
+        if (selected.has(optionId)) selected.delete(optionId);
+        else selected.add(optionId);
+      } else {
+        selected.clear();
+        selected.add(optionId);
+      }
+      syncOptionState();
+    }
+
+    options.addEventListener("click", (event) => {
+      const item = event.target.closest("li[data-option-id]");
+      if (item) toggleOption(item.dataset.optionId);
+    });
+    options.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const item = event.target.closest("li[data-option-id]");
+      if (!item) return;
+      event.preventDefault();
+      toggleOption(item.dataset.optionId);
+    });
+    confirm.addEventListener("click", () => {
+      const submitted = [...selected].sort();
+      const correct = sameAnswer(submitted, answerIds(question));
+      const event = {
+        question_id: question.id,
+        selected: submitted,
+        correct,
+        answered_at: new Date().toISOString()
+      };
+      feedbackState.events = feedbackState.events.filter((item) => item.question_id !== question.id);
+      feedbackState.events.push(event);
+      saveFeedbackState();
+      syncOptionState();
+      markResult(event);
+      updateFeedbackStatus();
+    });
+    answerPanel.append(confirm, result);
+    syncOptionState();
+    markResult(existing);
+  }
+
   const revealBlock = document.createElement("div");
   revealBlock.className = "slideReveal";
   const answer = document.createElement("strong");
@@ -417,6 +578,7 @@ function questionSlide(question, index) {
 
   slide.append(kicker, title, prompt, slideMedia);
   if ((question.options || []).length > 0) slide.append(options);
+  slide.append(answerPanel);
   slide.append(revealBlock);
   return slide;
 }
@@ -429,6 +591,7 @@ function render() {
   document.querySelector("#reveal").textContent = manifest.revealMode === "inline" ? "Reveal Inline" : reveal ? "Hide Reveal" : "Show Reveal";
   const activeReveal = slides[current]?.querySelector(".slideReveal");
   if (activeReveal && manifest.revealMode !== "inline") activeReveal.classList.toggle("hidden", !reveal);
+  updateFeedbackStatus();
 }
 
 function move(delta) {
@@ -442,6 +605,7 @@ document.querySelector("#deck").replaceChildren(...questions.map(questionSlide))
 document.querySelector("#prev").addEventListener("click", () => move(-1));
 document.querySelector("#next").addEventListener("click", () => move(1));
 document.querySelector("#reveal").addEventListener("click", () => { reveal = !reveal; render(); });
+document.querySelector("#downloadFeedback").addEventListener("click", downloadFeedback);
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") move(-1);
   if (event.key === "ArrowRight") move(1);

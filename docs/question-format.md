@@ -68,6 +68,10 @@ Recommended fields:
     }
   ],
   "play_time_sec": 20,
+  "feedback": {
+    "answered_count": 12,
+    "correct_count": 8
+  },
   "status": "draft"
 }
 ```
@@ -95,6 +99,7 @@ Use `status: "published"` only when the question is ready for random sampling.
 - `pairs`：配对题使用，包含 `left` 和 `right` 两组可配对项目。
 - `hotspots`：热点题使用，描述图片上的可选区域，坐标统一使用 0 到 1 的相对比例。
 - `play_time_sec`：预估游玩时长。
+- `feedback`：可选作答反馈统计，只记录被导出演示收集到的回答次数和答对次数；它是难度训练参考，不会自动代表或覆盖 `difficulty`。
 - `status`：题目状态，`published` 的题目才适合进入随机抽题。
 
 `title`、`prompt`、`options.text`、`reveal` 和 `fun_fact` 需要同时提供 `zh-CN` 和 `en-US`。字段名、分类 ID、题型 ID、标签 ID 建议保持英文。

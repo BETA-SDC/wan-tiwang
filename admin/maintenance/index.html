@@ -16,6 +16,15 @@
         <p>这一步不会修改题目内容，只会检查结构、标签、重复题并重建索引。</p>
       </section>
       <pre id="checkOutput">Ready to run.</pre>
+      <section class="noticePanel">
+        <h2>Answer Feedback Import</h2>
+        <p>导出演示页下载的反馈 JSON 可以在这里接回题库，只累加回答次数和答对次数，不自动改难度。</p>
+        <div class="actions">
+          <input id="feedbackFile" type="file" accept="application/json,.json">
+          <button id="importFeedbackButton" type="button">Import Feedback</button>
+        </div>
+      </section>
+      <pre id="feedbackOutput">No feedback imported yet.</pre>
     </section>
     <script type="module" src="/maintenance/app.js"></script>
   </body>

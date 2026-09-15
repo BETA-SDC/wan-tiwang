@@ -123,6 +123,18 @@ function validateQuestionTypeShape(file, line, question) {
   }
 }
 
+function validateFeedback(file, line, feedback) {
+  if (feedback === undefined) return;
+  if (!feedback || typeof feedback !== "object" || Array.isArray(feedback)) {
+    addError(file, line, "feedback should be an object");
+    return;
+  }
+  for (const field of ["answered_count", "correct_count"]) {
+    if (!Number.isInteger(feedback[field]) || feedback[field] < 0) addError(file, line, `feedback.${field} should be a non-negative integer`);
+  }
+  if (feedback.correct_count > feedback.answered_count) addError(file, line, "feedback.correct_count cannot exceed feedback.answered_count");
+}
+
 for (const file of mediaFiles) {
   for (const { value: item, line } of readJsonl(file)) {
     if (!item.id) addError(file, line, "media item is missing id");
@@ -166,6 +178,7 @@ for (const file of questionFiles) {
     }
 
     for (const media of question.media ?? []) validateMediaRef(file, line, media);
+    validateFeedback(file, line, question.feedback);
     for (const item of question.pairs?.left ?? []) validateOptionLike(file, line, item, `matching left ${item.id ?? ""}`.trim());
     for (const item of question.pairs?.right ?? []) validateOptionLike(file, line, item, `matching right ${item.id ?? ""}`.trim());
     for (const hotspot of question.hotspots ?? []) {

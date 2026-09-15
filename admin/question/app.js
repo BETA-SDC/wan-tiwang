@@ -43,7 +43,10 @@ async function init() {
   question = questionResult.question;
   media = mediaResult.media;
   document.title = `${localized(question.title)} - Wan Ti Wang`;
-  meta.textContent = `${question.id} · ${question.category}`;
+  const feedback = question.feedback
+    ? ` · answered ${question.feedback.answered_count || 0} · correct ${question.feedback.correct_count || 0}`
+    : "";
+  meta.textContent = `${question.id} · ${question.category}${feedback}`;
   editLink.href = `/editor/?id=${encodeURIComponent(question.id)}`;
   render();
 }
