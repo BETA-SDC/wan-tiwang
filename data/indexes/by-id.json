@@ -1,4 +1,32 @@
 {
+  "arts-music-000001": {
+    "file": "data/questions/arts/music/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "arts-music-000002": {
+    "file": "data/questions/arts/music/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "arts-music-000003": {
+    "file": "data/questions/arts/music/quiz-master-ppt.jsonl",
+    "line": 3
+  },
+  "arts-music-000004": {
+    "file": "data/questions/arts/music/quiz-master-ppt.jsonl",
+    "line": 4
+  },
+  "arts-music-000005": {
+    "file": "data/questions/arts/music/quiz-master-ppt.jsonl",
+    "line": 5
+  },
+  "arts-music-000006": {
+    "file": "data/questions/arts/music/quiz-master-ppt.jsonl",
+    "line": 6
+  },
+  "arts-music-000007": {
+    "file": "data/questions/arts/music/quiz-master-ppt.jsonl",
+    "line": 7
+  },
   "brain-lateral-thinking-000001": {
     "file": "data/questions/brain/lateral-thinking/riddles.jsonl",
     "line": 1
@@ -7,12 +35,40 @@
     "file": "data/questions/brain/lateral-thinking/riddles.jsonl",
     "line": 2
   },
+  "brain-math-puzzles-000001": {
+    "file": "data/questions/brain/math-puzzles/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "general-everyday-trivia-000001": {
+    "file": "data/questions/general/everyday-trivia/quiz-master-ppt.jsonl",
+    "line": 1
+  },
   "general-weird-facts-000001": {
     "file": "data/questions/general/weird-facts/mixed.jsonl",
     "line": 1
   },
   "general-weird-facts-000002": {
     "file": "data/questions/general/weird-facts/mixed.jsonl",
+    "line": 2
+  },
+  "geography-cities-000001": {
+    "file": "data/questions/geography/cities/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "geography-cities-000002": {
+    "file": "data/questions/geography/cities/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "geography-cities-000003": {
+    "file": "data/questions/geography/cities/quiz-master-ppt.jsonl",
+    "line": 3
+  },
+  "geography-nature-000001": {
+    "file": "data/questions/geography/nature/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "geography-nature-000002": {
+    "file": "data/questions/geography/nature/quiz-master-ppt.jsonl",
     "line": 2
   },
   "history-ancient-china-000001": {
@@ -23,8 +79,68 @@
     "file": "data/questions/history/ancient-china/fun-facts.jsonl",
     "line": 2
   },
+  "history-figures-000001": {
+    "file": "data/questions/history/figures/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "history-figures-000002": {
+    "file": "data/questions/history/figures/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "history-world-history-000001": {
+    "file": "data/questions/history/world-history/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "history-world-history-000002": {
+    "file": "data/questions/history/world-history/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "history-world-history-000003": {
+    "file": "data/questions/history/world-history/quiz-master-ppt.jsonl",
+    "line": 3
+  },
+  "history-world-history-000004": {
+    "file": "data/questions/history/world-history/quiz-master-ppt.jsonl",
+    "line": 4
+  },
+  "humanities-literature-000001": {
+    "file": "data/questions/humanities/literature/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "humanities-literature-000002": {
+    "file": "data/questions/humanities/literature/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "humanities-philosophy-000001": {
+    "file": "data/questions/humanities/philosophy/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "language-chinese-000001": {
+    "file": "data/questions/language/chinese/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "language-chinese-000002": {
+    "file": "data/questions/language/chinese/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "language-chinese-000003": {
+    "file": "data/questions/language/chinese/quiz-master-ppt.jsonl",
+    "line": 3
+  },
+  "language-english-000001": {
+    "file": "data/questions/language/english/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "language-english-000002": {
+    "file": "data/questions/language/english/quiz-master-ppt.jsonl",
+    "line": 2
+  },
   "language-idioms-000001": {
     "file": "data/questions/language/idioms/chinese-idioms.jsonl",
+    "line": 1
+  },
+  "language-wordplay-000002": {
+    "file": "data/questions/language/wordplay/quiz-master-ppt.jsonl",
     "line": 1
   },
   "language-wordplay-000001": {
@@ -39,6 +155,26 @@
     "file": "data/questions/life/food/kitchen-trivia.jsonl",
     "line": 2
   },
+  "life-sports-000001": {
+    "file": "data/questions/life/sports/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "life-sports-000002": {
+    "file": "data/questions/life/sports/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "pop-culture-memes-000001": {
+    "file": "data/questions/pop-culture/memes/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "pop-culture-memes-000002": {
+    "file": "data/questions/pop-culture/memes/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "pop-culture-memes-000003": {
+    "file": "data/questions/pop-culture/memes/quiz-master-ppt.jsonl",
+    "line": 3
+  },
   "science-astronomy-000001": {
     "file": "data/questions/science/astronomy/space-trivia.jsonl",
     "line": 1
@@ -47,6 +183,62 @@
     "file": "data/questions/science/astronomy/space-trivia.jsonl",
     "line": 2
   },
+  "science-biology-000001": {
+    "file": "data/questions/science/biology/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "science-biology-000002": {
+    "file": "data/questions/science/biology/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "science-biology-000003": {
+    "file": "data/questions/science/biology/quiz-master-ppt.jsonl",
+    "line": 3
+  },
+  "science-physics-000001": {
+    "file": "data/questions/science/physics/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "science-physics-000002": {
+    "file": "data/questions/science/physics/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "society-economics-000001": {
+    "file": "data/questions/society/economics/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "society-economics-000002": {
+    "file": "data/questions/society/economics/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "society-economics-000003": {
+    "file": "data/questions/society/economics/quiz-master-ppt.jsonl",
+    "line": 3
+  },
+  "society-economics-000004": {
+    "file": "data/questions/society/economics/quiz-master-ppt.jsonl",
+    "line": 4
+  },
+  "society-economics-000005": {
+    "file": "data/questions/society/economics/quiz-master-ppt.jsonl",
+    "line": 5
+  },
+  "society-education-000001": {
+    "file": "data/questions/society/education/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "society-law-000001": {
+    "file": "data/questions/society/law/quiz-master-ppt.jsonl",
+    "line": 1
+  },
+  "society-law-000002": {
+    "file": "data/questions/society/law/quiz-master-ppt.jsonl",
+    "line": 2
+  },
+  "society-politics-000001": {
+    "file": "data/questions/society/politics/quiz-master-ppt.jsonl",
+    "line": 1
+  },
   "technology-internet-000001": {
     "file": "data/questions/technology/internet/web-trivia.jsonl",
     "line": 1
@@ -54,5 +246,9 @@
   "technology-internet-000002": {
     "file": "data/questions/technology/internet/web-trivia.jsonl",
     "line": 2
+  },
+  "technology-inventions-000001": {
+    "file": "data/questions/technology/inventions/quiz-master-ppt.jsonl",
+    "line": 1
   }
 }

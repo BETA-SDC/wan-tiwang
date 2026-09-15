@@ -1,32 +1,121 @@
 {
+  "arts.music": [
+    "arts-music-000001",
+    "arts-music-000002",
+    "arts-music-000003",
+    "arts-music-000004",
+    "arts-music-000005",
+    "arts-music-000006",
+    "arts-music-000007"
+  ],
   "brain.lateral-thinking": [
     "brain-lateral-thinking-000001",
     "brain-lateral-thinking-000002"
+  ],
+  "brain.math-puzzles": [
+    "brain-math-puzzles-000001"
+  ],
+  "general.everyday-trivia": [
+    "general-everyday-trivia-000001"
   ],
   "general.weird-facts": [
     "general-weird-facts-000001",
     "general-weird-facts-000002"
   ],
+  "geography.cities": [
+    "geography-cities-000001",
+    "geography-cities-000002",
+    "geography-cities-000003"
+  ],
+  "geography.nature": [
+    "geography-nature-000001",
+    "geography-nature-000002"
+  ],
   "history.ancient-china": [
     "history-ancient-china-000001",
     "history-ancient-china-000002"
+  ],
+  "history.figures": [
+    "history-figures-000001",
+    "history-figures-000002"
+  ],
+  "history.world-history": [
+    "history-world-history-000001",
+    "history-world-history-000002",
+    "history-world-history-000003",
+    "history-world-history-000004"
+  ],
+  "humanities.literature": [
+    "humanities-literature-000001",
+    "humanities-literature-000002"
+  ],
+  "humanities.philosophy": [
+    "humanities-philosophy-000001"
+  ],
+  "language.chinese": [
+    "language-chinese-000001",
+    "language-chinese-000002",
+    "language-chinese-000003"
+  ],
+  "language.english": [
+    "language-english-000001",
+    "language-english-000002"
   ],
   "language.idioms": [
     "language-idioms-000001"
   ],
   "language.wordplay": [
+    "language-wordplay-000002",
     "language-wordplay-000001"
   ],
   "life.food": [
     "life-food-000001",
     "life-food-000002"
   ],
+  "life.sports": [
+    "life-sports-000001",
+    "life-sports-000002"
+  ],
+  "pop-culture.memes": [
+    "pop-culture-memes-000001",
+    "pop-culture-memes-000002",
+    "pop-culture-memes-000003"
+  ],
   "science.astronomy": [
     "science-astronomy-000001",
     "science-astronomy-000002"
   ],
+  "science.biology": [
+    "science-biology-000001",
+    "science-biology-000002",
+    "science-biology-000003"
+  ],
+  "science.physics": [
+    "science-physics-000001",
+    "science-physics-000002"
+  ],
+  "society.economics": [
+    "society-economics-000001",
+    "society-economics-000002",
+    "society-economics-000003",
+    "society-economics-000004",
+    "society-economics-000005"
+  ],
+  "society.education": [
+    "society-education-000001"
+  ],
+  "society.law": [
+    "society-law-000001",
+    "society-law-000002"
+  ],
+  "society.politics": [
+    "society-politics-000001"
+  ],
   "technology.internet": [
     "technology-internet-000001",
     "technology-internet-000002"
+  ],
+  "technology.inventions": [
+    "technology-inventions-000001"
   ]
 }

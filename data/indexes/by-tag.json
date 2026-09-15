@@ -1,4 +1,110 @@
 {
+  "luo-tianyi": [
+    "arts-music-000001"
+  ],
+  "vocaloid": [
+    "arts-music-000001"
+  ],
+  "color": [
+    "arts-music-000001"
+  ],
+  "ppt-import": [
+    "arts-music-000001",
+    "arts-music-000002",
+    "arts-music-000003",
+    "arts-music-000004",
+    "arts-music-000005",
+    "arts-music-000006",
+    "arts-music-000007",
+    "brain-math-puzzles-000001",
+    "general-everyday-trivia-000001",
+    "geography-cities-000001",
+    "geography-cities-000002",
+    "geography-cities-000003",
+    "geography-nature-000001",
+    "geography-nature-000002",
+    "history-figures-000001",
+    "history-figures-000002",
+    "history-world-history-000001",
+    "history-world-history-000002",
+    "history-world-history-000003",
+    "history-world-history-000004",
+    "humanities-literature-000001",
+    "humanities-literature-000002",
+    "humanities-philosophy-000001",
+    "language-chinese-000001",
+    "language-chinese-000002",
+    "language-chinese-000003",
+    "language-english-000001",
+    "language-english-000002",
+    "language-wordplay-000002",
+    "life-sports-000001",
+    "life-sports-000002",
+    "pop-culture-memes-000001",
+    "pop-culture-memes-000002",
+    "pop-culture-memes-000003",
+    "science-biology-000001",
+    "science-biology-000002",
+    "science-biology-000003",
+    "science-physics-000001",
+    "science-physics-000002",
+    "society-economics-000001",
+    "society-economics-000002",
+    "society-economics-000003",
+    "society-economics-000004",
+    "society-economics-000005",
+    "society-education-000001",
+    "society-law-000001",
+    "society-law-000002",
+    "society-politics-000001",
+    "technology-inventions-000001"
+  ],
+  "mozart": [
+    "arts-music-000002"
+  ],
+  "classical-music": [
+    "arts-music-000002",
+    "arts-music-000003",
+    "arts-music-000004",
+    "arts-music-000005"
+  ],
+  "austria": [
+    "arts-music-000002"
+  ],
+  "ravel": [
+    "arts-music-000003"
+  ],
+  "twentieth-century": [
+    "arts-music-000003"
+  ],
+  "vivaldi": [
+    "arts-music-000004"
+  ],
+  "four-seasons": [
+    "arts-music-000004"
+  ],
+  "string-quartet": [
+    "arts-music-000005"
+  ],
+  "instruments": [
+    "arts-music-000005"
+  ],
+  "jay-chou": [
+    "arts-music-000006"
+  ],
+  "mandopop": [
+    "arts-music-000006"
+  ],
+  "music": [
+    "arts-music-000006",
+    "arts-music-000007"
+  ],
+  "erhu": [
+    "arts-music-000007"
+  ],
+  "chinese-instruments": [
+    "arts-music-000007"
+  ],
   "riddle": [
     "brain-lateral-thinking-000001",
     "brain-lateral-thinking-000002"
@@ -14,7 +120,26 @@
   ],
   "english": [
     "brain-lateral-thinking-000002",
+    "language-wordplay-000002",
     "language-wordplay-000001"
+  ],
+  "calculus": [
+    "brain-math-puzzles-000001"
+  ],
+  "odd-function": [
+    "brain-math-puzzles-000001"
+  ],
+  "integral": [
+    "brain-math-puzzles-000001"
+  ],
+  "manhattanhenge": [
+    "general-everyday-trivia-000001"
+  ],
+  "sunrise": [
+    "general-everyday-trivia-000001"
+  ],
+  "new-york": [
+    "general-everyday-trivia-000001"
   ],
   "botany": [
     "general-weird-facts-000001",
@@ -32,6 +157,54 @@
   ],
   "microbes": [
     "general-weird-facts-000002"
+  ],
+  "hangzhou": [
+    "geography-cities-000001",
+    "geography-cities-000002",
+    "history-figures-000002"
+  ],
+  "old-names": [
+    "geography-cities-000001"
+  ],
+  "china": [
+    "geography-cities-000001",
+    "geography-cities-000003",
+    "history-world-history-000001",
+    "history-world-history-000002",
+    "society-education-000001",
+    "society-law-000001",
+    "society-politics-000001",
+    "technology-inventions-000001"
+  ],
+  "city-gates": [
+    "geography-cities-000002"
+  ],
+  "local-culture": [
+    "geography-cities-000002"
+  ],
+  "prefecture-level-city": [
+    "geography-cities-000003"
+  ],
+  "province": [
+    "geography-cities-000003"
+  ],
+  "mediterranean": [
+    "geography-nature-000001"
+  ],
+  "rome": [
+    "geography-nature-000001"
+  ],
+  "geography": [
+    "geography-nature-000001"
+  ],
+  "asia": [
+    "geography-nature-000002"
+  ],
+  "europe": [
+    "geography-nature-000002"
+  ],
+  "boundary": [
+    "geography-nature-000002"
   ],
   "qin-dynasty": [
     "history-ancient-china-000001"
@@ -51,6 +224,121 @@
   "han-dynasty": [
     "history-ancient-china-000002"
   ],
+  "xin-qiji": [
+    "history-figures-000001"
+  ],
+  "ci-poetry": [
+    "history-figures-000001"
+  ],
+  "song-dynasty": [
+    "history-figures-000001"
+  ],
+  "qian-liu": [
+    "history-figures-000002"
+  ],
+  "wuyue": [
+    "history-figures-000002"
+  ],
+  "yuan-dynasty": [
+    "history-world-history-000001"
+  ],
+  "mongol-empire": [
+    "history-world-history-000001"
+  ],
+  "qing-dynasty": [
+    "history-world-history-000002"
+  ],
+  "dynasty": [
+    "history-world-history-000002"
+  ],
+  "communist-manifesto": [
+    "history-world-history-000003"
+  ],
+  "marx": [
+    "history-world-history-000003"
+  ],
+  "history": [
+    "history-world-history-000003"
+  ],
+  "california": [
+    "history-world-history-000004"
+  ],
+  "gold-rush": [
+    "history-world-history-000004"
+  ],
+  "united-states": [
+    "history-world-history-000004"
+  ],
+  "eileen-chang": [
+    "humanities-literature-000001"
+  ],
+  "modern-literature": [
+    "humanities-literature-000001"
+  ],
+  "phrase-origin": [
+    "humanities-literature-000001"
+  ],
+  "world-literature": [
+    "humanities-literature-000002"
+  ],
+  "cortazar": [
+    "humanities-literature-000002"
+  ],
+  "authors": [
+    "humanities-literature-000002"
+  ],
+  "john-dewey": [
+    "humanities-philosophy-000001"
+  ],
+  "pragmatism": [
+    "humanities-philosophy-000001"
+  ],
+  "education": [
+    "humanities-philosophy-000001",
+    "society-education-000001"
+  ],
+  "dream-of-the-red-chamber": [
+    "language-chinese-000001",
+    "language-chinese-000003"
+  ],
+  "chinese-literature": [
+    "language-chinese-000001"
+  ],
+  "chapter-title": [
+    "language-chinese-000001"
+  ],
+  "lu-xun": [
+    "language-chinese-000002"
+  ],
+  "meme": [
+    "language-chinese-000002",
+    "pop-culture-memes-000002"
+  ],
+  "modern-chinese": [
+    "language-chinese-000002"
+  ],
+  "classic-novel": [
+    "language-chinese-000003"
+  ],
+  "titles": [
+    "language-chinese-000003"
+  ],
+  "linguistics": [
+    "language-english-000001",
+    "language-english-000002"
+  ],
+  "word-order": [
+    "language-english-000001"
+  ],
+  "language": [
+    "language-english-000001"
+  ],
+  "maya-script": [
+    "language-english-000002"
+  ],
+  "writing-system": [
+    "language-english-000002"
+  ],
   "chinese": [
     "language-idioms-000001"
   ],
@@ -58,9 +346,14 @@
     "language-idioms-000001"
   ],
   "wordplay": [
-    "language-idioms-000001"
+    "language-idioms-000001",
+    "pop-culture-memes-000001"
+  ],
+  "countries": [
+    "language-wordplay-000002"
   ],
   "alphabet": [
+    "language-wordplay-000002",
     "language-wordplay-000001"
   ],
   "pangram": [
@@ -74,6 +367,45 @@
   ],
   "cacao": [
     "life-food-000002"
+  ],
+  "sports": [
+    "life-sports-000001"
+  ],
+  "ball-games": [
+    "life-sports-000001"
+  ],
+  "table-tennis": [
+    "life-sports-000001"
+  ],
+  "rugby": [
+    "life-sports-000002"
+  ],
+  "sports-history": [
+    "life-sports-000002"
+  ],
+  "england": [
+    "life-sports-000002"
+  ],
+  "military-meme": [
+    "pop-culture-memes-000001"
+  ],
+  "h-20": [
+    "pop-culture-memes-000001"
+  ],
+  "fire": [
+    "pop-culture-memes-000002"
+  ],
+  "mixed-pop-culture": [
+    "pop-culture-memes-000002"
+  ],
+  "cartoon": [
+    "pop-culture-memes-000003"
+  ],
+  "internet-meme": [
+    "pop-culture-memes-000003"
+  ],
+  "fictional-place": [
+    "pop-culture-memes-000003"
   ],
   "venus": [
     "science-astronomy-000001"
@@ -91,6 +423,106 @@
   "solar-system": [
     "science-astronomy-000002"
   ],
+  "ginkgo": [
+    "science-biology-000001"
+  ],
+  "taxonomy": [
+    "science-biology-000001",
+    "science-biology-000002"
+  ],
+  "plants": [
+    "science-biology-000001"
+  ],
+  "arthropod": [
+    "science-biology-000002"
+  ],
+  "tardigrade": [
+    "science-biology-000002"
+  ],
+  "telomere": [
+    "science-biology-000003"
+  ],
+  "dna": [
+    "science-biology-000003"
+  ],
+  "genetics": [
+    "science-biology-000003"
+  ],
+  "photoelectric-effect": [
+    "science-physics-000001"
+  ],
+  "einstein": [
+    "science-physics-000001"
+  ],
+  "nobel-prize": [
+    "science-physics-000001"
+  ],
+  "quantum-mechanics": [
+    "science-physics-000002"
+  ],
+  "physics": [
+    "science-physics-000002"
+  ],
+  "interpretation": [
+    "science-physics-000002"
+  ],
+  "elasticity": [
+    "society-economics-000001"
+  ],
+  "microeconomics": [
+    "society-economics-000001",
+    "society-economics-000002",
+    "society-economics-000003",
+    "society-economics-000004",
+    "society-economics-000005"
+  ],
+  "demand": [
+    "society-economics-000001"
+  ],
+  "utility": [
+    "society-economics-000002"
+  ],
+  "consumer-theory": [
+    "society-economics-000002"
+  ],
+  "production-function": [
+    "society-economics-000003"
+  ],
+  "marginal-product": [
+    "society-economics-000003"
+  ],
+  "perfect-competition": [
+    "society-economics-000004"
+  ],
+  "market": [
+    "society-economics-000004"
+  ],
+  "monopolistic-competition": [
+    "society-economics-000005"
+  ],
+  "market-structure": [
+    "society-economics-000005"
+  ],
+  "westlake-university": [
+    "society-education-000001",
+    "society-law-000002"
+  ],
+  "civil-law": [
+    "society-law-000001",
+    "society-law-000002"
+  ],
+  "legal-common-sense": [
+    "society-law-000001"
+  ],
+  "legal-person": [
+    "society-law-000002"
+  ],
+  "civic-knowledge": [
+    "society-politics-000001"
+  ],
+  "politics": [
+    "society-politics-000001"
+  ],
   "web": [
     "technology-internet-000001",
     "technology-internet-000002"
@@ -104,5 +536,11 @@
   ],
   "http": [
     "technology-internet-000002"
+  ],
+  "aircraft-carrier": [
+    "technology-inventions-000001"
+  ],
+  "naval-technology": [
+    "technology-inventions-000001"
   ]
 }

@@ -1,21 +1,45 @@
 {
-  "total": 14,
+  "total": 63,
   "with_media": 0,
   "by_status": {
+    "review": 49,
     "published": 14
   },
   "by_type": {
-    "single_choice": 11,
-    "true_false": 3
+    "single_choice": 37,
+    "fill_blank": 15,
+    "multiple_choice": 5,
+    "true_false": 4,
+    "short_answer": 2
   },
   "by_category": {
+    "arts.music": 7,
     "brain.lateral-thinking": 2,
+    "brain.math-puzzles": 1,
+    "general.everyday-trivia": 1,
     "general.weird-facts": 2,
+    "geography.cities": 3,
+    "geography.nature": 2,
     "history.ancient-china": 2,
+    "history.figures": 2,
+    "history.world-history": 4,
+    "humanities.literature": 2,
+    "humanities.philosophy": 1,
+    "language.chinese": 3,
+    "language.english": 2,
     "language.idioms": 1,
-    "language.wordplay": 1,
+    "language.wordplay": 2,
     "life.food": 2,
+    "life.sports": 2,
+    "pop-culture.memes": 3,
     "science.astronomy": 2,
-    "technology.internet": 2
+    "science.biology": 3,
+    "science.physics": 2,
+    "society.economics": 5,
+    "society.education": 1,
+    "society.law": 2,
+    "society.politics": 1,
+    "technology.internet": 2,
+    "technology.inventions": 1
   }
 }

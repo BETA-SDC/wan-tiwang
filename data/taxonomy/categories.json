@@ -40,6 +40,12 @@
     { "id": "humanities.religion", "name": "Religion and Culture", "parent": "humanities" },
     { "id": "humanities.classics", "name": "Classics", "parent": "humanities" },
 
+    { "id": "society", "name": "Society and Social Science" },
+    { "id": "society.politics", "name": "Politics and Civic Knowledge", "parent": "society" },
+    { "id": "society.economics", "name": "Economics", "parent": "society" },
+    { "id": "society.law", "name": "Law and Legal Common Sense", "parent": "society" },
+    { "id": "society.education", "name": "Education and Universities", "parent": "society" },
+
     { "id": "arts", "name": "Arts and Aesthetics" },
     { "id": "arts.painting", "name": "Painting", "parent": "arts" },
     { "id": "arts.music", "name": "Music", "parent": "arts" },
