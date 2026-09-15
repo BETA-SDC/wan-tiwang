@@ -4,6 +4,10 @@ AI can reduce the repetitive parts of maintaining Wan Ti Wang, but it should not
 
 AI 可以显著降低维护万题王的重复劳动，但不应该完全代替审核。适合交给 AI 的部分包括草稿生成、双语改写、格式整理、批量清理；事实准确性、趣味风格、版权判断和最终发布仍然需要人工把关。
 
+If another AI can only read one instruction file, give it [AI One-File Question Brief](ai-one-file-question-brief.md). That file includes allowed categories, values, normal question format, media question format, and final checks in one place.
+
+如果其他 AI 只能读一份说明，请直接给它 [AI One-File Question Brief](ai-one-file-question-brief.md)。那份文档把可用分类、字段取值、普通题格式、媒体题格式和最终检查都放在一处。
+
 ## What AI Should Help With
 
 - turn rough ideas into bilingual question drafts

@@ -253,6 +253,10 @@ For AI-assisted question drafting and review, see [AI-Assisted Authoring](docs/a
 
 AI 辅助生成、翻译、审核和导入流程见 [AI-Assisted Authoring](docs/ai-assisted-authoring.md)。
 
+If you need to give another AI only one self-contained instruction file, use [AI One-File Question Brief](docs/ai-one-file-question-brief.md).
+
+如果要给其他 AI 只读一份自包含说明，请使用 [AI One-File Question Brief](docs/ai-one-file-question-brief.md)。
+
 For long-term readability, tag standards, duplicate checks, and generated media indexes, see [Maintenance Guide](docs/maintenance-guide.md).
 
 长期可读性、标签规范、重复题检测和媒体索引说明见 [Maintenance Guide](docs/maintenance-guide.md)。
