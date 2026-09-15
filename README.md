@@ -81,6 +81,46 @@ skills/        面向 AI 助手的仓库操作说明
 - 题目引用媒体时使用稳定的 `media_id`，不要直接依赖物理路径。
 - 索引文件由脚本生成，不建议手动编辑。
 
+## First-Time Setup
+
+If this is the first time using the project on a computer, install Node.js first. Node.js normally includes npm, so installing Node.js is enough for both `node` and `npm` commands.
+
+第一次在一台电脑上使用本项目时，先安装 Node.js。通常 Node.js 会自带 npm，所以装好 Node.js 后就同时有 `node` 和 `npm` 命令。
+
+Recommended beginner path:
+
+1. Open [nodejs.org](https://nodejs.org/).
+2. Download the LTS version for your system.
+3. Install it with the default options.
+4. Close and reopen Terminal.
+5. Check the installation:
+
+```bash
+node --version
+npm --version
+```
+
+新手推荐步骤：
+
+1. 打开 [nodejs.org](https://nodejs.org/)。
+2. 下载适合自己系统的 LTS 版本。
+3. 按默认选项安装。
+4. 关闭并重新打开终端。
+5. 检查是否安装成功：
+
+```bash
+node --version
+npm --version
+```
+
+If both commands print version numbers, setup is ready. This project requires Node.js 18 or newer.
+
+如果两个命令都能输出版本号，就可以继续使用。本项目需要 Node.js 18 或更新版本。
+
+If `node` works but `npm` does not, you can still start the UI with direct Node commands shown below.
+
+如果 `node` 可用但 `npm` 不可用，也可以使用下面的直接 Node 命令启动 UI。
+
 ## Quick Start
 
 For everyday visual work, start the local UI:
