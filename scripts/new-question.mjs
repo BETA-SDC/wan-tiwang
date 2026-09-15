@@ -143,8 +143,7 @@ function resolveTargetPath(question, targetRelative) {
   return defaultQuestionFile(question.category, topicSlug);
 }
 
-function normalizeQuestion(inputQuestion) {
-  const ids = existingQuestionIds();
+function normalizeQuestion(inputQuestion, ids = existingQuestionIds()) {
   const question = { ...inputQuestion };
 
   if (!question.category) {
@@ -164,6 +163,7 @@ function normalizeQuestion(inputQuestion) {
   }
 
   question.id ||= nextQuestionId(question.category, ids);
+  ids.add(question.id);
   delete question.topic;
   return question;
 }
@@ -217,9 +217,14 @@ async function main() {
   const targetFromArgs = argValue("--target");
 
   if (fromJsonSource) {
-    const inputQuestion = readQuestionFromJson(fromJsonSource);
-    const question = normalizeQuestion(inputQuestion);
-    writeQuestion(question, resolveTargetPath(inputQuestion, targetFromArgs));
+    const input = readQuestionFromJson(fromJsonSource);
+    const inputQuestions = Array.isArray(input) ? input : [input];
+    const ids = existingQuestionIds();
+
+    for (const inputQuestion of inputQuestions) {
+      const question = normalizeQuestion(inputQuestion, ids);
+      writeQuestion(question, resolveTargetPath(inputQuestion, targetFromArgs));
+    }
     return;
   }
 

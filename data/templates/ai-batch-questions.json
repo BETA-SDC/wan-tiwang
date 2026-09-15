@@ -1,0 +1,104 @@
+[
+  {
+    "type": "single_choice",
+    "category": "technology.ai",
+    "topic": "ai-trivia",
+    "difficulty": "easy",
+    "title": {
+      "zh-CN": "中文短标题",
+      "en-US": "Short English title"
+    },
+    "prompt": {
+      "zh-CN": "中文题干？",
+      "en-US": "English prompt?"
+    },
+    "options": [
+      {
+        "id": "A",
+        "text": {
+          "zh-CN": "中文选项 A",
+          "en-US": "English option A"
+        }
+      },
+      {
+        "id": "B",
+        "text": {
+          "zh-CN": "中文选项 B",
+          "en-US": "English option B"
+        }
+      },
+      {
+        "id": "C",
+        "text": {
+          "zh-CN": "中文选项 C",
+          "en-US": "English option C"
+        }
+      },
+      {
+        "id": "D",
+        "text": {
+          "zh-CN": "中文选项 D",
+          "en-US": "English option D"
+        }
+      }
+    ],
+    "answer": ["A"],
+    "reveal": {
+      "zh-CN": "中文答案解释，轻松但准确。",
+      "en-US": "English reveal, light but accurate."
+    },
+    "fun_fact": {
+      "zh-CN": "可选趣味补充。",
+      "en-US": "Optional fun fact."
+    },
+    "tags": ["ai", "example"],
+    "mood": ["easygoing"],
+    "occasion": ["daily", "party"],
+    "play_time_sec": 25,
+    "status": "draft"
+  },
+  {
+    "type": "true_false",
+    "category": "general.weird-facts",
+    "topic": "mixed",
+    "difficulty": "medium",
+    "title": {
+      "zh-CN": "判断题中文短标题",
+      "en-US": "True/false short title"
+    },
+    "prompt": {
+      "zh-CN": "判断：这里写中文判断题干。",
+      "en-US": "True or false: write the English statement here."
+    },
+    "options": [
+      {
+        "id": "T",
+        "text": {
+          "zh-CN": "正确",
+          "en-US": "True"
+        }
+      },
+      {
+        "id": "F",
+        "text": {
+          "zh-CN": "错误",
+          "en-US": "False"
+        }
+      }
+    ],
+    "answer": ["F"],
+    "reveal": {
+      "zh-CN": "说明为什么正确或错误。",
+      "en-US": "Explain why it is true or false."
+    },
+    "fun_fact": {
+      "zh-CN": "可选趣味补充。",
+      "en-US": "Optional fun fact."
+    },
+    "tags": ["example"],
+    "mood": ["surprising"],
+    "occasion": ["daily"],
+    "play_time_sec": 20,
+    "status": "draft"
+  }
+]

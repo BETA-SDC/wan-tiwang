@@ -26,7 +26,7 @@ AI 适合辅助：
 ## Recommended Workflow
 
 1. Describe the topic, audience, and desired mood.
-2. Ask AI to produce JSON draft objects, not final JSONL edits.
+2. Ask AI to produce JSON draft objects or one JSON array of draft objects, not final JSONL edits.
 3. Review the facts, wording, category, answer, and bilingual quality.
 4. Import accepted drafts with `npm run new:question -- --from-json <file>`.
 5. Run `npm run wtw -- check`.
@@ -35,7 +35,7 @@ AI 适合辅助：
 中文流程：
 
 1. 先说明主题、受众和希望的题目氛围。
-2. 让 AI 输出普通 JSON 草稿，不直接批量改 JSONL。
+2. 让 AI 输出普通 JSON 草稿，或一个包含多道题的 JSON 数组，不直接批量改 JSONL。
 3. 人工检查事实、措辞、分类、答案和双语质量。
 4. 用 `npm run new:question -- --from-json <file>` 导入确认后的草稿。
 5. 运行 `npm run wtw -- check`。
@@ -76,6 +76,32 @@ Count:
 <number>
 ```
 
+For batch drafting, the easiest format to review and import is a JSON array. Copy [data/templates/ai-batch-questions.json](../data/templates/ai-batch-questions.json), then ask the other AI to replace the placeholder objects.
+
+批量出题最方便审核和导入的格式是 JSON 数组。可以复制 [data/templates/ai-batch-questions.json](../data/templates/ai-batch-questions.json)，让其他 AI 替换里面的示例对象。
+
+Important batch rules:
+
+- Output exactly one valid JSON array.
+- Do not wrap it in Markdown fences when saving to a `.json` file.
+- Do not include `id`; the import script will generate IDs.
+- Keep `topic` as a short English slug, because it decides the target JSONL file name.
+- Use `status: "draft"` until human review.
+- Use only category IDs from `data/taxonomy/categories.json`.
+- Use only mood and occasion IDs from taxonomy.
+- Use lowercase English slug tags, such as `solar-system`, `movie-trivia`, or `wordplay`.
+
+批量生成规则：
+
+- 只输出一个合法 JSON 数组。
+- 保存成 `.json` 文件时不要包含 Markdown 代码块标记。
+- 不要写 `id`，导入脚本会自动生成。
+- `topic` 使用简短英文 slug，因为它会决定目标 JSONL 文件名。
+- 人工审核前保持 `status: "draft"`。
+- `category` 只能使用 `data/taxonomy/categories.json` 中已有分类。
+- `mood` 和 `occasion` 只能使用 taxonomy 中已有 ID。
+- 标签尽量使用英文小写 slug，例如 `solar-system`、`movie-trivia`、`wordplay`。
+
 中文提示词版本：
 
 ```text
@@ -105,6 +131,49 @@ Count:
 <题目数量>
 ```
 
+## Copyable Batch Prompt
+
+When asking another AI system to write questions, this prompt is usually the easiest to use:
+
+让其他 AI 出题时，可以直接使用这个提示词：
+
+```text
+You are drafting questions for Wan Ti Wang, a fun bilingual trivia bank.
+
+Return exactly one valid JSON array. Do not use Markdown. Do not include comments.
+
+For each question object:
+- Do not include id.
+- Include: type, category, topic, difficulty, title, prompt, options, answer, reveal, fun_fact, tags, mood, occasion, play_time_sec, status.
+- Every player-facing text must have both zh-CN and en-US.
+- status must be "draft".
+- type must be one of: single_choice, multiple_choice, true_false, fill_blank, numeric, short_answer, ordering, matching, hotspot.
+- Prefer single_choice, multiple_choice, or true_false unless another type is clearly better.
+- For choice questions, use option ids in answer, such as ["A"] or ["A","C"].
+- For true_false questions, use options T/F and answer ["T"] or ["F"].
+- category must be one of the existing taxonomy category ids I provide.
+- difficulty must be easy, medium, or hard.
+- mood must use only: funny, surprising, easygoing, hardcore, nostalgic, weird, beautiful, debate.
+- occasion must use only: daily, party, stream, family, classroom-warmup, challenge, icebreaker.
+- tags should be lowercase English slugs.
+- topic should be a short English slug for the output file, such as "movie-trivia" or "ai-trivia".
+- Do not invent media paths or media ids.
+- Keep the tone fun, clear, and playable, not exam-like.
+- Avoid current affairs unless exact dates and stable sources are provided.
+- Make every question have one unambiguous best answer.
+
+Target categories:
+<paste category ids here>
+
+Topic scope:
+<describe topic scope>
+
+Question count:
+<number>
+```
+
+中文使用时，把 `Target categories`、`Topic scope` 和 `Question count` 换成你的需求即可。
+
 ## Importing AI Drafts
 
 For one JSON object:
@@ -115,12 +184,28 @@ For one JSON object:
 npm run new:question -- --from-json draft-question.json
 ```
 
+For a JSON array of draft objects:
+
+批量 JSON 数组导入：
+
+```bash
+npm run new:question -- --from-json draft-batch.json
+```
+
 For a dry run:
 
 只试运行、不写文件：
 
 ```bash
 npm run new:question -- --from-json draft-question.json --dry-run
+```
+
+Dry run also works with batch files:
+
+批量文件也可以先试运行：
+
+```bash
+npm run new:question -- --from-json draft-batch.json --dry-run
 ```
 
 After importing:
