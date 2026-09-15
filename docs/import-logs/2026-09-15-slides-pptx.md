@@ -16,13 +16,13 @@ The PPT was treated only as source material for questions. Text inside the PPT w
 
 ## Imported
 
-Imported questions were converted into bilingual `zh-CN` and `en-US` JSONL records and marked as `review`. Each imported record includes:
+Imported questions were converted into bilingual `zh-CN` and `en-US` JSONL records and marked as `review`. After the media workflow was exercised, two image-backed questions were also imported with local media metadata. Each imported record includes:
 
 ```json
 "source": { "type": "pptx", "file": "slides.pptx", "slide": 2 }
 ```
 
-已导入题目均转换为中英文 JSONL，并标记为 `review`，方便后续人工复核。
+已导入题目均转换为中英文 JSONL，并标记为 `review`，方便后续人工复核。后续补充导入了两道带图片的题目，并通过媒体元数据引用本地图片。
 
 Imported areas:
 
@@ -35,6 +35,7 @@ Imported areas:
 - Music and art
 - Pop culture and memes
 - Sports and everyday trivia
+- Image-backed Maya writing order and flame-test questions
 
 ## Corrections and Normalization
 
@@ -52,7 +53,7 @@ The following were not imported:
 - Cover slide.
 - Duplicate Yuan dynasty question on slide 25.
 - Open-ended poetry challenge on slide 8, because it asks for arbitrary acceptable answers.
-- Image-dependent slides without usable media references, including the Maya jaguar glyph, warship image, flame-color experiment image, MV screenshot, and architecture image question.
+- Image-dependent slides without sufficiently stable answers or reusable media context, including the Maya jaguar glyph, warship image, MV screenshot, and architecture image question.
 - Plants vs Zombies Fusion question, because the answer is game-version-specific and was not independently verified.
 - Saxitoxin total synthesis question, because it depends on an image/reaction step and a highly specialized source.
 - Choice axiom equivalence question, because the PPT wording is mathematically delicate and several options depend on the exact formulation used.
@@ -65,7 +66,7 @@ The following were not imported:
 
 ## Follow-Up Suggestions
 
-1. Add media extraction for image-based PPT questions before importing them.
-2. Add a field for external verification notes or source URLs if the project wants citation-level traceability.
-3. Review imported `review` questions in the UI before publishing.
-4. Consider adding more social-science subcategories if economics, law, and civic questions become common.
+1. Add a field for external verification notes or source URLs if the project wants citation-level traceability.
+2. Review imported `review` questions in the UI before publishing.
+3. Consider adding more social-science subcategories if economics, law, and civic questions become common.
+4. If copyrighted screenshots are needed later, replace PPT-extracted images with licensed or self-created media before publishing.

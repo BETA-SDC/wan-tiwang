@@ -34,6 +34,7 @@
     "life-sports-000002",
     "science-astronomy-000001",
     "science-astronomy-000002",
+    "science-chemistry-000001",
     "society-economics-000004",
     "society-education-000001",
     "society-law-000001",
@@ -63,12 +64,14 @@
     "history-ancient-china-000001",
     "history-ancient-china-000002",
     "history-figures-000001",
+    "history-world-history-000005",
     "language-english-000001",
     "language-english-000002",
     "science-astronomy-000001",
     "science-astronomy-000002",
     "science-biology-000001",
-    "science-biology-000002"
+    "science-biology-000002",
+    "science-chemistry-000001"
   ],
   "funny": [
     "brain-lateral-thinking-000001",

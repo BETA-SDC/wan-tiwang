@@ -1,13 +1,13 @@
 {
-  "total": 63,
-  "with_media": 0,
+  "total": 65,
+  "with_media": 2,
   "by_status": {
-    "review": 49,
+    "review": 51,
     "published": 14
   },
   "by_type": {
-    "single_choice": 37,
-    "fill_blank": 15,
+    "single_choice": 38,
+    "fill_blank": 16,
     "multiple_choice": 5,
     "true_false": 4,
     "short_answer": 2
@@ -22,7 +22,7 @@
     "geography.nature": 2,
     "history.ancient-china": 2,
     "history.figures": 2,
-    "history.world-history": 4,
+    "history.world-history": 5,
     "humanities.literature": 2,
     "humanities.philosophy": 1,
     "language.chinese": 3,
@@ -34,6 +34,7 @@
     "pop-culture.memes": 3,
     "science.astronomy": 2,
     "science.biology": 3,
+    "science.chemistry": 1,
     "science.physics": 2,
     "society.economics": 5,
     "society.education": 1,

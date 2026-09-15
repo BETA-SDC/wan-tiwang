@@ -29,6 +29,7 @@
     "history-world-history-000002",
     "history-world-history-000003",
     "history-world-history-000004",
+    "history-world-history-000005",
     "humanities-literature-000001",
     "humanities-literature-000002",
     "humanities-philosophy-000001",
@@ -46,6 +47,7 @@
     "science-biology-000001",
     "science-biology-000002",
     "science-biology-000003",
+    "science-chemistry-000001",
     "science-physics-000001",
     "science-physics-000002",
     "society-economics-000001",
@@ -269,6 +271,20 @@
   "united-states": [
     "history-world-history-000004"
   ],
+  "maya": [
+    "history-world-history-000005"
+  ],
+  "writing-system": [
+    "history-world-history-000005",
+    "language-english-000002"
+  ],
+  "inscription": [
+    "history-world-history-000005"
+  ],
+  "image-guess": [
+    "history-world-history-000005",
+    "science-chemistry-000001"
+  ],
   "eileen-chang": [
     "humanities-literature-000001"
   ],
@@ -334,9 +350,6 @@
     "language-english-000001"
   ],
   "maya-script": [
-    "language-english-000002"
-  ],
-  "writing-system": [
     "language-english-000002"
   ],
   "chinese": [
@@ -447,6 +460,15 @@
   ],
   "genetics": [
     "science-biology-000003"
+  ],
+  "flame-test": [
+    "science-chemistry-000001"
+  ],
+  "chemistry": [
+    "science-chemistry-000001"
+  ],
+  "experiment": [
+    "science-chemistry-000001"
   ],
   "photoelectric-effect": [
     "science-physics-000001"

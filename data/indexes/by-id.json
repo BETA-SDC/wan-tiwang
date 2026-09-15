@@ -103,6 +103,10 @@
     "file": "data/questions/history/world-history/quiz-master-ppt.jsonl",
     "line": 4
   },
+  "history-world-history-000005": {
+    "file": "data/questions/history/world-history/quiz-master-ppt.jsonl",
+    "line": 5
+  },
   "humanities-literature-000001": {
     "file": "data/questions/humanities/literature/quiz-master-ppt.jsonl",
     "line": 1
@@ -194,6 +198,10 @@
   "science-biology-000003": {
     "file": "data/questions/science/biology/quiz-master-ppt.jsonl",
     "line": 3
+  },
+  "science-chemistry-000001": {
+    "file": "data/questions/science/chemistry/quiz-master-ppt.jsonl",
+    "line": 1
   },
   "science-physics-000001": {
     "file": "data/questions/science/physics/quiz-master-ppt.jsonl",

@@ -43,7 +43,8 @@
     "history-world-history-000001",
     "history-world-history-000002",
     "history-world-history-000003",
-    "history-world-history-000004"
+    "history-world-history-000004",
+    "history-world-history-000005"
   ],
   "humanities.literature": [
     "humanities-literature-000001",
@@ -89,6 +90,9 @@
     "science-biology-000001",
     "science-biology-000002",
     "science-biology-000003"
+  ],
+  "science.chemistry": [
+    "science-chemistry-000001"
   ],
   "science.physics": [
     "science-physics-000001",
