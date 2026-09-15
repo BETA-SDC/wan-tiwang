@@ -1,24 +1,17 @@
 import { requestJson } from "../shared/api.js";
+import { byId } from "../shared/dom.js";
+import { readTextFile } from "../shared/files.js";
 import { mountAppShell } from "../shared/app-shell.js";
 
-const draftInput = document.querySelector("#draftInput");
-const draftFile = document.querySelector("#draftFile");
-const clearDraftButton = document.querySelector("#clearDraftButton");
-const validateDraftButton = document.querySelector("#validateDraftButton");
-const importDraftButton = document.querySelector("#importDraftButton");
-const importOutput = document.querySelector("#importOutput");
-const resultSummary = document.querySelector("#resultSummary");
+const draftInput = byId("draftInput");
+const draftFile = byId("draftFile");
+const clearDraftButton = byId("clearDraftButton");
+const validateDraftButton = byId("validateDraftButton");
+const importDraftButton = byId("importDraftButton");
+const importOutput = byId("importOutput");
+const resultSummary = byId("resultSummary");
 
 let lastValidatedSource = "";
-
-function readFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => resolve(reader.result));
-    reader.addEventListener("error", () => reject(reader.error));
-    reader.readAsText(file);
-  });
-}
 
 function parseDraft() {
   const raw = draftInput.value.trim();
@@ -104,7 +97,7 @@ draftInput.addEventListener("input", () => {
 draftFile.addEventListener("change", async () => {
   const file = draftFile.files[0];
   if (!file) return;
-  draftInput.value = await readFile(file);
+  draftInput.value = await readTextFile(file);
   lastValidatedSource = "";
   importDraftButton.disabled = true;
   resultSummary.textContent = `Loaded ${file.name}.`;

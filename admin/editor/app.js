@@ -1,33 +1,28 @@
 import { requestJson } from "../shared/api.js";
+import { byId, createOption as option } from "../shared/dom.js";
+import { readDataUrlFile } from "../shared/files.js";
 import { localized } from "../shared/i18n.js";
-import { mountAppShell } from "../shared/app-shell.js";
+import { startPage } from "../shared/page.js";
 
 const params = new URLSearchParams(location.search);
 const questionId = params.get("id");
 const state = { bootstrap: null, media: [], selectedQuestion: null, baseQuestion: null, mode: "form" };
 const elements = {
-  form: document.querySelector("#questionForm"),
-  type: document.querySelector("#formType"),
-  category: document.querySelector("#formCategory"),
-  difficulty: document.querySelector("#formDifficulty"),
-  mood: document.querySelector("#formMood"),
-  occasion: document.querySelector("#formOccasion"),
-  options: document.querySelector("#optionsEditor"),
-  mediaEditors: document.querySelector("#mediaEditors"),
-  json: document.querySelector("#jsonEditor"),
-  meta: document.querySelector("#editorMeta"),
-  saveStatus: document.querySelector("#saveStatus"),
-  imageToggle: document.querySelector("#useImageMedia"),
-  audioToggle: document.querySelector("#useAudioMedia"),
-  videoToggle: document.querySelector("#useVideoMedia")
+  form: byId("questionForm"),
+  type: byId("formType"),
+  category: byId("formCategory"),
+  difficulty: byId("formDifficulty"),
+  mood: byId("formMood"),
+  occasion: byId("formOccasion"),
+  options: byId("optionsEditor"),
+  mediaEditors: byId("mediaEditors"),
+  json: byId("jsonEditor"),
+  meta: byId("editorMeta"),
+  saveStatus: byId("saveStatus"),
+  imageToggle: byId("useImageMedia"),
+  audioToggle: byId("useAudioMedia"),
+  videoToggle: byId("useVideoMedia")
 };
-
-function option(value, label) {
-  const node = document.createElement("option");
-  node.value = value;
-  node.textContent = label;
-  return node;
-}
 
 function localizedObject(zh, en) {
   return { "zh-CN": zh.trim(), "en-US": en.trim() };
@@ -221,15 +216,6 @@ function syncMedia(kind) {
   if (!toggleFor(kind).checked && existing) existing.remove();
 }
 
-function readFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => resolve(reader.result));
-    reader.addEventListener("error", () => reject(reader.error));
-    reader.readAsDataURL(file);
-  });
-}
-
 async function mediaRefs(upload = false) {
   const refs = [];
   for (const block of elements.mediaEditors.querySelectorAll(".mediaEditor")) {
@@ -244,7 +230,7 @@ async function mediaRefs(upload = false) {
           title: block.querySelector('[data-media-field="title"]').value.trim(),
           alt: block.querySelector('[data-media-field="alt"]').value.trim(),
           tags: list(block.querySelector('[data-media-field="tags"]').value),
-          dataUrl: await readFile(file)
+          dataUrl: await readDataUrlFile(file)
         })
       })).media;
     }
@@ -319,9 +305,9 @@ function setMode(mode) {
   state.mode = mode;
   elements.form.classList.toggle("hidden", mode !== "form");
   elements.json.classList.toggle("hidden", mode !== "json");
-  document.querySelector("#formatButton").classList.toggle("hidden", mode !== "json");
-  document.querySelector("#formModeButton").classList.toggle("active", mode === "form");
-  document.querySelector("#jsonModeButton").classList.toggle("active", mode === "json");
+  byId("formatButton").classList.toggle("hidden", mode !== "json");
+  byId("formModeButton").classList.toggle("active", mode === "form");
+  byId("jsonModeButton").classList.toggle("active", mode === "json");
 }
 
 function newDraft() {
@@ -365,7 +351,6 @@ async function save() {
 }
 
 async function init() {
-  mountAppShell();
   const [bootstrap, media] = await Promise.all([requestJson("/api/bootstrap"), requestJson("/api/media")]);
   state.bootstrap = bootstrap;
   state.media = media.media;
@@ -379,20 +364,20 @@ async function init() {
   setMode("form");
 }
 
-document.querySelector("#saveButton").addEventListener("click", save);
-document.querySelector("#formModeButton").addEventListener("click", async () => {
+byId("saveButton").addEventListener("click", save);
+byId("formModeButton").addEventListener("click", async () => {
   if (state.mode === "json") fillForm(JSON.parse(elements.json.value || "{}"));
   setMode("form");
 });
-document.querySelector("#jsonModeButton").addEventListener("click", async () => {
+byId("jsonModeButton").addEventListener("click", async () => {
   elements.json.value = JSON.stringify(await questionFromForm(), null, 2);
   setMode("json");
 });
-document.querySelector("#formatButton").addEventListener("click", () => {
+byId("formatButton").addEventListener("click", () => {
   try { elements.json.value = JSON.stringify(JSON.parse(elements.json.value), null, 2); }
   catch (error) { elements.saveStatus.textContent = `Invalid JSON: ${error.message}`; }
 });
-document.querySelector("#addOptionButton").addEventListener("click", () => {
+byId("addOptionButton").addEventListener("click", () => {
   addOptionRow({ id: String.fromCharCode(65 + elements.options.children.length), text: localizedObject("", "") });
 });
 elements.type.addEventListener("change", () => showOptions(elements.type.value));
@@ -400,6 +385,4 @@ for (const [kind, toggle] of [["image", elements.imageToggle], ["audio", element
   toggle.addEventListener("change", () => syncMedia(kind));
 }
 
-init().catch((error) => {
-  document.querySelector("#pageContent").innerHTML = `<pre class="error">${error.stack || error.message}</pre>`;
-});
+startPage(init);

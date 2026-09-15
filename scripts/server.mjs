@@ -22,7 +22,10 @@ const server = http.createServer(async (request, response) => {
       serveStatic(response, url);
     }
   } catch (error) {
-    sendJson(response, 500, { error: error.message, stack: error.stack });
+    sendJson(response, error.status ?? 500, {
+      error: error.message,
+      ...(error.status ? {} : { stack: error.stack })
+    });
   }
 });
 

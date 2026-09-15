@@ -1,5 +1,5 @@
 import { requestJson } from "../shared/api.js";
-import { mountAppShell } from "../shared/app-shell.js";
+import { startPage } from "../shared/page.js";
 
 function renderList(target, items) {
   target.replaceChildren();
@@ -16,7 +16,6 @@ function renderList(target, items) {
 }
 
 async function init() {
-  mountAppShell();
   const data = await requestJson("/api/bootstrap");
   const categoryTree = document.querySelector("#categoryTree");
   categoryTree.replaceChildren();
@@ -36,6 +35,4 @@ async function init() {
   renderList(document.querySelector("#occasionList"), data.occasions);
 }
 
-init().catch((error) => {
-  document.querySelector("#pageContent").innerHTML = `<pre class="error">${error.stack || error.message}</pre>`;
-});
+startPage(init);

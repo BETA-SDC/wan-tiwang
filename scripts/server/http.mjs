@@ -1,3 +1,10 @@
+export class HttpError extends Error {
+  constructor(message, status = 500) {
+    super(message);
+    this.status = status;
+  }
+}
+
 export function sendJson(response, status, value) {
   response.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
   response.end(JSON.stringify(value, null, 2));
@@ -14,7 +21,7 @@ export function readBody(request, maxRequestBytes) {
     request.on("data", (chunk) => {
       body += chunk;
       if (body.length > maxRequestBytes) {
-        reject(new Error("Request body too large."));
+        reject(new HttpError("Request body too large.", 413));
         request.destroy();
       }
     });
@@ -24,5 +31,10 @@ export function readBody(request, maxRequestBytes) {
 }
 
 export async function readJsonBody(request, maxRequestBytes) {
-  return JSON.parse(await readBody(request, maxRequestBytes));
+  const raw = await readBody(request, maxRequestBytes);
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    throw new HttpError(`Invalid JSON request body: ${error.message}`, 400);
+  }
 }

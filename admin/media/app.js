@@ -1,5 +1,5 @@
 import { requestJson } from "../shared/api.js";
-import { mountAppShell } from "../shared/app-shell.js";
+import { startPage } from "../shared/page.js";
 
 const list = document.querySelector("#mediaList");
 const count = document.querySelector("#mediaCount");
@@ -31,10 +31,7 @@ function render(items) {
 }
 
 async function init() {
-  mountAppShell();
   render((await requestJson("/api/media")).media);
 }
 
-init().catch((error) => {
-  document.querySelector("#pageContent").innerHTML = `<pre class="error">${error.stack || error.message}</pre>`;
-});
+startPage(init);

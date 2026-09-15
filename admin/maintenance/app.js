@@ -1,11 +1,13 @@
 import { requestJson } from "../shared/api.js";
+import { byId } from "../shared/dom.js";
+import { readTextFile } from "../shared/files.js";
 import { mountAppShell } from "../shared/app-shell.js";
 
-const output = document.querySelector("#checkOutput");
-const button = document.querySelector("#runCheckButton");
-const feedbackFile = document.querySelector("#feedbackFile");
-const feedbackButton = document.querySelector("#importFeedbackButton");
-const feedbackOutput = document.querySelector("#feedbackOutput");
+const output = byId("checkOutput");
+const button = byId("runCheckButton");
+const feedbackFile = byId("feedbackFile");
+const feedbackButton = byId("importFeedbackButton");
+const feedbackOutput = byId("feedbackOutput");
 
 async function runCheck() {
   button.disabled = true;
@@ -20,15 +22,6 @@ async function runCheck() {
   }
 }
 
-function readFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => resolve(reader.result));
-    reader.addEventListener("error", () => reject(reader.error));
-    reader.readAsText(file);
-  });
-}
-
 async function importFeedback() {
   const file = feedbackFile.files[0];
   if (!file) {
@@ -38,7 +31,7 @@ async function importFeedback() {
   feedbackButton.disabled = true;
   feedbackOutput.textContent = "Importing feedback...";
   try {
-    const payload = await readFile(file);
+    const payload = await readTextFile(file);
     const result = await requestJson("/api/feedback/import", {
       method: "POST",
       body: payload

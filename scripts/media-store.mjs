@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { mediaMetaRoot, readJsonl, relativePath, walkFiles } from "./lib.mjs";
+import { mediaMetaRoot, normalizeSlug, readJsonl, relativePath, repoRoot, walkFiles } from "./lib.mjs";
 
 export function loadMedia() {
   const mediaFiles = walkFiles(mediaMetaRoot, (file) => file.endsWith(".jsonl"));
@@ -48,4 +48,32 @@ export function appendMediaMeta(item) {
   fs.mkdirSync(path.dirname(metaFile), { recursive: true });
   fs.appendFileSync(metaFile, `${JSON.stringify(item)}\n`);
   return item;
+}
+
+export function saveUploadedMedia({ type, filename, title, alt, tags = [], status = "draft", dataUrl, slug }) {
+  const extension = path.extname(path.basename(filename || "")).toLowerCase();
+  if (!["image", "audio", "video"].includes(type)) throw new Error(`Unsupported media type: ${type}`);
+  if (!extension) throw new Error("Uploaded media needs a file extension.");
+  if (!dataUrl || !dataUrl.includes(",")) throw new Error("Uploaded media is missing data.");
+
+  const cleanTitle = (title || path.basename(filename, extension)).trim();
+  const mediaSlug = normalizeSlug(slug || cleanTitle || path.basename(filename, extension));
+  const id = nextMediaId(type, mediaSlug, loadMedia());
+  const relativeMediaPath = path.join("media", mediaDirectory(type), `${id}${extension}`);
+  const targetFile = path.join(repoRoot, relativeMediaPath);
+  const encoded = dataUrl.split(",").pop();
+
+  fs.mkdirSync(path.dirname(targetFile), { recursive: true });
+  fs.writeFileSync(targetFile, Buffer.from(encoded, "base64"));
+
+  return appendMediaMeta({
+    id,
+    type,
+    path: relativeMediaPath.replaceAll(path.sep, "/"),
+    title: cleanTitle,
+    ...(alt ? { alt } : {}),
+    source: { type: "local", note: "Uploaded from the local admin UI." },
+    tags: Array.isArray(tags) ? tags : [],
+    status
+  });
 }

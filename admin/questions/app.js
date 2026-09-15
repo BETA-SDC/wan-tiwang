@@ -1,6 +1,7 @@
 import { requestJson } from "../shared/api.js";
+import { createOption as option } from "../shared/dom.js";
 import { localized } from "../shared/i18n.js";
-import { mountAppShell } from "../shared/app-shell.js";
+import { startPage } from "../shared/page.js";
 
 const state = {
   bootstrap: null,
@@ -18,13 +19,6 @@ const elements = {
   questionList: document.querySelector("#questionList"),
   questionCount: document.querySelector("#questionCount")
 };
-
-function option(value, label) {
-  const node = document.createElement("option");
-  node.value = value;
-  node.textContent = label;
-  return node;
-}
 
 function saveSelection() {
   localStorage.setItem("wtw:selectedSlideIds", JSON.stringify([...state.selectedIds]));
@@ -182,7 +176,6 @@ async function loadQuestions() {
 }
 
 async function init() {
-  mountAppShell();
   state.bootstrap = await requestJson("/api/bootstrap");
   renderFilters();
   await loadQuestions();
@@ -210,6 +203,4 @@ document.addEventListener("wtw:selection-cleared", () => {
   renderQuestions();
 });
 
-init().catch((error) => {
-  document.querySelector("#pageContent").innerHTML = `<pre class="error">${error.stack || error.message}</pre>`;
-});
+startPage(init);

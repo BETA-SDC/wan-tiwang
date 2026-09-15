@@ -51,6 +51,19 @@ scripts/server/maintenance.mjs
 
 数据读写复用 `scripts/question-store.mjs` 和 `scripts/media-store.mjs`，不要在 API 文件里重新实现 ID 生成、JSONL 写入、媒体元数据读取等逻辑。
 
+The admin UI also keeps shared browser helpers in one place:
+
+```text
+admin/shared/api.js       JSON requests
+admin/shared/dom.js       Required DOM lookup, options, page errors
+admin/shared/files.js     Text and data-URL file reading
+admin/shared/page.js      Page startup and error boundary
+admin/shared/app-shell.js Shared navigation and page shell
+admin/shared/question-view.js
+```
+
+管理端页面应优先复用 `admin/shared/` 中的请求、DOM、文件读取和页面错误处理，不要在每个页面重新复制一套工具函数。
+
 ## Question Filters
 
 `GET /api/questions` query parameters:
