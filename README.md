@@ -257,6 +257,113 @@ If you need to give another AI only one self-contained instruction file, use [AI
 
 如果要给其他 AI 只读一份自包含说明，请使用 [AI One-File Question Brief](docs/ai-one-file-question-brief.md)。
 
+## How to Teach Another AI
+
+If another AI does not have an agent or repository access, give it exactly this document first:
+
+```text
+docs/ai-one-file-question-brief.md
+```
+
+如果其他 AI 没有 agent，也不能读取仓库，先只给它这一份文档：
+
+```text
+docs/ai-one-file-question-brief.md
+```
+
+Then send a task message after the document. The task message should include:
+
+- topic or topic range
+- target category IDs
+- number of questions
+- desired difficulty mix, such as `easy: 2, medium: 2, hard: 1`
+- desired mood and occasion
+- whether media is needed
+- for media: the real file names, local paths, media types, and known source/license information
+
+然后在文档后面补充任务消息。任务消息应包含：
+
+- 主题或主题范围
+- 目标分类 ID
+- 题目数量
+- 难度比例，例如 `easy: 2, medium: 2, hard: 1`
+- 希望的氛围和使用场景
+- 是否需要媒体
+- 如果有媒体：真实文件名、本地路径、媒体类型，以及已知的来源和许可信息
+
+Copyable instruction for normal questions:
+
+普通题可以直接复制下面这段：
+
+```text
+Read the attached file docs/ai-one-file-question-brief.md and follow it exactly.
+
+Create 10 questions about [topic].
+Use these categories: [category IDs].
+Difficulty mix: 3 easy, 5 medium, 2 hard.
+Use a mix of single_choice, multiple_choice, and true_false.
+Mood: easygoing, surprising.
+Occasions: daily, party.
+Return only one valid JSON array. Do not include Markdown or explanations.
+```
+
+Copyable instruction for media questions:
+
+媒体题可以直接复制下面这段：
+
+```text
+Read the attached file docs/ai-one-file-question-brief.md and follow it exactly.
+
+Create 5 media-backed questions about [topic].
+Use these categories: [category IDs].
+Difficulty mix: 2 easy, 2 medium, 1 hard.
+Return one JSON object with:
+- media_files_to_place_locally
+- media_metadata_jsonl
+- question_drafts
+
+I will provide these real local media files:
+- [file name] | [image/audio/video] | [local path] | source: [known source or unknown] | license: [known license or unknown]
+
+Use question-level media for shared prompt material.
+Use options[].media when an image, audio clip, or video is itself an answer option.
+Return only valid JSON. Do not include Markdown or explanations.
+```
+
+After the AI responds:
+
+1. Save ordinary output as `draft-batch.json`.
+2. For media output, review and register `media_metadata_jsonl`, then save only `question_drafts` as `draft-batch.json`.
+3. Run a dry run:
+   ```bash
+   npm run new:question -- --from-json draft-batch.json --dry-run
+   ```
+4. Import after review:
+   ```bash
+   npm run new:question -- --from-json draft-batch.json
+   ```
+5. Run:
+   ```bash
+   npm run wtw -- check
+   ```
+
+拿到 AI 结果后：
+
+1. 普通题输出保存为 `draft-batch.json`。
+2. 媒体题先审核并登记 `media_metadata_jsonl`，再只把 `question_drafts` 保存为 `draft-batch.json`。
+3. 先试运行：
+   ```bash
+   npm run new:question -- --from-json draft-batch.json --dry-run
+   ```
+4. 人工审核无误后正式导入：
+   ```bash
+   npm run new:question -- --from-json draft-batch.json
+   ```
+5. 最后运行：
+   ```bash
+   npm run wtw -- check
+   ```
+
 For long-term readability, tag standards, duplicate checks, and generated media indexes, see [Maintenance Guide](docs/maintenance-guide.md).
 
 长期可读性、标签规范、重复题检测和媒体索引说明见 [Maintenance Guide](docs/maintenance-guide.md)。

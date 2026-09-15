@@ -4,6 +4,71 @@ Give this single document to any AI that needs to draft Wan Ti Wang questions. I
 
 把这一份文档直接给其他 AI 即可。它不需要读取仓库，也不需要知道项目其他文件。
 
+## How a Human Should Use This Brief
+
+Give this entire document to the other AI as an attachment or pasted context. Do not give it only `README.md`, `docs/ai-assisted-authoring.md`, or the question schema; this brief is the standalone version.
+
+把整份文档作为附件或上下文提供给其他 AI。不要只给它 `README.md`、`docs/ai-assisted-authoring.md` 或 schema；本文件才是可以单独使用的版本。
+
+After giving the document, send a short task message with:
+
+```text
+Topic:
+Target categories:
+Question count:
+Difficulty mix:
+Mood:
+Occasions:
+Need media: yes/no
+```
+
+提供文档后，再发送一段任务消息，至少填写：
+
+```text
+主题：
+目标分类：
+题目数量：
+难度比例：
+氛围：
+使用场景：
+是否需要媒体：是/否
+```
+
+For example:
+
+例如：
+
+```text
+Read the attached Wan Ti Wang AI Question Brief and follow it exactly.
+
+Create 10 fun bilingual questions about astronomy.
+Target categories: science.astronomy.
+Difficulty mix: 3 easy, 5 medium, 2 hard.
+Mood: surprising, easygoing.
+Occasions: daily, party.
+Need media: no.
+Return only one valid JSON array. Do not include Markdown or explanations.
+```
+
+If media is needed, also give the real media information. The AI must not guess local files:
+
+如果需要媒体，还要提供真实媒体信息。AI 不应该猜本地文件：
+
+```text
+Need media: yes.
+
+Real files:
+- moon-surface.webp | image | media/images/science/astronomy/moon-surface.webp | source: NASA | license: verify
+- eclipse.mp3 | audio | media/audio/science/astronomy/eclipse.mp3 | source: local recording | license: owned
+
+Return one media question pack with media_files_to_place_locally,
+media_metadata_jsonl, and question_drafts.
+```
+
+The human still needs to review facts, source/license information, and answers before importing.
+
+人仍然需要在导入前审核事实、媒体来源/许可和答案。
+
 ## Goal
 
 Create fun bilingual trivia questions for Wan Ti Wang. This is for playful quizzes, party games, daily challenges, livestream interaction, and light knowledge games. It is not a formal exam bank.
