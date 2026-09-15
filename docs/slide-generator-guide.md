@@ -41,7 +41,7 @@ node scripts/server.mjs
    - `Selected from Library`: use only questions selected in the Question Library.
    - `All questions`: use the full bank.
 4. Set count, language, and reveal mode.
-5. Optionally enable `Guess the question from options` for a playful round where choice questions initially show only their options. Press `H` or use `Show Question` to reveal the question; moving to another slide hides it again.
+5. Optionally enable `Guess the question from options` for a playful round where choice questions initially show only their options. During the preview or presentation, press `G` or use `Enable Guess Mode` / `Disable Guess Mode` to switch this mode at any time. Press `H` or use `Show Question` to reveal the question; moving to another slide hides it again.
 6. Click `Build Preview` or `Shuffle Preview`.
 7. Use `Previous`, `Next`, and `Show Reveal`, or the keyboard shortcuts listed below.
 8. Use `Present` for a slide-like full-stage view.
@@ -57,7 +57,7 @@ node scripts/server.mjs
    - `Selected from Library`：只使用在 Question Library 中勾选的题目。
    - `All questions`：使用全部题目。
 4. 设置数量、语言和答案显示方式。
-5. 如果想玩“根据选项猜题”，勾选 `Guess the question from options`。选择题会先只显示选项；按 `H` 或点击 `Show Question` 显示题目，切换到下一题时会自动隐藏。
+5. 如果想玩“根据选项猜题”，可以先勾选 `Guess the question from options`。演示过程中也可以按 `G`，或点击 `Enable Guess Mode` / `Disable Guess Mode`，随时开启或关闭；开启后选择题只显示选项，按 `H` 或点击 `Show Question` 显示题目，切换到下一题时会自动隐藏。
 6. 点击 `Build Preview` 或 `Shuffle Preview`。
 7. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示，也可以使用下面列出的快捷键。
 8. 使用 `Present` 进入类似幻灯片的展示模式。
@@ -156,6 +156,7 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
   - `Right`, `PageDown`, `Space`, or `N`: next slide.
   - `Left`, `PageUp`, `P`, or `Backspace`: previous slide.
   - `F` or `R`: show or hide the answer.
+  - `G`: enable or disable Guess the question from options mode.
   - `H`: show or hide the question in Guess the question from options mode.
   - `Esc`: hide the answer; in Present mode, exits Present when the answer is already hidden.
   - `W/A/S/D`: move option focus by the on-screen layout.
@@ -177,6 +178,7 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
   - `Right`、`PageDown`、`Space` 或 `N`：下一题。
   - `Left`、`PageUp`、`P` 或 `Backspace`：上一题。
   - `F` 或 `R`：显示/隐藏答案。
+  - `G`：开启/关闭“根据选项猜题”模式。
   - `H`：在“根据选项猜题”模式中显示/隐藏题目。
   - `Esc`：隐藏答案；在 Present 模式中，如果答案已隐藏则退出 Present。
   - `W/A/S/D`：按界面布局移动选项焦点。

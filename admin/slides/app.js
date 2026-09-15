@@ -28,6 +28,7 @@ const elements = {
   slideQuestionPicker: document.querySelector("#slideQuestionPicker"),
   slideDeck: document.querySelector("#slideDeck"),
   slideStatus: document.querySelector("#slideStatus"),
+  toggleGuessModeButton: document.querySelector("#toggleGuessModeButton"),
   toggleQuestionButton: document.querySelector("#toggleQuestionButton"),
   exportStatus: document.querySelector("#exportStatus")
 };
@@ -103,6 +104,7 @@ function renderSlides() {
     empty.textContent = "Choose questions and build slides. 选择题目后生成幻灯片。";
     elements.slideDeck.append(empty);
     elements.slideStatus.textContent = "No slides yet.";
+    elements.toggleGuessModeButton.disabled = true;
     elements.toggleQuestionButton.disabled = true;
     return;
   }
@@ -132,6 +134,8 @@ function renderSlides() {
   const revealButton = document.querySelector("#toggleRevealButton");
   revealButton.disabled = revealMode === "inline";
   revealButton.textContent = revealMode === "inline" ? "Reveal Inline" : state.revealVisible ? "Hide Reveal" : "Show Reveal";
+  elements.toggleGuessModeButton.disabled = false;
+  elements.toggleGuessModeButton.textContent = state.guessQuestionMode ? "Disable Guess Mode" : "Enable Guess Mode";
   elements.toggleQuestionButton.disabled = !canToggleQuestion;
   elements.toggleQuestionButton.textContent = canToggleQuestion && questionVisible ? "Hide Question" : "Show Question";
 }
@@ -286,6 +290,18 @@ function toggleQuestion() {
   renderSlides();
 }
 
+function setGuessQuestionMode(enabled) {
+  state.guessQuestionMode = enabled;
+  elements.guessQuestionMode.checked = enabled;
+  state.questionVisible = !enabled;
+  renderSlides();
+}
+
+function toggleGuessQuestionMode() {
+  if (state.slideQuestions.length === 0) return;
+  setGuessQuestionMode(!state.guessQuestionMode);
+}
+
 async function exportSlides() {
   elements.exportStatus.textContent = "Generating export folder...";
   if (state.slideQuestions.length === 0) buildSlides();
@@ -361,6 +377,7 @@ document.querySelector("#toggleRevealButton").addEventListener("click", () => {
   toggleReveal();
 });
 elements.toggleQuestionButton.addEventListener("click", toggleQuestion);
+elements.toggleGuessModeButton.addEventListener("click", toggleGuessQuestionMode);
 document.querySelector("#presentSlidesButton").addEventListener("click", () => togglePresentation());
 document.querySelector("#selectAllButton").addEventListener("click", () => {
   for (const question of shownQuestions()) state.selectedIds.add(question.id);
@@ -376,9 +393,7 @@ elements.slideSearch.addEventListener("input", renderPicker);
 elements.slideLocale.addEventListener("change", renderSlides);
 elements.slideRevealMode.addEventListener("change", syncRevealForMode);
 elements.guessQuestionMode.addEventListener("change", () => {
-  state.guessQuestionMode = elements.guessQuestionMode.checked;
-  state.questionVisible = !state.guessQuestionMode;
-  renderSlides();
+  setGuessQuestionMode(elements.guessQuestionMode.checked);
 });
 document.addEventListener("keydown", (event) => {
   if (event.defaultPrevented || isEditingTarget(event.target)) return;
@@ -402,6 +417,11 @@ document.addEventListener("keydown", (event) => {
   if (lower === "h") {
     event.preventDefault();
     toggleQuestion();
+    return;
+  }
+  if (lower === "g") {
+    event.preventDefault();
+    toggleGuessQuestionMode();
     return;
   }
   if (key === "Escape") {

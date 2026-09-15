@@ -151,13 +151,13 @@ export function standaloneDeckHtml(questions, media, options = {}) {
 </head>
 <body>
   <main class="deck">${slides}</main>
-  <footer class="controls"><div><button id="prev">Previous</button><button id="next">Next</button><button id="reveal">Show Reveal</button></div><span><span id="status"></span><span class="shortcutHint"> · ←/→ Space F H ?</span></span></footer>
+  <footer class="controls"><div><button id="prev">Previous</button><button id="next">Next</button><button id="guessMode">Enable Guess Mode</button><button id="reveal">Show Reveal</button></div><span><span id="status"></span><span class="shortcutHint"> · ←/→ Space F G H ?</span></span></footer>
   <script>
     const slides = [...document.querySelectorAll(".questionSlide")];
     let current = 0;
     let reveal = ${options.revealMode === "inline" ? "true" : "false"};
     const revealMode = ${JSON.stringify(options.revealMode || "hidden")};
-    const guessQuestionMode = ${Boolean(options.guessQuestionMode)};
+    let guessQuestionMode = ${Boolean(options.guessQuestionMode)};
     let questionVisible = !guessQuestionMode;
     const guessableSlides = new Set(${JSON.stringify(questions.map((question, index) => isChoiceQuestion(question) ? index : -1).filter((index) => index >= 0))});
     function move(delta) {
@@ -172,6 +172,7 @@ export function standaloneDeckHtml(questions, media, options = {}) {
       document.querySelector("#status").textContent = slides.length ? String(current + 1) + " / " + slides.length : "0 / 0";
       document.querySelector("#reveal").disabled = revealMode === "inline";
       document.querySelector("#reveal").textContent = revealMode === "inline" ? "Reveal Inline" : reveal ? "Hide Reveal" : "Show Reveal";
+      document.querySelector("#guessMode").textContent = guessQuestionMode ? "Disable Guess Mode" : "Enable Guess Mode";
       const activeReveal = slides[current]?.querySelector(".slideReveal");
       if (activeReveal && ${options.revealMode === "inline" ? "false" : "true"}) activeReveal.classList.toggle("hidden", !reveal);
       const activeQuestionHidden = guessQuestionMode && guessableSlides.has(current) && !questionVisible;
@@ -184,6 +185,11 @@ export function standaloneDeckHtml(questions, media, options = {}) {
     document.querySelector("#prev").addEventListener("click", () => move(-1));
     document.querySelector("#next").addEventListener("click", () => move(1));
     document.querySelector("#reveal").addEventListener("click", () => { reveal = !reveal; render(); });
+    document.querySelector("#guessMode").addEventListener("click", () => {
+      guessQuestionMode = !guessQuestionMode;
+      questionVisible = !guessQuestionMode;
+      render();
+    });
     function toggleQuestion() {
       if (!guessQuestionMode || !guessableSlides.has(current)) return;
       questionVisible = !questionVisible;
@@ -201,11 +207,18 @@ export function standaloneDeckHtml(questions, media, options = {}) {
       if (["ArrowLeft", "PageUp", "Backspace"].includes(key) || lower === "p") { event.preventDefault(); move(-1); return; }
       if (["ArrowRight", "PageDown", " "].includes(key) || lower === "n") { event.preventDefault(); move(1); return; }
       if (lower === "f" || lower === "r") { event.preventDefault(); toggleReveal(); return; }
+      if (lower === "g") {
+        event.preventDefault();
+        guessQuestionMode = !guessQuestionMode;
+        questionVisible = !guessQuestionMode;
+        render();
+        return;
+      }
       if (lower === "h") { event.preventDefault(); toggleQuestion(); return; }
       if (key === "Escape" && reveal && revealMode !== "inline") { event.preventDefault(); toggleReveal(); return; }
       if (key === "?") {
         event.preventDefault();
-        window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nShow or hide question in guess mode: H\\nHide answer: Esc\\nHelp: ?");
+        window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nEnable or disable guess mode: G\\nShow or hide question in guess mode: H\\nHide answer: Esc\\nHelp: ?");
       }
     });
     render();
@@ -279,9 +292,10 @@ function folderIndexHtml(title) {
       <button id="prev" type="button">Previous</button>
       <button id="next" type="button">Next</button>
       <button id="reveal" type="button">Show Reveal</button>
+      <button id="guessMode" type="button">Enable Guess Mode</button>
       <button id="downloadFeedback" type="button">Download Feedback</button>
     </div>
-    <span><span id="status"></span><span id="feedbackStatus"></span><span class="shortcutHint"> · ←/→ Space F H WASD 1-9 Enter ?</span></span>
+    <span><span id="status"></span><span id="feedbackStatus"></span><span class="shortcutHint"> · ←/→ Space F G H WASD 1-9 Enter ?</span></span>
   </footer>
   <script src="data/deck-data.js"></script>
   <script src="assets/deck.js"></script>
@@ -357,7 +371,8 @@ const storageKey = "wtw-feedback:" + (manifest.exported_at || manifest.title || 
 const feedbackState = loadFeedbackState();
 let current = 0;
 let reveal = manifest.revealMode === "inline";
-let questionVisible = !manifest.guessQuestionMode;
+let guessQuestionMode = Boolean(manifest.guessQuestionMode);
+let questionVisible = !guessQuestionMode;
 
 function loadFeedbackState() {
   try {
@@ -504,7 +519,7 @@ function isChoiceQuestion(question) {
 }
 
 function canToggleQuestion() {
-  return Boolean(manifest.guessQuestionMode) && isChoiceQuestion(activeQuestion());
+  return guessQuestionMode && isChoiceQuestion(activeQuestion());
 }
 
 function activeSelectedIds() {
@@ -662,7 +677,7 @@ function questionSlide(question, index) {
   if ((question.options || []).length > 0) slide.append(options);
   slide.append(answerPanel);
   slide.append(revealBlock);
-  const hidden = Boolean(manifest.guessQuestionMode) && isChoiceQuestion(question) && !questionVisible;
+  const hidden = guessQuestionMode && isChoiceQuestion(question) && !questionVisible;
   title.classList.toggle("questionTextHidden", hidden);
   prompt.classList.toggle("questionTextHidden", hidden);
   slideMedia.classList.toggle("questionTextHidden", hidden);
@@ -675,9 +690,10 @@ function render() {
   document.querySelector("#status").textContent = slides.length ? String(current + 1) + " / " + slides.length : "0 / 0";
   document.querySelector("#reveal").disabled = manifest.revealMode === "inline";
   document.querySelector("#reveal").textContent = manifest.revealMode === "inline" ? "Reveal Inline" : reveal ? "Hide Reveal" : "Show Reveal";
+  document.querySelector("#guessMode").textContent = guessQuestionMode ? "Disable Guess Mode" : "Enable Guess Mode";
   const activeReveal = slides[current]?.querySelector(".slideReveal");
   if (activeReveal && manifest.revealMode !== "inline") activeReveal.classList.toggle("hidden", !reveal);
-  const hidden = Boolean(manifest.guessQuestionMode) && isChoiceQuestion(activeQuestion()) && !questionVisible;
+  const hidden = guessQuestionMode && isChoiceQuestion(activeQuestion()) && !questionVisible;
   slides.forEach((slide, index) => {
     slide.querySelector("h1")?.classList.toggle("questionTextHidden", index === current && hidden);
     slide.querySelector(".slidePrompt")?.classList.toggle("questionTextHidden", index === current && hidden);
@@ -689,7 +705,7 @@ function render() {
 function move(delta) {
   const next = Math.max(0, Math.min(questions.length - 1, current + delta));
   if (next !== current && manifest.revealMode !== "inline") reveal = false;
-  if (next !== current) questionVisible = !manifest.guessQuestionMode;
+  if (next !== current) questionVisible = !guessQuestionMode;
   current = next;
   render();
 }
@@ -703,6 +719,12 @@ function toggleReveal() {
 function toggleQuestion() {
   if (!canToggleQuestion()) return;
   questionVisible = !questionVisible;
+  render();
+}
+
+function toggleGuessQuestionMode() {
+  guessQuestionMode = !guessQuestionMode;
+  questionVisible = !guessQuestionMode;
   render();
 }
 
@@ -782,13 +804,14 @@ function confirmActiveAnswer() {
 }
 
 function showShortcutHelp() {
-  window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nShow or hide question in guess mode: H\\nMove option focus: W/A/S/D\\nSelect option by number: 1-9\\nSelect focused option: Enter\\nConfirm selected answer: Enter again or Confirm Answer\\nHide answer: Esc\\nHelp: ?");
+  window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nEnable or disable guess mode: G\\nShow or hide question in guess mode: H\\nMove option focus: W/A/S/D\\nSelect option by number: 1-9\\nSelect focused option: Enter\\nConfirm selected answer: Enter again or Confirm Answer\\nHide answer: Esc\\nHelp: ?");
 }
 
 document.querySelector("#deck").replaceChildren(...questions.map(questionSlide));
 document.querySelector("#prev").addEventListener("click", () => move(-1));
 document.querySelector("#next").addEventListener("click", () => move(1));
 document.querySelector("#reveal").addEventListener("click", toggleReveal);
+document.querySelector("#guessMode").addEventListener("click", toggleGuessQuestionMode);
 document.querySelector("#downloadFeedback").addEventListener("click", downloadFeedback);
 document.addEventListener("keydown", (event) => {
   if (event.defaultPrevented || event.target.closest("input, textarea, select, button, audio, video, [contenteditable='true']")) return;
@@ -812,6 +835,11 @@ document.addEventListener("keydown", (event) => {
   if (lower === "h") {
     event.preventDefault();
     toggleQuestion();
+    return;
+  }
+  if (lower === "g") {
+    event.preventDefault();
+    toggleGuessQuestionMode();
     return;
   }
   if (key === "Enter") {
