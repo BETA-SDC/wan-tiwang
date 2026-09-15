@@ -3,6 +3,26 @@
     "file": "data/questions/arts/architecture/humanities-expansion-001.jsonl",
     "line": 1
   },
+  "arts-design-000001": {
+    "file": "data/questions/arts/design/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "arts-design-000002": {
+    "file": "data/questions/arts/design/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "arts-design-000003": {
+    "file": "data/questions/arts/design/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "arts-design-000004": {
+    "file": "data/questions/arts/design/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "arts-design-000005": {
+    "file": "data/questions/arts/design/broad-expansion-001.jsonl",
+    "line": 5
+  },
   "arts-music-000008": {
     "file": "data/questions/arts/music/humanities-expansion-001.jsonl",
     "line": 1
@@ -55,6 +75,26 @@
     "file": "data/questions/arts/music/quiz-master-ppt.jsonl",
     "line": 7
   },
+  "arts-painting-000001": {
+    "file": "data/questions/arts/painting/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "arts-painting-000002": {
+    "file": "data/questions/arts/painting/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "arts-painting-000003": {
+    "file": "data/questions/arts/painting/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "arts-painting-000004": {
+    "file": "data/questions/arts/painting/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "arts-painting-000005": {
+    "file": "data/questions/arts/painting/broad-expansion-001.jsonl",
+    "line": 5
+  },
   "brain-lateral-thinking-000001": {
     "file": "data/questions/brain/lateral-thinking/riddles.jsonl",
     "line": 1
@@ -62,6 +102,26 @@
   "brain-lateral-thinking-000002": {
     "file": "data/questions/brain/lateral-thinking/riddles.jsonl",
     "line": 2
+  },
+  "brain-logic-000001": {
+    "file": "data/questions/brain/logic/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "brain-logic-000002": {
+    "file": "data/questions/brain/logic/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "brain-logic-000003": {
+    "file": "data/questions/brain/logic/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "brain-logic-000004": {
+    "file": "data/questions/brain/logic/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "brain-logic-000005": {
+    "file": "data/questions/brain/logic/broad-expansion-001.jsonl",
+    "line": 5
   },
   "brain-math-puzzles-000006": {
     "file": "data/questions/brain/math-puzzles/hard-science-expansion-001.jsonl",
@@ -102,6 +162,46 @@
   "brain-math-puzzles-000005": {
     "file": "data/questions/brain/math-puzzles/science-expansion-001.jsonl",
     "line": 4
+  },
+  "games-anime-000001": {
+    "file": "data/questions/games/anime/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "games-anime-000002": {
+    "file": "data/questions/games/anime/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "games-anime-000003": {
+    "file": "data/questions/games/anime/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "games-anime-000004": {
+    "file": "data/questions/games/anime/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "games-anime-000005": {
+    "file": "data/questions/games/anime/broad-expansion-001.jsonl",
+    "line": 5
+  },
+  "games-board-games-000001": {
+    "file": "data/questions/games/board-games/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "games-board-games-000002": {
+    "file": "data/questions/games/board-games/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "games-board-games-000003": {
+    "file": "data/questions/games/board-games/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "games-board-games-000004": {
+    "file": "data/questions/games/board-games/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "games-board-games-000005": {
+    "file": "data/questions/games/board-games/broad-expansion-001.jsonl",
+    "line": 5
   },
   "games-esports-000001": {
     "file": "data/questions/games/esports/popular-games-expansion-001.jsonl",
@@ -347,6 +447,26 @@
     "file": "data/questions/geography/countries/humanities-expansion-001.jsonl",
     "line": 4
   },
+  "geography-landmarks-000001": {
+    "file": "data/questions/geography/landmarks/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "geography-landmarks-000002": {
+    "file": "data/questions/geography/landmarks/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "geography-landmarks-000003": {
+    "file": "data/questions/geography/landmarks/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "geography-landmarks-000004": {
+    "file": "data/questions/geography/landmarks/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "geography-landmarks-000005": {
+    "file": "data/questions/geography/landmarks/broad-expansion-001.jsonl",
+    "line": 5
+  },
   "geography-nature-000003": {
     "file": "data/questions/geography/nature/humanities-expansion-001.jsonl",
     "line": 1
@@ -378,6 +498,26 @@
   "history-figures-000002": {
     "file": "data/questions/history/figures/quiz-master-ppt.jsonl",
     "line": 2
+  },
+  "history-modern-china-000001": {
+    "file": "data/questions/history/modern-china/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "history-modern-china-000002": {
+    "file": "data/questions/history/modern-china/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "history-modern-china-000003": {
+    "file": "data/questions/history/modern-china/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "history-modern-china-000004": {
+    "file": "data/questions/history/modern-china/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "history-modern-china-000005": {
+    "file": "data/questions/history/modern-china/broad-expansion-001.jsonl",
+    "line": 5
   },
   "history-world-history-000007": {
     "file": "data/questions/history/world-history/humanities-expansion-001.jsonl",
@@ -571,6 +711,26 @@
     "file": "data/questions/language/wordplay/word-trivia.jsonl",
     "line": 1
   },
+  "life-animals-000001": {
+    "file": "data/questions/life/animals/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "life-animals-000002": {
+    "file": "data/questions/life/animals/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "life-animals-000003": {
+    "file": "data/questions/life/animals/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "life-animals-000004": {
+    "file": "data/questions/life/animals/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "life-animals-000005": {
+    "file": "data/questions/life/animals/broad-expansion-001.jsonl",
+    "line": 5
+  },
   "life-food-000001": {
     "file": "data/questions/life/food/kitchen-trivia.jsonl",
     "line": 1
@@ -578,6 +738,46 @@
   "life-food-000002": {
     "file": "data/questions/life/food/kitchen-trivia.jsonl",
     "line": 2
+  },
+  "life-health-000001": {
+    "file": "data/questions/life/health/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "life-health-000002": {
+    "file": "data/questions/life/health/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "life-health-000003": {
+    "file": "data/questions/life/health/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "life-health-000004": {
+    "file": "data/questions/life/health/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "life-health-000005": {
+    "file": "data/questions/life/health/broad-expansion-001.jsonl",
+    "line": 5
+  },
+  "life-plants-000001": {
+    "file": "data/questions/life/plants/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "life-plants-000002": {
+    "file": "data/questions/life/plants/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "life-plants-000003": {
+    "file": "data/questions/life/plants/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "life-plants-000004": {
+    "file": "data/questions/life/plants/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "life-plants-000005": {
+    "file": "data/questions/life/plants/broad-expansion-001.jsonl",
+    "line": 5
   },
   "life-sports-000001": {
     "file": "data/questions/life/sports/quiz-master-ppt.jsonl",
@@ -598,6 +798,46 @@
   "pop-culture-memes-000003": {
     "file": "data/questions/pop-culture/memes/quiz-master-ppt.jsonl",
     "line": 3
+  },
+  "pop-culture-movies-000001": {
+    "file": "data/questions/pop-culture/movies/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "pop-culture-movies-000002": {
+    "file": "data/questions/pop-culture/movies/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "pop-culture-movies-000003": {
+    "file": "data/questions/pop-culture/movies/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "pop-culture-movies-000004": {
+    "file": "data/questions/pop-culture/movies/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "pop-culture-movies-000005": {
+    "file": "data/questions/pop-culture/movies/broad-expansion-001.jsonl",
+    "line": 5
+  },
+  "pop-culture-tv-000001": {
+    "file": "data/questions/pop-culture/tv/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "pop-culture-tv-000002": {
+    "file": "data/questions/pop-culture/tv/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "pop-culture-tv-000003": {
+    "file": "data/questions/pop-culture/tv/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "pop-culture-tv-000004": {
+    "file": "data/questions/pop-culture/tv/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "pop-culture-tv-000005": {
+    "file": "data/questions/pop-culture/tv/broad-expansion-001.jsonl",
+    "line": 5
   },
   "science-astronomy-000011": {
     "file": "data/questions/science/astronomy/hard-science-expansion-001.jsonl",
@@ -970,6 +1210,46 @@
   "society-politics-000001": {
     "file": "data/questions/society/politics/quiz-master-ppt.jsonl",
     "line": 1
+  },
+  "technology-ai-000001": {
+    "file": "data/questions/technology/ai/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "technology-ai-000002": {
+    "file": "data/questions/technology/ai/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "technology-ai-000003": {
+    "file": "data/questions/technology/ai/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "technology-ai-000004": {
+    "file": "data/questions/technology/ai/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "technology-ai-000005": {
+    "file": "data/questions/technology/ai/broad-expansion-001.jsonl",
+    "line": 5
+  },
+  "technology-computers-000001": {
+    "file": "data/questions/technology/computers/broad-expansion-001.jsonl",
+    "line": 1
+  },
+  "technology-computers-000002": {
+    "file": "data/questions/technology/computers/broad-expansion-001.jsonl",
+    "line": 2
+  },
+  "technology-computers-000003": {
+    "file": "data/questions/technology/computers/broad-expansion-001.jsonl",
+    "line": 3
+  },
+  "technology-computers-000004": {
+    "file": "data/questions/technology/computers/broad-expansion-001.jsonl",
+    "line": 4
+  },
+  "technology-computers-000005": {
+    "file": "data/questions/technology/computers/broad-expansion-001.jsonl",
+    "line": 5
   },
   "technology-internet-000001": {
     "file": "data/questions/technology/internet/web-trivia.jsonl",

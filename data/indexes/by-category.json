@@ -2,6 +2,13 @@
   "arts.architecture": [
     "arts-architecture-000001"
   ],
+  "arts.design": [
+    "arts-design-000001",
+    "arts-design-000002",
+    "arts-design-000003",
+    "arts-design-000004",
+    "arts-design-000005"
+  ],
   "arts.music": [
     "arts-music-000008",
     "arts-music-000009",
@@ -17,9 +24,23 @@
     "arts-music-000006",
     "arts-music-000007"
   ],
+  "arts.painting": [
+    "arts-painting-000001",
+    "arts-painting-000002",
+    "arts-painting-000003",
+    "arts-painting-000004",
+    "arts-painting-000005"
+  ],
   "brain.lateral-thinking": [
     "brain-lateral-thinking-000001",
     "brain-lateral-thinking-000002"
+  ],
+  "brain.logic": [
+    "brain-logic-000001",
+    "brain-logic-000002",
+    "brain-logic-000003",
+    "brain-logic-000004",
+    "brain-logic-000005"
   ],
   "brain.math-puzzles": [
     "brain-math-puzzles-000006",
@@ -32,6 +53,20 @@
     "brain-math-puzzles-000003",
     "brain-math-puzzles-000004",
     "brain-math-puzzles-000005"
+  ],
+  "games.anime": [
+    "games-anime-000001",
+    "games-anime-000002",
+    "games-anime-000003",
+    "games-anime-000004",
+    "games-anime-000005"
+  ],
+  "games.board-games": [
+    "games-board-games-000001",
+    "games-board-games-000002",
+    "games-board-games-000003",
+    "games-board-games-000004",
+    "games-board-games-000005"
   ],
   "games.esports": [
     "games-esports-000001",
@@ -106,6 +141,13 @@
     "geography-countries-000003",
     "geography-countries-000004"
   ],
+  "geography.landmarks": [
+    "geography-landmarks-000001",
+    "geography-landmarks-000002",
+    "geography-landmarks-000003",
+    "geography-landmarks-000004",
+    "geography-landmarks-000005"
+  ],
   "geography.nature": [
     "geography-nature-000003",
     "geography-nature-000004",
@@ -119,6 +161,13 @@
   "history.figures": [
     "history-figures-000001",
     "history-figures-000002"
+  ],
+  "history.modern-china": [
+    "history-modern-china-000001",
+    "history-modern-china-000002",
+    "history-modern-china-000003",
+    "history-modern-china-000004",
+    "history-modern-china-000005"
   ],
   "history.world-history": [
     "history-world-history-000007",
@@ -186,9 +235,30 @@
     "language-wordplay-000002",
     "language-wordplay-000001"
   ],
+  "life.animals": [
+    "life-animals-000001",
+    "life-animals-000002",
+    "life-animals-000003",
+    "life-animals-000004",
+    "life-animals-000005"
+  ],
   "life.food": [
     "life-food-000001",
     "life-food-000002"
+  ],
+  "life.health": [
+    "life-health-000001",
+    "life-health-000002",
+    "life-health-000003",
+    "life-health-000004",
+    "life-health-000005"
+  ],
+  "life.plants": [
+    "life-plants-000001",
+    "life-plants-000002",
+    "life-plants-000003",
+    "life-plants-000004",
+    "life-plants-000005"
   ],
   "life.sports": [
     "life-sports-000001",
@@ -198,6 +268,20 @@
     "pop-culture-memes-000001",
     "pop-culture-memes-000002",
     "pop-culture-memes-000003"
+  ],
+  "pop-culture.movies": [
+    "pop-culture-movies-000001",
+    "pop-culture-movies-000002",
+    "pop-culture-movies-000003",
+    "pop-culture-movies-000004",
+    "pop-culture-movies-000005"
+  ],
+  "pop-culture.tv": [
+    "pop-culture-tv-000001",
+    "pop-culture-tv-000002",
+    "pop-culture-tv-000003",
+    "pop-culture-tv-000004",
+    "pop-culture-tv-000005"
   ],
   "science.astronomy": [
     "science-astronomy-000011",
@@ -309,6 +393,20 @@
     "society-politics-000002",
     "society-politics-000003",
     "society-politics-000001"
+  ],
+  "technology.ai": [
+    "technology-ai-000001",
+    "technology-ai-000002",
+    "technology-ai-000003",
+    "technology-ai-000004",
+    "technology-ai-000005"
+  ],
+  "technology.computers": [
+    "technology-computers-000001",
+    "technology-computers-000002",
+    "technology-computers-000003",
+    "technology-computers-000004",
+    "technology-computers-000005"
   ],
   "technology.internet": [
     "technology-internet-000001",
