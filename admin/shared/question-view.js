@@ -57,6 +57,9 @@ export function createQuestionSlide({
 }) {
   const slide = document.createElement("article");
   slide.className = "questionSlide";
+  if ((question.options || []).some((option) => (option.media || []).length > 0)) {
+    slide.classList.add("mediaOptionSlide");
+  }
 
   const kicker = document.createElement("div");
   kicker.className = "slideKicker";

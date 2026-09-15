@@ -646,6 +646,45 @@ textarea {
 .optionBody audio {
   width: 100%;
 }
+.mediaOptionSlide {
+  gap: 8px;
+  padding: 18px;
+}
+.mediaOptionSlide h3 {
+  font-size: 24px;
+}
+.mediaOptionSlide .slidePrompt {
+  font-size: 17px;
+  line-height: 1.25;
+}
+.mediaOptionSlide .slideOptions {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 8px;
+}
+.mediaOptionSlide .slideOptions li {
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: start;
+  min-height: 0;
+  padding: 6px;
+}
+.mediaOptionSlide .slideOptions span {
+  width: 24px;
+  height: 24px;
+}
+.mediaOptionSlide .optionBody {
+  justify-items: center;
+  align-content: start;
+}
+.mediaOptionSlide .optionBody img,
+.mediaOptionSlide .optionBody video {
+  width: 100%;
+  max-height: 120px;
+}
+.mediaOptionSlide .slideOptions strong {
+  font-size: 13px;
+  text-align: center;
+}
 .slideMedia {
   display: grid;
   gap: 10px;
@@ -769,6 +808,9 @@ pre {
   .mediaEditor,
   .slideOptions {
     grid-template-columns: 1fr;
+  }
+  .mediaOptionSlide .slideOptions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .slideStage { padding: 10px; }
   .questionSlide,

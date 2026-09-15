@@ -65,8 +65,11 @@ function slideHtml(question, index, total, options, mediaById, relativePrefix = 
   const locale = options.locale || "zh-CN";
   const revealInline = options.revealMode === "inline";
   const optionItems = (question.options || []).map((item) => optionHtml(item, mediaById, locale, relativePrefix)).join("");
+  const slideClass = (question.options || []).some((item) => (item.media || []).length > 0)
+    ? "questionSlide mediaOptionSlide"
+    : "questionSlide";
   return `
-    <article class="questionSlide">
+    <article class="${slideClass}">
       <div class="slideKicker">${index + 1} / ${total} · ${escapeHtml(question.category)} · ${escapeHtml(question.type)}</div>
       <h1>${escapeHtml(displayText(question.title, locale))}</h1>
       <p class="slidePrompt">${escapeHtml(displayText(question.prompt, locale))}</p>
@@ -106,6 +109,15 @@ export function standaloneDeckHtml(questions, media, options = {}) {
     .optionBody img, .optionBody video { max-height: 160px; max-width: 100%; object-fit: contain; border-radius: 6px; background: #101828; }
     .optionBody audio { width: 100%; }
     .slideOptions strong { white-space: pre-line; overflow-wrap: anywhere; font-size: 22px; }
+    .mediaOptionSlide { gap: 12px; padding: 34px; }
+    .mediaOptionSlide h1 { font-size: 34px; }
+    .mediaOptionSlide .slidePrompt { font-size: 22px; line-height: 1.25; }
+    .mediaOptionSlide .slideOptions { grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: stretch; gap: 10px; }
+    .mediaOptionSlide .slideOptions li { grid-template-columns: 34px minmax(0, 1fr); align-items: start; padding: 8px; min-height: 0; }
+    .mediaOptionSlide .slideOptions span { width: 28px; height: 28px; }
+    .mediaOptionSlide .optionBody { justify-items: center; align-content: start; }
+    .mediaOptionSlide .optionBody img, .mediaOptionSlide .optionBody video { width: 100%; max-height: 190px; }
+    .mediaOptionSlide .slideOptions strong { font-size: 16px; text-align: center; }
     .slideMedia:empty { display: none; }
     .slideMedia img, .slideMedia video { max-height: 240px; max-width: 100%; object-fit: contain; border-radius: 8px; background: #101828; }
     .slideMedia audio { width: min(100%, 620px); }
@@ -116,6 +128,7 @@ export function standaloneDeckHtml(questions, media, options = {}) {
     .controls { position: fixed; left: 24px; right: 24px; bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #e4e7ec; }
     .controls div { display: flex; gap: 8px; }
     button { min-height: 38px; border: 1px solid #d9dee7; border-radius: 6px; background: #fff; color: #18212f; padding: 0 12px; cursor: pointer; font: inherit; }
+    @media (max-width: 820px) { .mediaOptionSlide .slideOptions { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media print { body { background: white; } .deck { display: block; padding: 0; } .questionSlide, .questionSlide.active { display: grid; width: 100%; height: 100vh; border-radius: 0; page-break-after: always; } .controls { display: none; } }
   </style>
 </head>
@@ -237,6 +250,15 @@ h1 { margin: 0; white-space: pre-line; font-size: 40px; line-height: 1.12; }
 .optionBody img, .optionBody video { max-height: 160px; max-width: 100%; object-fit: contain; border-radius: 6px; background: #101828; }
 .optionBody audio { width: 100%; }
 .slideOptions strong { white-space: pre-line; overflow-wrap: anywhere; font-size: 22px; }
+.mediaOptionSlide { gap: 12px; padding: 34px; }
+.mediaOptionSlide h1 { font-size: 34px; }
+.mediaOptionSlide .slidePrompt { font-size: 22px; line-height: 1.25; }
+.mediaOptionSlide .slideOptions { grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: stretch; gap: 10px; }
+.mediaOptionSlide .slideOptions li { grid-template-columns: 34px minmax(0, 1fr); align-items: start; padding: 8px; min-height: 0; }
+.mediaOptionSlide .slideOptions span { width: 28px; height: 28px; }
+.mediaOptionSlide .optionBody { justify-items: center; align-content: start; }
+.mediaOptionSlide .optionBody img, .mediaOptionSlide .optionBody video { width: 100%; max-height: 190px; }
+.mediaOptionSlide .slideOptions strong { font-size: 16px; text-align: center; }
 .slideMedia:empty { display: none; }
 .slideMedia img, .slideMedia video { max-height: 240px; max-width: 100%; object-fit: contain; border-radius: 8px; background: #101828; }
 .slideMedia audio { width: min(100%, 620px); }
@@ -247,6 +269,9 @@ h1 { margin: 0; white-space: pre-line; font-size: 40px; line-height: 1.12; }
 .controls { position: fixed; left: 24px; right: 24px; bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #e4e7ec; }
 .controls div { display: flex; gap: 8px; }
 button { min-height: 38px; border: 1px solid #d9dee7; border-radius: 6px; background: #fff; color: #18212f; padding: 0 12px; cursor: pointer; font: inherit; }
+@media (max-width: 820px) {
+  .mediaOptionSlide .slideOptions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media print {
   body { background: white; }
   .deck { display: block; padding: 0; }
@@ -317,6 +342,9 @@ function formatAnswer(question) {
 function questionSlide(question, index) {
   const slide = document.createElement("article");
   slide.className = "questionSlide";
+  if ((question.options || []).some((option) => (option.media || []).length > 0)) {
+    slide.classList.add("mediaOptionSlide");
+  }
 
   const kicker = document.createElement("div");
   kicker.className = "slideKicker";
