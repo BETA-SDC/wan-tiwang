@@ -2,7 +2,9 @@ import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 import { spawn } from "node:child_process";
-import { indexesRoot, mediaMetaRoot, questionsRoot, readJson, readJsonl, relativePath, repoRoot, taxonomyRoot, walkFiles } from "./lib.mjs";
+import { indexesRoot, normalizeSlug, readJson, relativePath, repoRoot, safePath, taxonomyRoot } from "./lib.mjs";
+import { appendMediaMeta, loadMedia, mediaDirectory, nextMediaId } from "./media-store.mjs";
+import { appendPreparedQuestions, createQuestion, importSummary, loadQuestions, localizedText, prepareQuestionImport, rewriteJsonlLine } from "./question-store.mjs";
 import { folderDeckFiles, usedMediaForQuestions } from "./slides/export-html.mjs";
 
 const port = Number(process.env.PORT ?? 5177);
@@ -40,12 +42,6 @@ function safeJoin(root, urlPath) {
   return joined;
 }
 
-function safePath(root, relativeFile) {
-  const joined = path.normalize(path.join(root, relativeFile));
-  if (joined !== root && !joined.startsWith(`${root}${path.sep}`)) return null;
-  return joined;
-}
-
 function readBody(request) {
   return new Promise((resolve, reject) => {
     let body = "";
@@ -59,197 +55,6 @@ function readBody(request) {
     request.on("end", () => resolve(body));
     request.on("error", reject);
   });
-}
-
-function loadQuestions() {
-  const questionFiles = walkFiles(questionsRoot, (file) => file.endsWith(".jsonl"));
-  const questions = [];
-
-  for (const file of questionFiles) {
-    for (const { value, line } of readJsonl(file)) {
-      questions.push({ ...value, _file: relativePath(file), _line: line });
-    }
-  }
-
-  return questions.sort((a, b) => a.id.localeCompare(b.id));
-}
-
-function loadMedia() {
-  const mediaFiles = walkFiles(mediaMetaRoot, (file) => file.endsWith(".jsonl"));
-  const media = [];
-
-  for (const file of mediaFiles) {
-    for (const { value, line } of readJsonl(file)) {
-      media.push({ ...value, _file: relativePath(file), _line: line });
-    }
-  }
-
-  return media.sort((a, b) => a.id.localeCompare(b.id));
-}
-
-function localizedText(value) {
-  if (!value || typeof value !== "object") return "";
-  return `${value["zh-CN"] ?? ""} ${value["en-US"] ?? ""}`;
-}
-
-function normalizeSlug(value) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function nextQuestionId(categoryId, questions) {
-  const prefix = categoryId.replace(/\./g, "-");
-  let max = 0;
-
-  for (const question of questions) {
-    if (!question.id?.startsWith(`${prefix}-`)) continue;
-    const suffix = question.id.slice(prefix.length + 1);
-    if (/^[0-9]{6}$/.test(suffix)) max = Math.max(max, Number(suffix));
-  }
-
-  return `${prefix}-${String(max + 1).padStart(6, "0")}`;
-}
-
-function nextMediaId(type, slug, media) {
-  const prefixByType = { image: "img", audio: "aud", video: "vid", thumbnail: "thumb" };
-  const prefix = `${prefixByType[type]}-${slug || type}`;
-  let max = 0;
-
-  for (const item of media) {
-    if (!item.id?.startsWith(`${prefix}-`)) continue;
-    const suffix = item.id.slice(prefix.length + 1);
-    if (/^[0-9]{3}$/.test(suffix)) max = Math.max(max, Number(suffix));
-  }
-
-  return `${prefix}-${String(max + 1).padStart(3, "0")}`;
-}
-
-function mediaDirectory(type) {
-  if (type === "image" || type === "thumbnail") return "images";
-  if (type === "audio") return "audio";
-  if (type === "video") return "video";
-  throw new Error(`Unsupported media type: ${type}`);
-}
-
-function mediaMetaFile(type) {
-  if (type === "image" || type === "thumbnail") return "images.jsonl";
-  if (type === "audio") return "audio.jsonl";
-  if (type === "video") return "video.jsonl";
-  throw new Error(`Unsupported media type: ${type}`);
-}
-
-function defaultQuestionFile(question) {
-  const parts = question.category.split(".");
-  return path.join(questionsRoot, ...parts, `${normalizeSlug(question.topic || "mixed")}.jsonl`);
-}
-
-function importPayloadQuestions(body) {
-  if (Array.isArray(body)) return body;
-  if (Array.isArray(body?.questions)) return body.questions;
-  if (Array.isArray(body?.questions?.questions)) return body.questions.questions;
-  if (body?.questions && typeof body.questions === "object") return [body.questions];
-  if (body && typeof body === "object") return [body];
-  return [];
-}
-
-function questionIds(questions) {
-  return new Set(questions.map((question) => question.id).filter(Boolean));
-}
-
-function normalizedImportQuestion(inputQuestion, ids, categories, formats) {
-  if (!inputQuestion || typeof inputQuestion !== "object" || Array.isArray(inputQuestion)) {
-    throw new Error("Each imported question must be a JSON object.");
-  }
-
-  const question = { ...inputQuestion };
-  if (!question.category) throw new Error("Question is missing category.");
-  if (!categories.some((category) => category.id === question.category)) {
-    throw new Error(`Unknown category: ${question.category}`);
-  }
-
-  if (!question.type) throw new Error("Question is missing type.");
-  if (!formats.some((format) => format.id === question.type)) {
-    throw new Error(`Unknown question type: ${question.type}`);
-  }
-
-  if (question.id && ids.has(question.id)) {
-    throw new Error(`Question id already exists: ${question.id}`);
-  }
-
-  question.id ||= nextQuestionId(question.category, [...ids].map((id) => ({ id })));
-  ids.add(question.id);
-  delete question._file;
-  delete question._line;
-  delete question.targetFile;
-  delete question.topic;
-  return question;
-}
-
-function prepareQuestionImport(body) {
-  const categories = readJson(path.join(taxonomyRoot, "categories.json")).categories;
-  const formats = readJson(path.join(taxonomyRoot, "formats.json")).formats;
-  const existingQuestions = loadQuestions();
-  const ids = questionIds(existingQuestions);
-  const inputQuestions = importPayloadQuestions(body);
-  if (inputQuestions.length === 0) throw new Error("No question objects found.");
-
-  return inputQuestions.map((inputQuestion, index) => {
-    const question = normalizedImportQuestion(inputQuestion, ids, categories, formats);
-    const targetRelative = inputQuestion.targetFile || body?.targetFile;
-    const targetFile = targetRelative ? safePath(repoRoot, targetRelative) : defaultQuestionFile(inputQuestion);
-    if (!targetFile) throw new Error(`Unsafe target file for question ${index + 1}.`);
-    if (!targetFile.startsWith(questionsRoot)) {
-      throw new Error(`Target file must stay under data/questions: ${targetRelative}`);
-    }
-    return {
-      index,
-      question,
-      targetFile,
-      file: relativePath(targetFile)
-    };
-  });
-}
-
-function importSummary(prepared, dryRun) {
-  const filesByPath = new Map();
-  for (const item of prepared) {
-    const current = filesByPath.get(item.file) || { file: item.file, count: 0, ids: [] };
-    current.count += 1;
-    current.ids.push(item.question.id);
-    filesByPath.set(item.file, current);
-  }
-
-  return {
-    ok: true,
-    dryRun,
-    count: prepared.length,
-    files: [...filesByPath.values()],
-    questions: prepared.map((item) => ({
-      id: item.question.id,
-      category: item.question.category,
-      type: item.question.type,
-      file: item.file
-    }))
-  };
-}
-
-function rewriteJsonlLine(relativeFile, line, nextValue) {
-  const file = path.join(repoRoot, relativeFile);
-  const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
-  const jsonLineIndexes = [];
-
-  lines.forEach((lineText, index) => {
-    if (lineText.trim()) jsonLineIndexes.push(index);
-  });
-
-  const physicalIndex = jsonLineIndexes[line - 1];
-  if (physicalIndex === undefined) throw new Error(`Cannot find JSONL line ${line} in ${relativeFile}.`);
-
-  lines[physicalIndex] = JSON.stringify(nextValue);
-  fs.writeFileSync(file, lines.join("\n").replace(/\n*$/, "\n"));
 }
 
 function feedbackEntries(body) {
@@ -353,10 +158,7 @@ async function handleApi(request, response, url) {
     const prepared = prepareQuestionImport(body);
 
     if (!dryRun) {
-      for (const item of prepared) {
-        fs.mkdirSync(path.dirname(item.targetFile), { recursive: true });
-        fs.appendFileSync(item.targetFile, `${JSON.stringify(item.question)}\n`);
-      }
+      appendPreparedQuestions(prepared);
     }
 
     return sendJson(response, dryRun ? 200 : 201, importSummary(prepared, dryRun));
@@ -454,23 +256,13 @@ async function handleApi(request, response, url) {
       tags: Array.isArray(body.tags) ? body.tags : [],
       status: body.status || "draft"
     };
-    const metaFile = path.join(mediaMetaRoot, mediaMetaFile(type));
-    fs.mkdirSync(path.dirname(metaFile), { recursive: true });
-    fs.appendFileSync(metaFile, `${JSON.stringify(item)}\n`);
-    return sendJson(response, 201, { ok: true, media: item });
+    return sendJson(response, 201, { ok: true, media: appendMediaMeta(item) });
   }
 
   if (request.method === "POST" && url.pathname === "/api/questions") {
     const body = JSON.parse(await readBody(request));
-    const question = { ...body };
-    question.id ||= nextQuestionId(question.category, loadQuestions());
-    const targetFile = body.targetFile ? path.join(repoRoot, body.targetFile) : defaultQuestionFile(body);
-    delete question.topic;
-    delete question.targetFile;
-
-    fs.mkdirSync(path.dirname(targetFile), { recursive: true });
-    fs.appendFileSync(targetFile, `${JSON.stringify(question)}\n`);
-    return sendJson(response, 201, { ok: true, id: question.id, file: relativePath(targetFile) });
+    const item = createQuestion(body, body.targetFile);
+    return sendJson(response, 201, { ok: true, id: item.question.id, file: item.file });
   }
 
   if (questionMatch && request.method === "PUT") {

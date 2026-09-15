@@ -56,3 +56,17 @@ export function writeJson(filePath, value) {
 export function relativePath(filePath) {
   return path.relative(repoRoot, filePath).split(path.sep).join("/");
 }
+
+export function normalizeSlug(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function safePath(root, relativeFile) {
+  const joined = path.normalize(path.join(root, relativeFile));
+  if (joined !== root && !joined.startsWith(`${root}${path.sep}`)) return null;
+  return joined;
+}

@@ -2,7 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { questionsRoot, readJson, readJsonl, relativePath, repoRoot, taxonomyRoot, walkFiles } from "./lib.mjs";
+import { normalizeSlug, readJson, relativePath, repoRoot, taxonomyRoot } from "./lib.mjs";
+import { appendPreparedQuestions, defaultQuestionFile, nextQuestionId, prepareQuestionImport, questionIds } from "./question-store.mjs";
 
 function argValue(name) {
   const index = process.argv.indexOf(name);
@@ -20,14 +21,6 @@ const formats = readJson(path.join(taxonomyRoot, "formats.json")).formats;
 const moods = readJson(path.join(taxonomyRoot, "moods.json")).moods;
 const occasions = readJson(path.join(taxonomyRoot, "occasions.json")).occasions;
 const isDryRun = process.argv.includes("--dry-run");
-
-function slugify(value) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
 
 function localized(zh, en) {
   return {
@@ -103,83 +96,16 @@ async function askMultiSelect(title, items, fallbackIds = []) {
   return selected.filter((id) => validIds.has(id));
 }
 
-function existingQuestionIds() {
-  const files = walkFiles(questionsRoot, (file) => file.endsWith(".jsonl"));
-  const ids = new Set();
-
-  for (const file of files) {
-    for (const { value } of readJsonl(file)) {
-      if (value.id) ids.add(value.id);
-    }
-  }
-
-  return ids;
-}
-
-function nextQuestionId(categoryId, ids) {
-  const prefix = categoryId.replace(/\./g, "-");
-  let max = 0;
-
-  for (const id of ids) {
-    if (!id.startsWith(`${prefix}-`)) continue;
-    const suffix = id.slice(prefix.length + 1);
-    if (/^[0-9]{6}$/.test(suffix)) {
-      max = Math.max(max, Number(suffix));
-    }
-  }
-
-  return `${prefix}-${String(max + 1).padStart(6, "0")}`;
-}
-
-function defaultQuestionFile(categoryId, topicSlug) {
-  const parts = categoryId.split(".");
-  return path.join(questionsRoot, ...parts, `${topicSlug || "mixed"}.jsonl`);
-}
-
-function resolveTargetPath(question, targetRelative) {
-  if (targetRelative) return path.join(repoRoot, targetRelative);
-
-  const topicSlug = slugify(question.topic || "mixed");
-  return defaultQuestionFile(question.category, topicSlug);
-}
-
-function normalizeQuestion(inputQuestion, ids = existingQuestionIds()) {
-  const question = { ...inputQuestion };
-
-  if (!question.category) {
-    throw new Error("Question is missing category.");
-  }
-
-  if (!categories.some((category) => category.id === question.category)) {
-    throw new Error(`Unknown category: ${question.category}`);
-  }
-
-  if (!question.type) {
-    throw new Error("Question is missing type.");
-  }
-
-  if (!formats.some((format) => format.id === question.type)) {
-    throw new Error(`Unknown question type: ${question.type}`);
-  }
-
-  question.id ||= nextQuestionId(question.category, ids);
-  ids.add(question.id);
-  delete question.topic;
-  return question;
-}
-
-function writeQuestion(question, targetPath) {
+function writeQuestion(item) {
   if (isDryRun) {
     console.log("\nDry run. No file was changed.");
-    console.log(JSON.stringify(question, null, 2));
-    console.log(`Target would be: ${relativePath(targetPath)}`);
+    console.log(JSON.stringify(item.question, null, 2));
+    console.log(`Target would be: ${item.file}`);
     return;
   }
 
-  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
-  fs.appendFileSync(targetPath, `${JSON.stringify(question)}\n`);
-
-  console.log(`\nAdded ${question.id} to ${relativePath(targetPath)}`);
+  appendPreparedQuestions([item]);
+  console.log(`\nAdded ${item.question.id} to ${item.file}`);
   console.log("Next steps:");
   console.log("- npm run validate");
   console.log("- npm run build:index");
@@ -218,13 +144,8 @@ async function main() {
 
   if (fromJsonSource) {
     const input = readQuestionFromJson(fromJsonSource);
-    const inputQuestions = Array.isArray(input) ? input : [input];
-    const ids = existingQuestionIds();
-
-    for (const inputQuestion of inputQuestions) {
-      const question = normalizeQuestion(inputQuestion, ids);
-      writeQuestion(question, resolveTargetPath(inputQuestion, targetFromArgs));
-    }
+    const prepared = prepareQuestionImport(input, { targetFile: targetFromArgs });
+    for (const item of prepared) writeQuestion(item);
     return;
   }
 
@@ -233,7 +154,7 @@ async function main() {
 
   const category = await chooseFromList("Categories", categories);
   const format = await chooseFromList("Question types", formats);
-  const ids = existingQuestionIds();
+  const ids = questionIds();
   const id = nextQuestionId(category.id, ids);
 
   const titleZh = await askRequired("Title zh-CN");
@@ -251,7 +172,7 @@ async function main() {
   const selectedOccasions = await askMultiSelect("Occasions", occasions, ["daily"]);
   const playTime = Number(await ask("Play time in seconds", "20"));
   const status = await ask("Status", "draft");
-  const topicSlug = slugify(await ask("Topic file name without .jsonl", "mixed"));
+  const topicSlug = normalizeSlug(await ask("Topic file name without .jsonl", "mixed"));
   const defaultFile = relativePath(defaultQuestionFile(category.id, topicSlug));
   const targetRelative = await ask("Target JSONL path", defaultFile);
   const targetPath = path.join(repoRoot, targetRelative);
@@ -273,7 +194,7 @@ async function main() {
     status
   };
 
-  writeQuestion(question, targetPath);
+  writeQuestion({ question, targetPath, file: relativePath(targetPath) });
 }
 
 try {
