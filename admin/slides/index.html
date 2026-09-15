@@ -7,10 +7,6 @@
     <link rel="stylesheet" href="/styles.css">
   </head>
   <body data-page="slides" data-title="Slide Generator" data-subtitle="Assemble and export one-question-per-slide folder decks." data-back="/questions/" data-back-label="Back to Library">
-    <div id="pageActions">
-      <button id="buildSlidesButton" type="button">Build Preview</button>
-      <button id="exportSlidesButton" type="button">Export Folder</button>
-    </div>
     <section id="pageContent" class="pageContent standaloneContent">
       <div class="standaloneLayout">
         <aside class="panel">
@@ -35,14 +31,24 @@
           <label>Reveal
             <select id="slideRevealMode">
               <option value="hidden">Hidden until show</option>
-              <option value="auto_hide">Auto-hide on question change</option>
               <option value="inline">Inline on each slide</option>
             </select>
           </label>
-          <div class="actions stackedActions">
-            <button id="shuffleSlidesButton" type="button">Shuffle Preview</button>
-            <button id="presentSlidesButton" type="button">Present</button>
-            <button id="printSlidesButton" type="button">Print Preview</button>
+          <div class="deckActionGroup">
+            <h3>Deck Actions</h3>
+            <div class="actions stackedActions">
+              <button id="buildSlidesButton" type="button">Build Preview</button>
+              <button id="shuffleSlidesButton" type="button">Shuffle Preview</button>
+              <button id="exportSlidesButton" type="button">Export Folder</button>
+              <button id="presentSlidesButton" type="button">Present</button>
+            </div>
+          </div>
+          <div class="deckActionGroup">
+            <h3>Selection</h3>
+            <div class="actions stackedActions compactActions">
+              <button id="selectAllButton" type="button">Select Shown</button>
+              <button id="clearSelectionButton" type="button">Clear Selection</button>
+            </div>
           </div>
           <div id="exportStatus" class="exportResult">Only Export Folder writes files.</div>
         </aside>
@@ -51,10 +57,6 @@
             <div>
               <h2>Question Picker</h2>
               <p id="pickerStatus">Loading questions...</p>
-            </div>
-            <div class="actions">
-              <button id="selectAllButton" type="button">Select Shown</button>
-              <button id="clearSelectionButton" type="button">Clear</button>
             </div>
           </div>
           <div id="slideQuestionPicker" class="questionPicker"></div>

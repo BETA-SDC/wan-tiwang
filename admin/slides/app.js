@@ -171,33 +171,10 @@ async function exportSlides() {
   open.target = "_blank";
   open.rel = "noreferrer";
   open.textContent = "Open in New Tab";
-  const folderButton = document.createElement("button");
-  folderButton.type = "button";
-  folderButton.textContent = "Open Folder";
-  const openFolder = async () => {
-    folderButton.disabled = true;
-    try {
-      await requestJson("/api/open-folder", {
-        method: "POST",
-        body: JSON.stringify({ folder: result.folder })
-      });
-      folderButton.textContent = "Folder Opened";
-    } catch (error) {
-      folderButton.textContent = "Open Failed";
-      elements.exportStatus.querySelector("small").textContent += ` · open folder failed: ${error.message}`;
-    } finally {
-      setTimeout(() => {
-        folderButton.disabled = false;
-        folderButton.textContent = "Open Folder";
-      }, 1800);
-    }
-  };
-  folderButton.addEventListener("click", openFolder);
   const file = document.createElement("small");
   const missing = result.media?.missing?.length ? ` · missing media: ${result.media.missing.length}` : "";
   file.textContent = `${result.folder} · media copied: ${result.media?.copied ?? 0}/${result.media?.total ?? 0}${missing}`;
-  elements.exportStatus.append(label, download, open, folderButton, file);
-  openFolder();
+  elements.exportStatus.append(label, download, open, file);
   window.alert(`Export complete.\n\nFolder: ${result.folder}`);
 }
 
@@ -206,7 +183,7 @@ function moveSlide(delta) {
   const nextSlide = Math.max(0, Math.min(state.slideQuestions.length - 1, state.currentSlide + delta));
   const changed = nextSlide !== state.currentSlide;
   state.currentSlide = nextSlide;
-  if (changed && elements.slideRevealMode.value === "auto_hide") state.revealVisible = false;
+  if (changed && elements.slideRevealMode.value !== "inline") state.revealVisible = false;
   renderSlides();
 }
 
@@ -243,7 +220,6 @@ document.querySelector("#toggleRevealButton").addEventListener("click", () => {
   renderSlides();
 });
 document.querySelector("#presentSlidesButton").addEventListener("click", () => togglePresentation());
-document.querySelector("#printSlidesButton").addEventListener("click", () => window.print());
 document.querySelector("#selectAllButton").addEventListener("click", () => {
   for (const question of shownQuestions()) state.selectedIds.add(question.id);
   saveSelection();

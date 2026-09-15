@@ -150,7 +150,7 @@ export function standaloneDeckHtml(questions, media, options = {}) {
     const revealMode = ${JSON.stringify(options.revealMode || "hidden")};
     function move(delta) {
       const next = Math.max(0, Math.min(slides.length - 1, current + delta));
-      if (next !== current && revealMode === "auto_hide") reveal = false;
+      if (next !== current && revealMode !== "inline") reveal = false;
       current = next;
       render();
     }
@@ -526,11 +526,12 @@ function questionSlide(question, index) {
 
     function toggleOption(optionId) {
       if (feedbackForQuestion(question.id)) return;
-      if (question.type === "multiple_choice") {
-        if (selected.has(optionId)) selected.delete(optionId);
-        else selected.add(optionId);
+      if (selected.has(optionId)) {
+        selected.delete(optionId);
       } else {
-        selected.clear();
+        if (question.type !== "multiple_choice") {
+          selected.clear();
+        }
         selected.add(optionId);
       }
       syncOptionState();
@@ -596,7 +597,7 @@ function render() {
 
 function move(delta) {
   const next = Math.max(0, Math.min(questions.length - 1, current + delta));
-  if (next !== current && manifest.revealMode === "auto_hide") reveal = false;
+  if (next !== current && manifest.revealMode !== "inline") reveal = false;
   current = next;
   render();
 }
