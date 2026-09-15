@@ -3,7 +3,7 @@ import http from "node:http";
 import path from "node:path";
 import { spawn } from "node:child_process";
 import { indexesRoot, mediaMetaRoot, questionsRoot, readJson, readJsonl, relativePath, repoRoot, taxonomyRoot, walkFiles } from "./lib.mjs";
-import { standaloneDeckHtml } from "./slides/export-html.mjs";
+import { folderDeckFiles, usedMediaForQuestions } from "./slides/export-html.mjs";
 
 const port = Number(process.env.PORT ?? 5177);
 const maxRequestBytes = Number(process.env.MAX_REQUEST_BYTES ?? 200_000_000);
@@ -35,6 +35,12 @@ function sendText(response, status, text) {
 
 function safeJoin(root, urlPath) {
   const joined = path.normalize(path.join(root, decodeURIComponent(urlPath)));
+  if (joined !== root && !joined.startsWith(`${root}${path.sep}`)) return null;
+  return joined;
+}
+
+function safePath(root, relativeFile) {
+  const joined = path.normalize(path.join(root, relativeFile));
   if (joined !== root && !joined.startsWith(`${root}${path.sep}`)) return null;
   return joined;
 }
@@ -236,21 +242,50 @@ async function handleApi(request, response, url) {
     if (questions.length === 0) throw new Error("No valid question IDs provided for export.");
     const title = body.title || `wan-ti-wang-slides-${new Date().toISOString().slice(0, 10)}`;
     const slug = normalizeSlug(title) || "wan-ti-wang-slides";
-    const fileName = `${slug}-${Date.now()}.html`;
-    const relativeFile = path.join("exports", "slides", fileName);
-    const targetFile = path.join(repoRoot, relativeFile);
-    const html = standaloneDeckHtml(questions, loadMedia(), {
+    const folderName = `${slug}-${Date.now()}`;
+    const relativeFolder = path.join("exports", "slides", folderName);
+    const targetFolder = path.join(repoRoot, relativeFolder);
+    const media = usedMediaForQuestions(questions, loadMedia());
+    const files = folderDeckFiles(questions, media, {
       title,
       locale: body.locale || "zh-CN",
       revealMode: body.revealMode || "hidden"
     });
-    fs.mkdirSync(path.dirname(targetFile), { recursive: true });
-    fs.writeFileSync(targetFile, html);
+
+    for (const [relativeFile, content] of Object.entries(files)) {
+      const targetFile = safePath(targetFolder, relativeFile);
+      if (!targetFile) throw new Error(`Unsafe export path: ${relativeFile}`);
+      fs.mkdirSync(path.dirname(targetFile), { recursive: true });
+      fs.writeFileSync(targetFile, content);
+    }
+
+    const copiedMedia = [];
+    const missingMedia = [];
+    for (const item of media) {
+      const sourceFile = safePath(repoRoot, item.path);
+      const targetFile = safePath(targetFolder, item.path);
+      if (!sourceFile || !targetFile) throw new Error(`Unsafe media path: ${item.path}`);
+      if (!fs.existsSync(sourceFile)) {
+        missingMedia.push(item.path);
+        continue;
+      }
+      fs.mkdirSync(path.dirname(targetFile), { recursive: true });
+      fs.copyFileSync(sourceFile, targetFile);
+      copiedMedia.push(item.path);
+    }
+
+    const relativeIndex = path.join(relativeFolder, "index.html");
     return sendJson(response, 201, {
       ok: true,
-      file: relativePath(targetFile),
-      url: `/${relativeFile.replaceAll(path.sep, "/")}`,
-      count: questions.length
+      folder: relativePath(targetFolder),
+      file: relativePath(path.join(targetFolder, "index.html")),
+      url: `/${relativeIndex.replaceAll(path.sep, "/")}`,
+      count: questions.length,
+      media: {
+        total: media.length,
+        copied: copiedMedia.length,
+        missing: missingMedia
+      }
     });
   }
 

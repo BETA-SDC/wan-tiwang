@@ -1,8 +1,8 @@
 # Slide Generator Guide
 
-The Slide Generator is a separate page at `/slides/` for turning selected questions into a lightweight presentation deck. It can export a standalone HTML file under `exports/slides/`. It does not edit question data.
+The Slide Generator is a separate page at `/slides/` for turning selected questions into a lightweight presentation deck. It exports a folder deck under `exports/slides/`. It does not edit question data.
 
-题目可视化生成器是 `/slides/` 独立页面，用来把选中的题目组装成轻量展示稿，并可以导出独立 HTML 文件到 `exports/slides/`。它不会修改题目数据。
+题目可视化生成器是 `/slides/` 独立页面，用来把选中的题目组装成轻量展示稿，并可以导出文件夹形式的演示包到 `exports/slides/`。它不会修改题目数据。
 
 ## Workflow
 
@@ -16,7 +16,7 @@ The Slide Generator is a separate page at `/slides/` for turning selected questi
 5. Click `Build Preview` or `Shuffle Preview`.
 6. Use `Previous`, `Next`, and `Show Reveal`.
 7. Use `Present` for a slide-like full-stage view, or `Print` for one question per printed page.
-8. Click `Export HTML` to write a standalone deck file under `exports/slides/`, then use the generated `Download HTML` or `Open` link.
+8. Click `Export Folder` to write a deck folder under `exports/slides/`, then use the generated `Open Deck` link.
 
 中文流程：
 
@@ -30,13 +30,52 @@ The Slide Generator is a separate page at `/slides/` for turning selected questi
 5. 点击 `Build Preview` 或 `Shuffle Preview`。
 6. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示。
 7. 使用 `Present` 进入类似幻灯片的展示模式，或用 `Print` 按“一题一页”打印。
-8. 点击 `Export HTML`，把独立演示文件写到 `exports/slides/`，然后使用生成的 `Download HTML` 或 `Open` 链接。
+8. 点击 `Export Folder`，把演示文件夹写到 `exports/slides/`，然后使用生成的 `Open Deck` 链接。
+
+## Export Folder
+
+Each export is a self-contained folder, not a single packed HTML file:
+
+```text
+exports/slides/<deck-name>/
+  index.html
+  assets/
+    deck.css
+    deck.js
+  data/
+    manifest.json
+    questions.json
+    media.json
+    deck-data.js
+  media/
+    images/...
+    audio/...
+    video/...
+```
+
+每次导出都是一个清晰的文件夹，而不是把所有题目和样式塞进一个 HTML：
+
+```text
+exports/slides/<deck-name>/
+  index.html              # 页面结构
+  assets/deck.css         # 演示样式
+  assets/deck.js          # 翻页、显示答案、渲染逻辑
+  data/questions.json     # 题目数据，接近题库原始结构
+  data/media.json         # 本次演示用到的媒体元数据
+  data/deck-data.js       # 让双击 HTML 也能读取数据的轻量数据入口
+  media/...               # 本次演示用到的本地媒体副本
+```
+
+`questions.json` and `media.json` are intended for reading, auditing, and reuse. `deck-data.js` mirrors the same data so the deck can load without a local web server in stricter browsers.
+
+`questions.json` 和 `media.json` 方便检查和复用；`deck-data.js` 只是为了让一些浏览器在没有本地服务器时也能加载同一份数据。
 
 ## Notes
 
 - One slide displays one question.
 - A single question can be previewed directly at `/question/?id=<question-id>`.
-- Preview and Present do not write files. Only `Export HTML` creates a file under `exports/slides/`.
+- Preview and Present do not write files. Only `Export Folder` creates a folder under `exports/slides/`.
+- Exported decks copy the referenced media into the export folder. If media is missing locally, the export result reports the missing count and those items will show broken media.
 - `Hidden until show` keeps answers hidden until `Show Reveal` is clicked.
 - `Inline on each slide` is useful for review decks.
 - Arrow keys move between slides in the Slides view.
@@ -46,7 +85,8 @@ The Slide Generator is a separate page at `/slides/` for turning selected questi
 
 - 一页只显示一道题。
 - 单题可以通过 `/question/?id=<题目ID>` 直接预览。
-- 预览和演示模式不会写入文件，只有点击 `Export HTML` 才会在 `exports/slides/` 下生成文件。
+- 预览和演示模式不会写入文件，只有点击 `Export Folder` 才会在 `exports/slides/` 下生成文件夹。
+- 导出演示会复制本次使用到的媒体文件。如果本地媒体缺失，导出结果会显示缺失数量，对应位置会显示断开的媒体。
 - `Hidden until show` 会默认隐藏答案，点击 `Show Reveal` 才显示。
 - `Inline on each slide` 适合审题或复习场景。
 - 在 Slides 视图中可以用左右方向键翻页。

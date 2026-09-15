@@ -20,6 +20,10 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
+function escapeScriptJson(value) {
+  return JSON.stringify(value, null, 2).replaceAll("</", "<\\/");
+}
+
 function formatAnswer(question, locale) {
   const answers = question.answer || [];
   if (!question.options) return answers.join(", ");
@@ -141,4 +145,248 @@ export function standaloneDeckHtml(questions, media, options = {}) {
   </script>
 </body>
 </html>`;
+}
+
+export function mediaRefsForQuestions(questions) {
+  const refs = [];
+  for (const question of questions) {
+    refs.push(...(question.media || []));
+    for (const option of question.options || []) refs.push(...(option.media || []));
+  }
+  return refs;
+}
+
+export function usedMediaForQuestions(questions, media) {
+  const ids = new Set(mediaRefsForQuestions(questions).map((ref) => ref.id).filter(Boolean));
+  return media.filter((item) => ids.has(item.id));
+}
+
+export function folderDeckFiles(questions, media, options = {}) {
+  const title = options.title || "Wan Ti Wang Slides";
+  const manifest = {
+    title,
+    locale: options.locale || "zh-CN",
+    revealMode: options.revealMode || "hidden",
+    question_count: questions.length,
+    media_count: media.length,
+    exported_at: new Date().toISOString(),
+    format: "wan-ti-wang-folder-deck-v1"
+  };
+
+  return {
+    "index.html": folderIndexHtml(title),
+    "assets/deck.css": folderDeckCss(),
+    "assets/deck.js": folderDeckJs(),
+    "data/manifest.json": `${JSON.stringify(manifest, null, 2)}\n`,
+    "data/questions.json": `${JSON.stringify(questions.map(stripRuntimeFields), null, 2)}\n`,
+    "data/media.json": `${JSON.stringify(media.map(stripRuntimeFields), null, 2)}\n`,
+    "data/deck-data.js": `window.WTW_DECK_DATA = ${escapeScriptJson({
+      manifest,
+      questions: questions.map(stripRuntimeFields),
+      media: media.map(stripRuntimeFields)
+    })};\n`
+  };
+}
+
+function stripRuntimeFields(value) {
+  const next = { ...value };
+  delete next._file;
+  delete next._line;
+  return next;
+}
+
+function folderIndexHtml(title) {
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${escapeHtml(title)}</title>
+  <link rel="stylesheet" href="assets/deck.css">
+</head>
+<body>
+  <main id="deck" class="deck" aria-live="polite"></main>
+  <footer class="controls">
+    <div>
+      <button id="prev" type="button">Previous</button>
+      <button id="next" type="button">Next</button>
+      <button id="reveal" type="button">Show Reveal</button>
+    </div>
+    <span id="status"></span>
+  </footer>
+  <script src="data/deck-data.js"></script>
+  <script src="assets/deck.js"></script>
+</body>
+</html>
+`;
+}
+
+function folderDeckCss() {
+  return `* { box-sizing: border-box; }
+body { margin: 0; background: #101828; color: #18212f; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.deck { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+.questionSlide { width: min(100%, calc((100vh - 120px) * 16 / 9)); aspect-ratio: 16 / 9; display: none; align-content: start; gap: 18px; padding: 48px; overflow: hidden; border-radius: 8px; background: #fffdf8; }
+.questionSlide.active { display: grid; }
+.slideKicker { color: #0f766e; font-size: 14px; font-weight: 800; text-transform: uppercase; }
+h1 { margin: 0; white-space: pre-line; font-size: 40px; line-height: 1.12; }
+.slidePrompt { margin: 0; white-space: pre-line; color: #344054; font-size: 28px; line-height: 1.35; }
+.slideOptions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 0; margin: 0; list-style: none; }
+.slideOptions li { display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 12px; min-height: 58px; padding: 10px 14px; border: 1px solid #d9dee7; border-radius: 8px; background: #f8fafc; }
+.slideOptions span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #0f766e; color: #fff; font-weight: 800; }
+.optionBody { display: grid; gap: 8px; min-width: 0; }
+.optionBody img, .optionBody video { max-height: 160px; max-width: 100%; object-fit: contain; border-radius: 6px; background: #101828; }
+.optionBody audio { width: 100%; }
+.slideOptions strong { white-space: pre-line; overflow-wrap: anywhere; font-size: 22px; }
+.slideMedia:empty { display: none; }
+.slideMedia img, .slideMedia video { max-height: 240px; max-width: 100%; object-fit: contain; border-radius: 8px; background: #101828; }
+.slideMedia audio { width: min(100%, 620px); }
+.slideReveal { display: grid; gap: 8px; margin-top: auto; padding-top: 14px; border-top: 1px solid #d9dee7; color: #344054; }
+.slideReveal.hidden { display: none; }
+.slideReveal strong { color: #115e59; }
+.slideReveal p { margin: 0; white-space: pre-line; }
+.controls { position: fixed; left: 24px; right: 24px; bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #e4e7ec; }
+.controls div { display: flex; gap: 8px; }
+button { min-height: 38px; border: 1px solid #d9dee7; border-radius: 6px; background: #fff; color: #18212f; padding: 0 12px; cursor: pointer; font: inherit; }
+@media print {
+  body { background: white; }
+  .deck { display: block; padding: 0; }
+  .questionSlide, .questionSlide.active { display: grid; width: 100%; height: 100vh; border-radius: 0; page-break-after: always; }
+  .controls { display: none; }
+}
+`;
+}
+
+function folderDeckJs() {
+  return `const data = window.WTW_DECK_DATA;
+const manifest = data.manifest || {};
+const questions = data.questions || [];
+const mediaById = new Map((data.media || []).map((item) => [item.id, item]));
+let current = 0;
+let reveal = manifest.revealMode === "inline";
+
+function localized(value, locale = "zh-CN") {
+  if (!value || typeof value !== "object") return "";
+  return value[locale] || value["en-US"] || "";
+}
+
+function displayText(value, locale = "zh-CN") {
+  if (locale !== "bilingual") return localized(value, locale);
+  const zh = localized(value, "zh-CN");
+  const en = localized(value, "en-US");
+  if (!zh) return en;
+  if (!en || en === zh) return zh;
+  return zh + "\\n" + en;
+}
+
+function mediaElement(ref) {
+  const item = mediaById.get(ref.id);
+  if (!item) return null;
+  const kind = ref.kind || item.type;
+  const label = displayText(ref.hint, manifest.locale) || item.alt || item.title || ref.id;
+  if (kind === "image" || kind === "thumbnail") {
+    const image = document.createElement("img");
+    image.src = item.path;
+    image.alt = label;
+    return image;
+  }
+  if (kind === "audio") {
+    const audio = document.createElement("audio");
+    audio.controls = true;
+    audio.src = item.path;
+    return audio;
+  }
+  if (kind === "video") {
+    const video = document.createElement("video");
+    video.controls = true;
+    video.src = item.path;
+    return video;
+  }
+  return null;
+}
+
+function formatAnswer(question) {
+  const answers = question.answer || [];
+  if (!question.options) return answers.join(", ");
+  return answers.map((answer) => {
+    const item = question.options.find((option) => option.id === answer);
+    const label = displayText(item?.text, manifest.locale).replace(/\\n/g, " / ") || (item?.media?.length ? "media option" : "");
+    return item ? answer + (label ? ". " + label : "") : answer;
+  }).join(", ");
+}
+
+function questionSlide(question, index) {
+  const slide = document.createElement("article");
+  slide.className = "questionSlide";
+
+  const kicker = document.createElement("div");
+  kicker.className = "slideKicker";
+  kicker.textContent = (index + 1) + " / " + questions.length + " · " + question.category + " · " + question.type;
+
+  const title = document.createElement("h1");
+  title.textContent = displayText(question.title, manifest.locale);
+
+  const prompt = document.createElement("p");
+  prompt.className = "slidePrompt";
+  prompt.textContent = displayText(question.prompt, manifest.locale);
+
+  const slideMedia = document.createElement("div");
+  slideMedia.className = "slideMedia";
+  for (const ref of question.media || []) {
+    const node = mediaElement(ref);
+    if (node) slideMedia.append(node);
+  }
+
+  const options = document.createElement("ol");
+  options.className = "slideOptions";
+  for (const option of question.options || []) {
+    const item = document.createElement("li");
+    const marker = document.createElement("span");
+    marker.textContent = option.id;
+    const body = document.createElement("div");
+    body.className = "optionBody";
+    for (const ref of option.media || []) {
+      const node = mediaElement(ref);
+      if (node) body.append(node);
+    }
+    const text = document.createElement("strong");
+    text.textContent = displayText(option.text, manifest.locale);
+    if (text.textContent) body.append(text);
+    item.append(marker, body);
+    options.append(item);
+  }
+
+  const revealBlock = document.createElement("div");
+  revealBlock.className = "slideReveal";
+  const answer = document.createElement("strong");
+  answer.textContent = "Answer: " + formatAnswer(question);
+  const explanation = document.createElement("p");
+  explanation.textContent = displayText(question.reveal, manifest.locale);
+  revealBlock.append(answer, explanation);
+
+  slide.append(kicker, title, prompt, slideMedia);
+  if ((question.options || []).length > 0) slide.append(options);
+  slide.append(revealBlock);
+  return slide;
+}
+
+function render() {
+  const slides = [...document.querySelectorAll(".questionSlide")];
+  slides.forEach((slide, index) => slide.classList.toggle("active", index === current));
+  document.querySelector("#status").textContent = slides.length ? String(current + 1) + " / " + slides.length : "0 / 0";
+  document.querySelector("#reveal").textContent = reveal ? "Hide Reveal" : "Show Reveal";
+  const activeReveal = slides[current]?.querySelector(".slideReveal");
+  if (activeReveal && manifest.revealMode !== "inline") activeReveal.classList.toggle("hidden", !reveal);
+}
+
+document.querySelector("#deck").replaceChildren(...questions.map(questionSlide));
+document.querySelector("#prev").addEventListener("click", () => { current = Math.max(0, current - 1); render(); });
+document.querySelector("#next").addEventListener("click", () => { current = Math.min(questions.length - 1, current + 1); render(); });
+document.querySelector("#reveal").addEventListener("click", () => { reveal = !reveal; render(); });
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowLeft") { current = Math.max(0, current - 1); render(); }
+  if (event.key === "ArrowRight") { current = Math.min(questions.length - 1, current + 1); render(); }
+  if (event.key.toLowerCase() === "r") { reveal = !reveal; render(); }
+});
+render();
+`;
 }

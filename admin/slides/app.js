@@ -139,7 +139,7 @@ function buildSlides({ shuffle = false } = {}) {
 }
 
 async function exportSlides() {
-  elements.exportStatus.textContent = "Generating exported HTML...";
+  elements.exportStatus.textContent = "Generating export folder...";
   if (state.slideQuestions.length === 0) buildSlides();
   const ids = state.slideQuestions.map((question) => question.id);
   const result = await requestJson("/api/slides/export", {
@@ -157,15 +157,15 @@ async function exportSlides() {
   label.textContent = `Generated ${result.count} slide(s)`;
   const download = document.createElement("a");
   download.href = result.url;
-  download.download = "";
-  download.textContent = "Download HTML";
+  download.textContent = "Open Deck";
   const open = document.createElement("a");
   open.href = result.url;
   open.target = "_blank";
   open.rel = "noreferrer";
-  open.textContent = "Open";
+  open.textContent = "Open in New Tab";
   const file = document.createElement("small");
-  file.textContent = result.file;
+  const missing = result.media?.missing?.length ? ` · missing media: ${result.media.missing.length}` : "";
+  file.textContent = `${result.folder} · media copied: ${result.media?.copied ?? 0}/${result.media?.total ?? 0}${missing}`;
   elements.exportStatus.append(label, download, open, file);
 }
 
