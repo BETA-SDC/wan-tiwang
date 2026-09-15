@@ -52,6 +52,7 @@ Recommended fields:
     "en-US": "Optional extra context."
   },
   "category": "science.astronomy",
+  "difficulty": "medium",
   "tags": ["space", "surprising"],
   "mood": ["surprising", "easygoing"],
   "occasion": ["daily", "party"],
@@ -85,6 +86,7 @@ Use `status: "published"` only when the question is ready for random sampling.
 - `reveal`：揭晓答案时展示的解释。
 - `fun_fact`：可选的额外趣味补充。
 - `category`：题目分类，只放一个稳定分类；支持 `science.astronomy` 这样的点分层级，管理界面会按层级筛选。
+- `difficulty`：可选但推荐，用于区分难度；当前稳定值为 `easy`、`medium`、`hard`。
 - `tags`：灵活标签，用于复用、检索和专题组合。
 - `mood`：题目氛围，比如 `funny`、`surprising`、`hardcore`。
 - `occasion`：适合场景，比如 `daily`、`party`、`stream`。

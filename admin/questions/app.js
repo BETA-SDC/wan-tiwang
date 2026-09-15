@@ -12,6 +12,7 @@ const state = {
 const elements = {
   categoryLevels: document.querySelector("#categoryLevels"),
   typeFilter: document.querySelector("#typeFilter"),
+  difficultyFilter: document.querySelector("#difficultyFilter"),
   searchInput: document.querySelector("#searchInput"),
   statusFilter: document.querySelector("#statusFilter"),
   questionList: document.querySelector("#questionList"),
@@ -75,6 +76,8 @@ function renderFilters() {
   renderCategoryLevels();
   elements.typeFilter.replaceChildren(option("", "All answer types"));
   for (const format of state.bootstrap.formats) elements.typeFilter.append(option(format.id, `${format.name} (${format.id})`));
+  elements.difficultyFilter.replaceChildren(option("", "All difficulties"));
+  for (const difficulty of state.bootstrap.difficulties) elements.difficultyFilter.append(option(difficulty.id, `${difficulty.name} (${difficulty.id})`));
 }
 
 function questionMatches(question) {
@@ -133,7 +136,7 @@ function renderQuestions() {
     prompt.textContent = localized(question.prompt);
     const meta = document.createElement("div");
     meta.className = "meta";
-    for (const value of [question.id, question.category, question.type]) {
+    for (const value of [question.id, question.category, question.type, question.difficulty].filter(Boolean)) {
       const item = document.createElement("span");
       item.textContent = value;
       meta.append(item);
@@ -168,6 +171,7 @@ async function loadQuestions() {
   if (elements.searchInput.value) params.set("q", elements.searchInput.value);
   if (selectedCategoryPrefix()) params.set("categoryPrefix", selectedCategoryPrefix());
   if (elements.typeFilter.value) params.set("type", elements.typeFilter.value);
+  if (elements.difficultyFilter.value) params.set("difficulty", elements.difficultyFilter.value);
   if (elements.statusFilter.value) params.set("status", elements.statusFilter.value);
   const data = await requestJson(`/api/questions?${params}`);
   state.questions = data.questions;
@@ -183,6 +187,7 @@ async function init() {
 
 document.querySelector("#applyFiltersButton").addEventListener("click", loadQuestions);
 elements.typeFilter.addEventListener("change", loadQuestions);
+elements.difficultyFilter.addEventListener("change", loadQuestions);
 elements.statusFilter.addEventListener("change", loadQuestions);
 elements.searchInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") loadQuestions();

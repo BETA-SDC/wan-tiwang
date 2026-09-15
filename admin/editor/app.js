@@ -9,6 +9,7 @@ const elements = {
   form: document.querySelector("#questionForm"),
   type: document.querySelector("#formType"),
   category: document.querySelector("#formCategory"),
+  difficulty: document.querySelector("#formDifficulty"),
   mood: document.querySelector("#formMood"),
   occasion: document.querySelector("#formOccasion"),
   options: document.querySelector("#optionsEditor"),
@@ -66,6 +67,8 @@ function renderTaxonomy() {
     const indent = item.parent ? "↳ " : "";
     elements.category.append(option(item.id, `${indent}${item.name} (${item.id})`));
   }
+  elements.difficulty.replaceChildren();
+  for (const item of state.bootstrap.difficulties) elements.difficulty.append(option(item.id, `${item.name} (${item.id})`));
   renderCheckboxGroup(elements.mood, state.bootstrap.moods);
   renderCheckboxGroup(elements.occasion, state.bootstrap.occasions);
 }
@@ -261,13 +264,14 @@ async function mediaRefs(upload = false) {
 
 function questionFromForm(uploadMedia = false) {
   const base = structuredClone(state.baseQuestion || {});
-  for (const field of ["_file", "_line", "type", "category", "topic", "title", "prompt", "options", "answer", "reveal", "fun_fact", "tags", "mood", "occasion", "media", "play_time_sec", "status"]) delete base[field];
+  for (const field of ["_file", "_line", "type", "category", "difficulty", "topic", "title", "prompt", "options", "answer", "reveal", "fun_fact", "tags", "mood", "occasion", "media", "play_time_sec", "status"]) delete base[field];
   return mediaRefs(uploadMedia).then((media) => {
     const question = {
       ...base,
       ...(state.selectedQuestion?.id ? { id: state.selectedQuestion.id } : {}),
       type: elements.form.type.value,
       category: elements.form.category.value,
+      difficulty: elements.form.difficulty.value,
       ...(elements.form.topic.value.trim() ? { topic: elements.form.topic.value.trim() } : {}),
       title: localizedObject(elements.form.title_zh.value, elements.form.title_en.value),
       prompt: localizedObject(elements.form.prompt_zh.value, elements.form.prompt_en.value),
@@ -292,6 +296,7 @@ function fillForm(question) {
   const form = elements.form;
   form.type.value = question.type || "single_choice";
   form.category.value = question.category || "general.weird-facts";
+  form.difficulty.value = question.difficulty || "easy";
   form.status.value = question.status || "draft";
   form.topic.value = question.topic || "";
   form.play_time_sec.value = question.play_time_sec || 20;
@@ -325,6 +330,7 @@ function newDraft() {
   fillForm({
     type: "single_choice",
     category: "general.weird-facts",
+    difficulty: "easy",
     topic: "mixed",
     title: { "zh-CN": "", "en-US": "" },
     prompt: { "zh-CN": "", "en-US": "" },

@@ -186,6 +186,7 @@ async function handleApi(request, response, url) {
     return sendJson(response, 200, {
       categories: readJson(path.join(taxonomyRoot, "categories.json")).categories,
       formats: readJson(path.join(taxonomyRoot, "formats.json")).formats,
+      difficulties: readJson(path.join(taxonomyRoot, "difficulties.json")).difficulties,
       moods: readJson(path.join(taxonomyRoot, "moods.json")).moods,
       occasions: readJson(path.join(taxonomyRoot, "occasions.json")).occasions,
       stats: readJson(path.join(indexesRoot, "stats.json"))
@@ -197,6 +198,7 @@ async function handleApi(request, response, url) {
     const category = url.searchParams.get("category") ?? "";
     const categoryPrefix = url.searchParams.get("categoryPrefix") ?? "";
     const type = url.searchParams.get("type") ?? "";
+    const difficulty = url.searchParams.get("difficulty") ?? "";
     const status = url.searchParams.get("status") ?? "";
     const tag = url.searchParams.get("tag") ?? "";
     const limit = Number(url.searchParams.get("limit") ?? 500);
@@ -204,6 +206,7 @@ async function handleApi(request, response, url) {
       if (category && question.category !== category) return false;
       if (categoryPrefix && question.category !== categoryPrefix && !question.category.startsWith(`${categoryPrefix}.`)) return false;
       if (type && question.type !== type) return false;
+      if (difficulty && question.difficulty !== difficulty) return false;
       if (status && question.status !== status) return false;
       if (tag && !(question.tags ?? []).includes(tag)) return false;
       if (!query) return true;

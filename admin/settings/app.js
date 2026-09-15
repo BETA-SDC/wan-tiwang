@@ -31,6 +31,7 @@ async function init() {
     categoryTree.append(row);
   }
   renderList(document.querySelector("#formatList"), data.formats);
+  renderList(document.querySelector("#difficultyList"), data.difficulties);
   renderList(document.querySelector("#moodList"), data.moods);
   renderList(document.querySelector("#occasionList"), data.occasions);
 }

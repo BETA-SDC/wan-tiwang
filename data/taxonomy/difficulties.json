@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "difficulties": [
+    { "id": "easy", "name": "Easy", "description": "Friendly entry-level questions for warmups and casual play." },
+    { "id": "medium", "name": "Medium", "description": "Requires some knowledge, reasoning, or close attention." },
+    { "id": "hard", "name": "Hard", "description": "Challenge questions for enthusiasts or deeper topic familiarity." }
+  ]
+}

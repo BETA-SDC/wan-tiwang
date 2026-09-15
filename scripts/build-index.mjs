@@ -9,12 +9,14 @@ const byTag = {};
 const byMood = {};
 const byOccasion = {};
 const byFormat = {};
+const byDifficulty = {};
 const byMedia = {};
 const stats = {
   total: 0,
   with_media: 0,
   by_status: {},
   by_type: {},
+  by_difficulty: {},
   by_category: {}
 };
 
@@ -40,6 +42,7 @@ for (const file of questionFiles) {
 
     pushIndex(byCategory, question.category, question.id);
     pushIndex(byFormat, question.type, question.id);
+    pushIndex(byDifficulty, question.difficulty, question.id);
 
     for (const tag of question.tags ?? []) pushIndex(byTag, tag, question.id);
     for (const mood of question.mood ?? []) pushIndex(byMood, mood, question.id);
@@ -50,6 +53,7 @@ for (const file of questionFiles) {
     if (mediaRefs(question).length > 0) stats.with_media += 1;
     stats.by_status[question.status] = (stats.by_status[question.status] ?? 0) + 1;
     stats.by_type[question.type] = (stats.by_type[question.type] ?? 0) + 1;
+    if (question.difficulty) stats.by_difficulty[question.difficulty] = (stats.by_difficulty[question.difficulty] ?? 0) + 1;
     stats.by_category[question.category] = (stats.by_category[question.category] ?? 0) + 1;
   }
 }
@@ -60,6 +64,7 @@ writeJson(path.join(indexesRoot, "by-tag.json"), byTag);
 writeJson(path.join(indexesRoot, "by-mood.json"), byMood);
 writeJson(path.join(indexesRoot, "by-occasion.json"), byOccasion);
 writeJson(path.join(indexesRoot, "by-format.json"), byFormat);
+writeJson(path.join(indexesRoot, "by-difficulty.json"), byDifficulty);
 writeJson(path.join(indexesRoot, "by-media.json"), byMedia);
 writeJson(path.join(indexesRoot, "stats.json"), stats);
 

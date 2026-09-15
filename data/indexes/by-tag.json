@@ -1,4 +1,100 @@
 {
+  "humanities-pack": [
+    "arts-architecture-000001",
+    "arts-music-000008",
+    "arts-music-000009",
+    "arts-music-000010",
+    "arts-music-000011",
+    "arts-music-000012",
+    "arts-music-000013",
+    "geography-cities-000004",
+    "geography-countries-000001",
+    "geography-countries-000002",
+    "geography-countries-000003",
+    "geography-countries-000004",
+    "geography-nature-000003",
+    "geography-nature-000004",
+    "history-world-history-000007",
+    "history-world-history-000008",
+    "history-world-history-000009",
+    "history-world-history-000010",
+    "history-world-history-000011",
+    "history-world-history-000012",
+    "history-world-history-000013",
+    "history-world-history-000014",
+    "history-world-history-000015",
+    "history-world-history-000016",
+    "humanities-classics-000001",
+    "humanities-literature-000003",
+    "humanities-literature-000004",
+    "humanities-literature-000005",
+    "humanities-literature-000006",
+    "humanities-literature-000007",
+    "humanities-literature-000008",
+    "humanities-literature-000009",
+    "humanities-literature-000010",
+    "humanities-literature-000011",
+    "humanities-literature-000012",
+    "humanities-mythology-000001",
+    "humanities-mythology-000002",
+    "language-chinese-000004",
+    "language-chinese-000005",
+    "language-chinese-000006",
+    "language-chinese-000007",
+    "language-chinese-000008",
+    "language-chinese-000009",
+    "language-chinese-000010",
+    "language-chinese-000011",
+    "society-economics-000006",
+    "society-law-000003",
+    "society-law-000004",
+    "society-politics-000002",
+    "society-politics-000003"
+  ],
+  "architecture": [
+    "arts-architecture-000001"
+  ],
+  "gothic": [
+    "arts-architecture-000001"
+  ],
+  "beethoven": [
+    "arts-music-000008"
+  ],
+  "music": [
+    "arts-music-000008",
+    "arts-music-000006",
+    "arts-music-000007"
+  ],
+  "waltz": [
+    "arts-music-000009"
+  ],
+  "classical-music": [
+    "arts-music-000009",
+    "arts-music-000010",
+    "arts-music-000002",
+    "arts-music-000003",
+    "arts-music-000004",
+    "arts-music-000005"
+  ],
+  "debussy": [
+    "arts-music-000010"
+  ],
+  "fugue": [
+    "arts-music-000011"
+  ],
+  "music-theory": [
+    "arts-music-000011",
+    "arts-music-000012"
+  ],
+  "temperament": [
+    "arts-music-000012"
+  ],
+  "peking-opera": [
+    "arts-music-000013"
+  ],
+  "arts": [
+    "arts-music-000013"
+  ],
   "luo-tianyi": [
     "arts-music-000001"
   ],
@@ -65,12 +161,6 @@
   "mozart": [
     "arts-music-000002"
   ],
-  "classical-music": [
-    "arts-music-000002",
-    "arts-music-000003",
-    "arts-music-000004",
-    "arts-music-000005"
-  ],
   "austria": [
     "arts-music-000002"
   ],
@@ -97,10 +187,6 @@
   ],
   "mandopop": [
     "arts-music-000006"
-  ],
-  "music": [
-    "arts-music-000006",
-    "arts-music-000007"
   ],
   "erhu": [
     "arts-music-000007"
@@ -135,6 +221,381 @@
   "integral": [
     "brain-math-puzzles-000001"
   ],
+  "science-pack": [
+    "brain-math-puzzles-000002",
+    "brain-math-puzzles-000003",
+    "brain-math-puzzles-000004",
+    "brain-math-puzzles-000005",
+    "science-astronomy-000003",
+    "science-astronomy-000004",
+    "science-astronomy-000005",
+    "science-astronomy-000006",
+    "science-astronomy-000007",
+    "science-astronomy-000008",
+    "science-astronomy-000009",
+    "science-astronomy-000010",
+    "science-biology-000004",
+    "science-biology-000005",
+    "science-biology-000006",
+    "science-biology-000007",
+    "science-biology-000008",
+    "science-biology-000009",
+    "science-biology-000010",
+    "science-biology-000011",
+    "science-biology-000012",
+    "science-biology-000013",
+    "science-chemistry-000002",
+    "science-chemistry-000003",
+    "science-chemistry-000004",
+    "science-chemistry-000005",
+    "science-chemistry-000006",
+    "science-chemistry-000007",
+    "science-chemistry-000008",
+    "science-chemistry-000009",
+    "science-chemistry-000010",
+    "science-chemistry-000011",
+    "science-earth-science-000001",
+    "science-earth-science-000002",
+    "science-earth-science-000003",
+    "science-earth-science-000004",
+    "science-earth-science-000005",
+    "science-earth-science-000006",
+    "science-physics-000003",
+    "science-physics-000004",
+    "science-physics-000005",
+    "science-physics-000006",
+    "science-physics-000007",
+    "science-physics-000008",
+    "science-physics-000009",
+    "science-physics-000010",
+    "science-physics-000011",
+    "science-physics-000012",
+    "science-physics-000013",
+    "science-physics-000014"
+  ],
+  "math": [
+    "brain-math-puzzles-000002",
+    "brain-math-puzzles-000003",
+    "brain-math-puzzles-000004",
+    "brain-math-puzzles-000005"
+  ],
+  "prime": [
+    "brain-math-puzzles-000002"
+  ],
+  "sequence": [
+    "brain-math-puzzles-000003"
+  ],
+  "geometry": [
+    "brain-math-puzzles-000004"
+  ],
+  "algebra": [
+    "brain-math-puzzles-000005"
+  ],
+  "games-pack": [
+    "games-esports-000001",
+    "games-esports-000002",
+    "games-esports-000003",
+    "games-esports-000004",
+    "games-esports-000005",
+    "games-esports-000006",
+    "games-esports-000007",
+    "games-esports-000008",
+    "games-esports-000009",
+    "games-esports-000010",
+    "games-specific-titles-000001",
+    "games-specific-titles-000002",
+    "games-specific-titles-000003",
+    "games-specific-titles-000004",
+    "games-specific-titles-000005",
+    "games-specific-titles-000006",
+    "games-specific-titles-000007",
+    "games-specific-titles-000008",
+    "games-specific-titles-000009",
+    "games-specific-titles-000010",
+    "games-specific-titles-000011",
+    "games-specific-titles-000012",
+    "games-specific-titles-000013",
+    "games-specific-titles-000014",
+    "games-specific-titles-000015",
+    "games-specific-titles-000016",
+    "games-specific-titles-000017",
+    "games-specific-titles-000018",
+    "games-specific-titles-000019",
+    "games-specific-titles-000020",
+    "games-specific-titles-000021",
+    "games-specific-titles-000022",
+    "games-specific-titles-000023",
+    "games-specific-titles-000024",
+    "games-specific-titles-000025",
+    "games-specific-titles-000026",
+    "games-specific-titles-000027",
+    "games-specific-titles-000028",
+    "games-specific-titles-000029",
+    "games-specific-titles-000030",
+    "games-specific-titles-000031",
+    "games-specific-titles-000032",
+    "games-specific-titles-000033",
+    "games-specific-titles-000034",
+    "games-specific-titles-000035",
+    "games-specific-titles-000036",
+    "games-specific-titles-000037",
+    "games-specific-titles-000038",
+    "games-specific-titles-000039",
+    "games-specific-titles-000040"
+  ],
+  "esports": [
+    "games-esports-000001",
+    "games-esports-000003",
+    "games-esports-000004",
+    "games-esports-000005"
+  ],
+  "moba": [
+    "games-esports-000001",
+    "games-esports-000009",
+    "games-specific-titles-000002",
+    "games-specific-titles-000035"
+  ],
+  "fps": [
+    "games-esports-000002",
+    "games-specific-titles-000012",
+    "games-specific-titles-000025",
+    "games-specific-titles-000026"
+  ],
+  "genre": [
+    "games-esports-000002"
+  ],
+  "draft": [
+    "games-esports-000003"
+  ],
+  "tactical-shooter": [
+    "games-esports-000004",
+    "games-esports-000008",
+    "games-specific-titles-000037"
+  ],
+  "stats": [
+    "games-esports-000005"
+  ],
+  "battle-royale": [
+    "games-esports-000006",
+    "games-specific-titles-000011",
+    "games-specific-titles-000036"
+  ],
+  "mechanics": [
+    "games-esports-000006",
+    "science-physics-000006"
+  ],
+  "rts": [
+    "games-esports-000007",
+    "games-specific-titles-000034"
+  ],
+  "apm": [
+    "games-esports-000007"
+  ],
+  "crossfire": [
+    "games-esports-000008"
+  ],
+  "wave-management": [
+    "games-esports-000009"
+  ],
+  "fighting-games": [
+    "games-esports-000010"
+  ],
+  "hit-confirm": [
+    "games-esports-000010"
+  ],
+  "minecraft": [
+    "games-specific-titles-000001"
+  ],
+  "sandbox": [
+    "games-specific-titles-000001",
+    "games-specific-titles-000019"
+  ],
+  "league-of-legends": [
+    "games-specific-titles-000002"
+  ],
+  "genshin-impact": [
+    "games-specific-titles-000003"
+  ],
+  "rpg": [
+    "games-specific-titles-000003",
+    "games-specific-titles-000017",
+    "games-specific-titles-000024",
+    "games-specific-titles-000028"
+  ],
+  "zelda": [
+    "games-specific-titles-000004"
+  ],
+  "nintendo": [
+    "games-specific-titles-000004",
+    "games-specific-titles-000007",
+    "games-specific-titles-000008",
+    "games-specific-titles-000039"
+  ],
+  "pokemon": [
+    "games-specific-titles-000005"
+  ],
+  "collection": [
+    "games-specific-titles-000005"
+  ],
+  "stardew-valley": [
+    "games-specific-titles-000006"
+  ],
+  "life-sim": [
+    "games-specific-titles-000006"
+  ],
+  "animal-crossing": [
+    "games-specific-titles-000007"
+  ],
+  "mario-kart": [
+    "games-specific-titles-000008"
+  ],
+  "roblox": [
+    "games-specific-titles-000009"
+  ],
+  "ugc": [
+    "games-specific-titles-000009"
+  ],
+  "among-us": [
+    "games-specific-titles-000010"
+  ],
+  "social-deduction": [
+    "games-specific-titles-000010"
+  ],
+  "fortnite": [
+    "games-specific-titles-000011"
+  ],
+  "valorant": [
+    "games-specific-titles-000012"
+  ],
+  "overwatch": [
+    "games-specific-titles-000013"
+  ],
+  "hero-shooter": [
+    "games-specific-titles-000013"
+  ],
+  "elden-ring": [
+    "games-specific-titles-000014"
+  ],
+  "fromsoftware": [
+    "games-specific-titles-000014",
+    "games-specific-titles-000031"
+  ],
+  "dark-souls": [
+    "games-specific-titles-000015"
+  ],
+  "soulslike": [
+    "games-specific-titles-000015"
+  ],
+  "red-dead-redemption": [
+    "games-specific-titles-000016"
+  ],
+  "open-world": [
+    "games-specific-titles-000016",
+    "games-specific-titles-000018"
+  ],
+  "cyberpunk-2077": [
+    "games-specific-titles-000017"
+  ],
+  "gta-v": [
+    "games-specific-titles-000018"
+  ],
+  "terraria": [
+    "games-specific-titles-000019"
+  ],
+  "hollow-knight": [
+    "games-specific-titles-000020"
+  ],
+  "metroidvania": [
+    "games-specific-titles-000020",
+    "games-specific-titles-000040"
+  ],
+  "celeste": [
+    "games-specific-titles-000021"
+  ],
+  "platformer": [
+    "games-specific-titles-000021"
+  ],
+  "hades": [
+    "games-specific-titles-000022"
+  ],
+  "roguelike": [
+    "games-specific-titles-000022"
+  ],
+  "civilization": [
+    "games-specific-titles-000023"
+  ],
+  "strategy": [
+    "games-specific-titles-000023"
+  ],
+  "the-witcher-3": [
+    "games-specific-titles-000024"
+  ],
+  "halo": [
+    "games-specific-titles-000025"
+  ],
+  "doom": [
+    "games-specific-titles-000026"
+  ],
+  "resident-evil": [
+    "games-specific-titles-000027"
+  ],
+  "horror": [
+    "games-specific-titles-000027"
+  ],
+  "final-fantasy": [
+    "games-specific-titles-000028"
+  ],
+  "black-myth-wukong": [
+    "games-specific-titles-000029"
+  ],
+  "chinese-games": [
+    "games-specific-titles-000029"
+  ],
+  "persona-5": [
+    "games-specific-titles-000030"
+  ],
+  "jrpg": [
+    "games-specific-titles-000030"
+  ],
+  "sekiro": [
+    "games-specific-titles-000031"
+  ],
+  "death-stranding": [
+    "games-specific-titles-000032"
+  ],
+  "kojima": [
+    "games-specific-titles-000032"
+  ],
+  "monster-hunter": [
+    "games-specific-titles-000033"
+  ],
+  "action-rpg": [
+    "games-specific-titles-000033"
+  ],
+  "starcraft": [
+    "games-specific-titles-000034"
+  ],
+  "dota-2": [
+    "games-specific-titles-000035"
+  ],
+  "apex-legends": [
+    "games-specific-titles-000036"
+  ],
+  "rainbow-six-siege": [
+    "games-specific-titles-000037"
+  ],
+  "hearthstone": [
+    "games-specific-titles-000038"
+  ],
+  "card-game": [
+    "games-specific-titles-000038"
+  ],
+  "splatoon": [
+    "games-specific-titles-000039"
+  ],
+  "metroid": [
+    "games-specific-titles-000040"
+  ],
   "manhattanhenge": [
     "general-everyday-trivia-000001"
   ],
@@ -161,6 +622,15 @@
   "microbes": [
     "general-weird-facts-000002"
   ],
+  "istanbul": [
+    "geography-cities-000004"
+  ],
+  "geography": [
+    "geography-cities-000004",
+    "geography-countries-000004",
+    "geography-nature-000003",
+    "geography-nature-000001"
+  ],
   "hangzhou": [
     "geography-cities-000001",
     "geography-cities-000002",
@@ -174,6 +644,7 @@
     "geography-cities-000003",
     "history-world-history-000001",
     "history-world-history-000002",
+    "language-chinese-000007",
     "society-education-000001",
     "society-law-000001",
     "society-politics-000001",
@@ -191,14 +662,42 @@
   "province": [
     "geography-cities-000003"
   ],
+  "countries": [
+    "geography-countries-000001",
+    "geography-countries-000002",
+    "language-wordplay-000002"
+  ],
+  "japan": [
+    "geography-countries-000001",
+    "history-world-history-000012"
+  ],
+  "australia": [
+    "geography-countries-000002"
+  ],
+  "capital": [
+    "geography-countries-000003"
+  ],
+  "bhutan": [
+    "geography-countries-000003"
+  ],
+  "landlocked": [
+    "geography-countries-000004"
+  ],
+  "rivers": [
+    "geography-nature-000003"
+  ],
+  "strait": [
+    "geography-nature-000004"
+  ],
+  "malacca": [
+    "geography-nature-000004"
+  ],
   "mediterranean": [
     "geography-nature-000001"
   ],
   "rome": [
-    "geography-nature-000001"
-  ],
-  "geography": [
-    "geography-nature-000001"
+    "geography-nature-000001",
+    "history-world-history-000008"
   ],
   "asia": [
     "geography-nature-000002"
@@ -241,6 +740,60 @@
   ],
   "wuyue": [
     "history-figures-000002"
+  ],
+  "egypt": [
+    "history-world-history-000007"
+  ],
+  "ancient-history": [
+    "history-world-history-000007"
+  ],
+  "latin": [
+    "history-world-history-000008"
+  ],
+  "american-history": [
+    "history-world-history-000009"
+  ],
+  "year": [
+    "history-world-history-000009"
+  ],
+  "byzantine": [
+    "history-world-history-000010"
+  ],
+  "constantinople": [
+    "history-world-history-000010"
+  ],
+  "middle-ages": [
+    "history-world-history-000011"
+  ],
+  "black-death": [
+    "history-world-history-000011"
+  ],
+  "modern-history": [
+    "history-world-history-000012"
+  ],
+  "french-revolution": [
+    "history-world-history-000013"
+  ],
+  "political-history": [
+    "history-world-history-000013"
+  ],
+  "westphalia": [
+    "history-world-history-000014"
+  ],
+  "early-modern": [
+    "history-world-history-000014"
+  ],
+  "marco-polo": [
+    "history-world-history-000015"
+  ],
+  "venice": [
+    "history-world-history-000015"
+  ],
+  "cold-war": [
+    "history-world-history-000016"
+  ],
+  "churchill": [
+    "history-world-history-000016"
   ],
   "yuan-dynasty": [
     "history-world-history-000001"
@@ -296,6 +849,69 @@
   "image-option": [
     "history-world-history-000006"
   ],
+  "philosophy": [
+    "humanities-classics-000001"
+  ],
+  "plato": [
+    "humanities-classics-000001"
+  ],
+  "chinese-classics": [
+    "humanities-literature-000003",
+    "humanities-literature-000005"
+  ],
+  "literature": [
+    "humanities-literature-000003"
+  ],
+  "shakespeare": [
+    "humanities-literature-000004"
+  ],
+  "drama": [
+    "humanities-literature-000004"
+  ],
+  "red-chamber": [
+    "humanities-literature-000005"
+  ],
+  "garcia-marquez": [
+    "humanities-literature-000006"
+  ],
+  "world-literature": [
+    "humanities-literature-000006",
+    "humanities-literature-000012",
+    "humanities-literature-000002"
+  ],
+  "kafka": [
+    "humanities-literature-000007"
+  ],
+  "modernism": [
+    "humanities-literature-000007",
+    "humanities-literature-000010"
+  ],
+  "dante": [
+    "humanities-literature-000008"
+  ],
+  "classics": [
+    "humanities-literature-000008"
+  ],
+  "hemingway": [
+    "humanities-literature-000009"
+  ],
+  "novel": [
+    "humanities-literature-000009"
+  ],
+  "joyce": [
+    "humanities-literature-000010"
+  ],
+  "poetry": [
+    "humanities-literature-000011",
+    "language-chinese-000005",
+    "language-chinese-000009"
+  ],
+  "haiku": [
+    "humanities-literature-000011"
+  ],
+  "dostoevsky": [
+    "humanities-literature-000012"
+  ],
   "eileen-chang": [
     "humanities-literature-000001"
   ],
@@ -305,14 +921,21 @@
   "phrase-origin": [
     "humanities-literature-000001"
   ],
-  "world-literature": [
-    "humanities-literature-000002"
-  ],
   "cortazar": [
     "humanities-literature-000002"
   ],
   "authors": [
     "humanities-literature-000002"
+  ],
+  "mythology": [
+    "humanities-mythology-000001",
+    "humanities-mythology-000002"
+  ],
+  "zeus": [
+    "humanities-mythology-000001"
+  ],
+  "norse": [
+    "humanities-mythology-000002"
   ],
   "john-dewey": [
     "humanities-philosophy-000001"
@@ -322,14 +945,47 @@
   ],
   "education": [
     "humanities-philosophy-000001",
+    "language-chinese-000006",
     "society-education-000001"
+  ],
+  "idiom": [
+    "language-chinese-000004",
+    "language-chinese-000006",
+    "language-idioms-000001"
+  ],
+  "chinese": [
+    "language-chinese-000004",
+    "language-idioms-000001"
+  ],
+  "su-shi": [
+    "language-chinese-000005"
+  ],
+  "classical-prose": [
+    "language-chinese-000007",
+    "language-chinese-000010"
+  ],
+  "confucius": [
+    "language-chinese-000008"
+  ],
+  "analects": [
+    "language-chinese-000008"
+  ],
+  "prosody": [
+    "language-chinese-000009"
+  ],
+  "wang-bo": [
+    "language-chinese-000010"
+  ],
+  "jianan": [
+    "language-chinese-000011"
+  ],
+  "chinese-literature": [
+    "language-chinese-000011",
+    "language-chinese-000001"
   ],
   "dream-of-the-red-chamber": [
     "language-chinese-000001",
     "language-chinese-000003"
-  ],
-  "chinese-literature": [
-    "language-chinese-000001"
   ],
   "chapter-title": [
     "language-chinese-000001"
@@ -363,18 +1019,9 @@
   "maya-script": [
     "language-english-000002"
   ],
-  "chinese": [
-    "language-idioms-000001"
-  ],
-  "idiom": [
-    "language-idioms-000001"
-  ],
   "wordplay": [
     "language-idioms-000001",
     "pop-culture-memes-000001"
-  ],
-  "countries": [
-    "language-wordplay-000002"
   ],
   "alphabet": [
     "language-wordplay-000002",
@@ -431,6 +1078,54 @@
   "fictional-place": [
     "pop-culture-memes-000003"
   ],
+  "solar-system": [
+    "science-astronomy-000003",
+    "science-astronomy-000004",
+    "science-astronomy-000002"
+  ],
+  "jupiter": [
+    "science-astronomy-000003",
+    "science-astronomy-000002"
+  ],
+  "mercury": [
+    "science-astronomy-000004"
+  ],
+  "eclipse": [
+    "science-astronomy-000005"
+  ],
+  "moon": [
+    "science-astronomy-000005"
+  ],
+  "milky-way": [
+    "science-astronomy-000006"
+  ],
+  "galaxy": [
+    "science-astronomy-000006"
+  ],
+  "light-year": [
+    "science-astronomy-000007"
+  ],
+  "astronomy": [
+    "science-astronomy-000007"
+  ],
+  "stars": [
+    "science-astronomy-000008"
+  ],
+  "hr-diagram": [
+    "science-astronomy-000008"
+  ],
+  "white-dwarf": [
+    "science-astronomy-000009"
+  ],
+  "astrophysics": [
+    "science-astronomy-000009"
+  ],
+  "cosmology": [
+    "science-astronomy-000010"
+  ],
+  "redshift": [
+    "science-astronomy-000010"
+  ],
   "venus": [
     "science-astronomy-000001"
   ],
@@ -441,21 +1136,17 @@
     "science-astronomy-000001",
     "science-astronomy-000002"
   ],
-  "jupiter": [
-    "science-astronomy-000002"
-  ],
-  "solar-system": [
-    "science-astronomy-000002"
-  ],
   "ginkgo": [
     "science-biology-000001"
   ],
   "taxonomy": [
     "science-biology-000001",
-    "science-biology-000002"
+    "science-biology-000002",
+    "science-biology-000009"
   ],
   "plants": [
-    "science-biology-000001"
+    "science-biology-000001",
+    "science-biology-000005"
   ],
   "arthropod": [
     "science-biology-000002"
@@ -467,19 +1158,147 @@
     "science-biology-000003"
   ],
   "dna": [
-    "science-biology-000003"
+    "science-biology-000003",
+    "science-biology-000004",
+    "science-biology-000013"
   ],
   "genetics": [
-    "science-biology-000003"
+    "science-biology-000003",
+    "science-biology-000007"
+  ],
+  "biology": [
+    "science-biology-000004",
+    "science-biology-000009"
+  ],
+  "photosynthesis": [
+    "science-biology-000005"
+  ],
+  "cell": [
+    "science-biology-000006"
+  ],
+  "mitochondria": [
+    "science-biology-000006"
+  ],
+  "mendel": [
+    "science-biology-000007"
+  ],
+  "blood": [
+    "science-biology-000008"
+  ],
+  "human-body": [
+    "science-biology-000008"
+  ],
+  "immunology": [
+    "science-biology-000010"
+  ],
+  "vaccine": [
+    "science-biology-000010"
+  ],
+  "pcr": [
+    "science-biology-000011"
+  ],
+  "molecular-biology": [
+    "science-biology-000011"
+  ],
+  "evolution": [
+    "science-biology-000012"
+  ],
+  "cell-biology": [
+    "science-biology-000012"
+  ],
+  "enzymes": [
+    "science-biology-000013"
   ],
   "flame-test": [
     "science-chemistry-000001"
   ],
   "chemistry": [
-    "science-chemistry-000001"
+    "science-chemistry-000001",
+    "science-chemistry-000002",
+    "science-chemistry-000003"
   ],
   "experiment": [
-    "science-chemistry-000001"
+    "science-chemistry-000001",
+    "science-chemistry-000004"
+  ],
+  "formula": [
+    "science-chemistry-000002"
+  ],
+  "salt": [
+    "science-chemistry-000003"
+  ],
+  "carbon-dioxide": [
+    "science-chemistry-000004"
+  ],
+  "ph": [
+    "science-chemistry-000005"
+  ],
+  "acid-base": [
+    "science-chemistry-000005",
+    "science-chemistry-000011"
+  ],
+  "noble-gas": [
+    "science-chemistry-000006"
+  ],
+  "elements": [
+    "science-chemistry-000006"
+  ],
+  "redox": [
+    "science-chemistry-000007"
+  ],
+  "electrons": [
+    "science-chemistry-000007"
+  ],
+  "organic-chemistry": [
+    "science-chemistry-000008",
+    "science-chemistry-000010"
+  ],
+  "carbon": [
+    "science-chemistry-000008"
+  ],
+  "mole": [
+    "science-chemistry-000009"
+  ],
+  "avogadro": [
+    "science-chemistry-000009"
+  ],
+  "benzene": [
+    "science-chemistry-000010"
+  ],
+  "buffer": [
+    "science-chemistry-000011"
+  ],
+  "earth-science": [
+    "science-earth-science-000001"
+  ],
+  "geology": [
+    "science-earth-science-000001",
+    "science-earth-science-000004",
+    "science-earth-science-000005"
+  ],
+  "weather": [
+    "science-earth-science-000002"
+  ],
+  "clouds": [
+    "science-earth-science-000002"
+  ],
+  "plate-tectonics": [
+    "science-earth-science-000003"
+  ],
+  "earthquakes": [
+    "science-earth-science-000003"
+  ],
+  "volcano": [
+    "science-earth-science-000004"
+  ],
+  "moho": [
+    "science-earth-science-000005"
+  ],
+  "meteorology": [
+    "science-earth-science-000006"
+  ],
+  "coriolis": [
+    "science-earth-science-000006"
   ],
   "photoelectric-effect": [
     "science-physics-000001"
@@ -494,10 +1313,73 @@
     "science-physics-000002"
   ],
   "physics": [
-    "science-physics-000002"
+    "science-physics-000002",
+    "science-physics-000003",
+    "science-physics-000004",
+    "science-physics-000014"
   ],
   "interpretation": [
     "science-physics-000002"
+  ],
+  "constants": [
+    "science-physics-000003"
+  ],
+  "gravity": [
+    "science-physics-000004"
+  ],
+  "electricity": [
+    "science-physics-000005"
+  ],
+  "units": [
+    "science-physics-000005",
+    "science-physics-000012"
+  ],
+  "newton": [
+    "science-physics-000006"
+  ],
+  "sound": [
+    "science-physics-000007"
+  ],
+  "waves": [
+    "science-physics-000007"
+  ],
+  "radioactivity": [
+    "science-physics-000008"
+  ],
+  "nuclear": [
+    "science-physics-000008"
+  ],
+  "optics": [
+    "science-physics-000009",
+    "science-physics-000011"
+  ],
+  "lens": [
+    "science-physics-000009"
+  ],
+  "quantum": [
+    "science-physics-000010"
+  ],
+  "planck": [
+    "science-physics-000010"
+  ],
+  "polarization": [
+    "science-physics-000011"
+  ],
+  "measurement": [
+    "science-physics-000012",
+    "science-physics-000013"
+  ],
+  "density": [
+    "science-physics-000013"
+  ],
+  "magnetism": [
+    "science-physics-000014"
+  ],
+  "economics": [
+    "society-economics-000006"
+  ],
+  "opportunity-cost": [
+    "society-economics-000006"
   ],
   "elasticity": [
     "society-economics-000001"
@@ -540,6 +1422,17 @@
     "society-education-000001",
     "society-law-000002"
   ],
+  "law": [
+    "society-law-000003",
+    "society-law-000004"
+  ],
+  "civic-knowledge": [
+    "society-law-000003",
+    "society-politics-000001"
+  ],
+  "contract": [
+    "society-law-000004"
+  ],
   "civil-law": [
     "society-law-000001",
     "society-law-000002"
@@ -550,8 +1443,15 @@
   "legal-person": [
     "society-law-000002"
   ],
-  "civic-knowledge": [
-    "society-politics-000001"
+  "united-nations": [
+    "society-politics-000002"
+  ],
+  "civics": [
+    "society-politics-000002",
+    "society-politics-000003"
+  ],
+  "political-theory": [
+    "society-politics-000003"
   ],
   "politics": [
     "society-politics-000001"

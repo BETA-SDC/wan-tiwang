@@ -9,6 +9,7 @@ const categories = new Set(readJson(path.join(taxonomyRoot, "categories.json")).
 const formats = new Set(readJson(path.join(taxonomyRoot, "formats.json")).formats.map((item) => item.id));
 const moods = new Set(readJson(path.join(taxonomyRoot, "moods.json")).moods.map((item) => item.id));
 const occasions = new Set(readJson(path.join(taxonomyRoot, "occasions.json")).occasions.map((item) => item.id));
+const difficulties = new Set(readJson(path.join(taxonomyRoot, "difficulties.json")).difficulties.map((item) => item.id));
 
 const questionIds = new Set();
 const mediaIds = new Set();
@@ -146,6 +147,7 @@ for (const file of questionFiles) {
     validateLocalizedText(file, line, question.prompt, "prompt");
     if (!Array.isArray(question.answer) || question.answer.length === 0) addError(file, line, "question answer must be a non-empty array");
     if (!question.category || !categories.has(question.category)) addError(file, line, `unknown category: ${question.category}`);
+    if (question.difficulty !== undefined && !difficulties.has(question.difficulty)) addError(file, line, `unknown difficulty: ${question.difficulty}`);
     if (!question.status) addError(file, line, "question is missing status");
 
     for (const option of question.options ?? []) {
