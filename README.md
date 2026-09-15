@@ -201,6 +201,22 @@ set PORT=5180 && npm run ui
 set PORT=5180 && node scripts\server.mjs
 ```
 
+### If You See `Not found`
+
+如果浏览器只显示 `Not found`：
+
+- Make sure you opened the URL printed by the server, such as `http://127.0.0.1:5177/`.
+- Do not open a random file path in the browser; start the local server first.
+- Make sure the command is running inside the Wan Ti Wang repository folder.
+- If you are on Windows, pull the latest version of this repository. Older versions had a Windows path bug that could make the server unable to find `admin/index.html`.
+
+检查：
+
+- 确认打开的是服务输出的地址，例如 `http://127.0.0.1:5177/`。
+- 不要直接在浏览器打开某个文件路径；要先启动本地服务。
+- 确认命令是在 Wan Ti Wang 仓库目录里运行的。
+- Windows 用户请先更新到最新版仓库。旧版本存在 Windows 路径兼容问题，可能导致服务找不到 `admin/index.html`。
+
 The UI includes a form editor for common question creation, optional local media upload/linking, slide export, feedback import, and raw JSON editing for advanced cases.
 
 管理界面提供常见题目的表单录入、可选本地媒体上传/关联、演示导出、反馈导入，也保留原始 JSON 编辑用于高级场景。

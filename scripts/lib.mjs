@@ -1,7 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-export const repoRoot = path.resolve(new URL("..", import.meta.url).pathname);
+export const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const dataRoot = path.join(repoRoot, "data");
 export const questionsRoot = path.join(dataRoot, "questions");
 export const mediaMetaRoot = path.join(dataRoot, "media-meta");
