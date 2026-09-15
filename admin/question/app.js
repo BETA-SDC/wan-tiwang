@@ -9,6 +9,7 @@ let revealVisible = false;
 let question = null;
 let media = [];
 let selectedOptionIds = new Set();
+let focusedOptionId = "";
 
 const deck = document.querySelector("#questionPreviewDeck");
 const meta = document.querySelector("#questionMeta");
@@ -28,6 +29,8 @@ function render() {
     revealVisible,
     revealMode,
     selectedOptionIds,
+    focusedOptionId,
+    onOptionFocus: focusOption,
     onOptionToggle: toggleOption
   });
   slide.classList.add("activeSlide");
@@ -36,8 +39,14 @@ function render() {
   revealButton.textContent = revealMode === "inline" ? "Reveal Inline" : revealVisible ? "Hide Reveal" : "Show Reveal";
 }
 
+function focusOption(optionId) {
+  if (!question || !optionId) return;
+  focusedOptionId = optionId;
+}
+
 function toggleOption(optionId) {
   if (!question || !optionId) return;
+  focusOption(optionId);
   if (selectedOptionIds.has(optionId)) {
     selectedOptionIds.delete(optionId);
   } else {
@@ -45,17 +54,6 @@ function toggleOption(optionId) {
     selectedOptionIds.add(optionId);
   }
   render();
-}
-
-function toggleOptionByShortcut(key) {
-  if (!question) return false;
-  const normalized = key.toLowerCase();
-  const byId = (question.options || []).find((option) => option.id.toLowerCase() === normalized);
-  const byIndex = /^[1-9]$/.test(key) ? question.options?.[Number(key) - 1] : null;
-  const option = byId || byIndex;
-  if (!option) return false;
-  toggleOption(option.id);
-  return true;
 }
 
 function canToggleReveal() {
@@ -66,6 +64,55 @@ function toggleReveal() {
   if (!canToggleReveal()) return;
   revealVisible = !revealVisible;
   render();
+}
+
+function optionElements() {
+  return [...deck.querySelectorAll(".slideOptions li[data-option-id]")];
+}
+
+function moveOptionFocus(direction) {
+  const options = optionElements();
+  if (options.length === 0) return false;
+  const currentElement = options.find((item) => item.dataset.optionId === focusedOptionId) || options.find((item) => item.classList.contains("selected")) || options[0];
+  const currentRect = currentElement.getBoundingClientRect();
+  const centerX = currentRect.left + currentRect.width / 2;
+  const centerY = currentRect.top + currentRect.height / 2;
+  const candidates = options
+    .filter((item) => item !== currentElement)
+    .map((item) => {
+      const rect = item.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const dx = x - centerX;
+      const dy = y - centerY;
+      return { item, dx, dy, distance: Math.hypot(dx, dy) };
+    })
+    .filter(({ dx, dy }) => {
+      if (direction === "left") return dx < -8;
+      if (direction === "right") return dx > 8;
+      if (direction === "up") return dy < -8;
+      if (direction === "down") return dy > 8;
+      return false;
+    })
+    .sort((a, b) => {
+      const primaryA = direction === "left" || direction === "right" ? Math.abs(a.dx) : Math.abs(a.dy);
+      const primaryB = direction === "left" || direction === "right" ? Math.abs(b.dx) : Math.abs(b.dy);
+      const crossA = direction === "left" || direction === "right" ? Math.abs(a.dy) : Math.abs(a.dx);
+      const crossB = direction === "left" || direction === "right" ? Math.abs(b.dy) : Math.abs(b.dx);
+      return primaryA - primaryB || crossA - crossB || a.distance - b.distance;
+    });
+  const next = candidates[0]?.item || currentElement;
+  focusOption(next.dataset.optionId);
+  render();
+  deck.querySelector(`[data-option-id="${CSS.escape(next.dataset.optionId)}"]`)?.focus();
+  return true;
+}
+
+function selectFocusedOption() {
+  const optionId = focusedOptionId || question?.options?.[0]?.id;
+  if (!optionId) return false;
+  toggleOption(optionId);
+  return true;
 }
 
 async function init() {
@@ -108,7 +155,23 @@ document.addEventListener("keydown", (event) => {
     toggleReveal();
     return;
   }
-  if (toggleOptionByShortcut(key)) {
+  if (lower === "w" && moveOptionFocus("up")) {
+    event.preventDefault();
+    return;
+  }
+  if (lower === "a" && moveOptionFocus("left")) {
+    event.preventDefault();
+    return;
+  }
+  if (lower === "s" && moveOptionFocus("down")) {
+    event.preventDefault();
+    return;
+  }
+  if (lower === "d" && moveOptionFocus("right")) {
+    event.preventDefault();
+    return;
+  }
+  if (key === "Enter" && selectFocusedOption()) {
     event.preventDefault();
   }
 });

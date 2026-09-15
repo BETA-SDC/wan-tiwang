@@ -10,7 +10,8 @@ const state = {
   slideQuestions: [],
   currentSlide: 0,
   revealVisible: false,
-  previewSelections: new Map()
+  previewSelections: new Map(),
+  focusedOptions: new Map()
 };
 
 const elements = {
@@ -111,6 +112,8 @@ function renderSlides() {
     revealVisible: state.revealVisible,
     revealMode,
     selectedOptionIds: selectedOptionIdsForCurrentSlide(),
+    focusedOptionId: focusedOptionIdForCurrentSlide(),
+    onOptionFocus: focusCurrentOption,
     onOptionToggle: toggleCurrentOption
   });
   slide.classList.add("activeSlide");
@@ -121,20 +124,36 @@ function renderSlides() {
   revealButton.textContent = revealMode === "inline" ? "Reveal Inline" : state.revealVisible ? "Hide Reveal" : "Show Reveal";
 }
 
+function currentQuestion() {
+  return state.slideQuestions[state.currentSlide];
+}
+
 function selectedOptionIdsForCurrentSlide() {
-  const question = state.slideQuestions[state.currentSlide];
+  const question = currentQuestion();
   return new Set(state.previewSelections.get(question?.id) || []);
 }
 
+function focusedOptionIdForCurrentSlide() {
+  const question = currentQuestion();
+  return state.focusedOptions.get(question?.id) || "";
+}
+
 function setCurrentSelection(selected) {
-  const question = state.slideQuestions[state.currentSlide];
+  const question = currentQuestion();
   if (!question) return;
   state.previewSelections.set(question.id, [...selected]);
 }
 
-function toggleCurrentOption(optionId) {
-  const question = state.slideQuestions[state.currentSlide];
+function focusCurrentOption(optionId) {
+  const question = currentQuestion();
   if (!question || !optionId) return;
+  state.focusedOptions.set(question.id, optionId);
+}
+
+function toggleCurrentOption(optionId) {
+  const question = currentQuestion();
+  if (!question || !optionId) return;
+  focusCurrentOption(optionId);
   const selected = selectedOptionIdsForCurrentSlide();
   if (selected.has(optionId)) {
     selected.delete(optionId);
@@ -146,15 +165,55 @@ function toggleCurrentOption(optionId) {
   renderSlides();
 }
 
-function toggleOptionByShortcut(key) {
-  const question = state.slideQuestions[state.currentSlide];
+function optionElements() {
+  return [...elements.slideDeck.querySelectorAll(".slideOptions li[data-option-id]")];
+}
+
+function moveOptionFocus(direction) {
+  const options = optionElements();
+  if (options.length === 0) return false;
+  const currentId = focusedOptionIdForCurrentSlide();
+  const currentElement = options.find((item) => item.dataset.optionId === currentId) || options.find((item) => item.classList.contains("selected")) || options[0];
+  const currentRect = currentElement.getBoundingClientRect();
+  const centerX = currentRect.left + currentRect.width / 2;
+  const centerY = currentRect.top + currentRect.height / 2;
+  const candidates = options
+    .filter((item) => item !== currentElement)
+    .map((item) => {
+      const rect = item.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const dx = x - centerX;
+      const dy = y - centerY;
+      return { item, dx, dy, distance: Math.hypot(dx, dy) };
+    })
+    .filter(({ dx, dy }) => {
+      if (direction === "left") return dx < -8;
+      if (direction === "right") return dx > 8;
+      if (direction === "up") return dy < -8;
+      if (direction === "down") return dy > 8;
+      return false;
+    })
+    .sort((a, b) => {
+      const primaryA = direction === "left" || direction === "right" ? Math.abs(a.dx) : Math.abs(a.dy);
+      const primaryB = direction === "left" || direction === "right" ? Math.abs(b.dx) : Math.abs(b.dy);
+      const crossA = direction === "left" || direction === "right" ? Math.abs(a.dy) : Math.abs(a.dx);
+      const crossB = direction === "left" || direction === "right" ? Math.abs(b.dy) : Math.abs(b.dx);
+      return primaryA - primaryB || crossA - crossB || a.distance - b.distance;
+    });
+  const next = candidates[0]?.item || currentElement;
+  focusCurrentOption(next.dataset.optionId);
+  renderSlides();
+  elements.slideDeck.querySelector(`[data-option-id="${CSS.escape(next.dataset.optionId)}"]`)?.focus();
+  return true;
+}
+
+function selectFocusedOption() {
+  const question = currentQuestion();
   if (!question) return false;
-  const normalized = key.toLowerCase();
-  const byId = (question.options || []).find((option) => option.id.toLowerCase() === normalized);
-  const byIndex = /^[1-9]$/.test(key) ? question.options?.[Number(key) - 1] : null;
-  const option = byId || byIndex;
-  if (!option) return false;
-  toggleCurrentOption(option.id);
+  const optionId = focusedOptionIdForCurrentSlide() || question.options?.[0]?.id;
+  if (!optionId) return false;
+  toggleCurrentOption(optionId);
   return true;
 }
 
@@ -307,7 +366,23 @@ document.addEventListener("keydown", (event) => {
     else togglePresentation(false);
     return;
   }
-  if (toggleOptionByShortcut(key)) {
+  if (lower === "w" && moveOptionFocus("up")) {
+    event.preventDefault();
+    return;
+  }
+  if (lower === "a" && moveOptionFocus("left")) {
+    event.preventDefault();
+    return;
+  }
+  if (lower === "s" && moveOptionFocus("down")) {
+    event.preventDefault();
+    return;
+  }
+  if (lower === "d" && moveOptionFocus("right")) {
+    event.preventDefault();
+    return;
+  }
+  if (key === "Enter" && selectFocusedOption()) {
     event.preventDefault();
   }
 });

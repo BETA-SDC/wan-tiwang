@@ -55,6 +55,8 @@ export function createQuestionSlide({
   headingTag = "h3",
   mediaPrefix = "/",
   selectedOptionIds = new Set(),
+  focusedOptionId = "",
+  onOptionFocus,
   onOptionToggle
 }) {
   const slide = document.createElement("article");
@@ -84,6 +86,7 @@ export function createQuestionSlide({
     node.setAttribute("role", "button");
     node.setAttribute("aria-pressed", String(selectedOptionIds.has(item.id)));
     node.classList.toggle("selected", selectedOptionIds.has(item.id));
+    node.classList.toggle("focused", focusedOptionId === item.id);
     const marker = document.createElement("span");
     marker.textContent = item.id;
     const body = document.createElement("div");
@@ -96,7 +99,11 @@ export function createQuestionSlide({
     text.textContent = displayText(item.text, locale);
     if (text.textContent) body.append(text);
     node.append(marker, body);
-    node.addEventListener("click", () => onOptionToggle?.(item.id));
+    node.addEventListener("focus", () => onOptionFocus?.(item.id));
+    node.addEventListener("click", () => {
+      onOptionFocus?.(item.id);
+      onOptionToggle?.(item.id);
+    });
     node.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== " ") return;
       event.preventDefault();

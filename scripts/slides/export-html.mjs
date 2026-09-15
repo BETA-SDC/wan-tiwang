@@ -256,7 +256,7 @@ function folderIndexHtml(title) {
       <button id="reveal" type="button">Show Reveal</button>
       <button id="downloadFeedback" type="button">Download Feedback</button>
     </div>
-    <span><span id="status"></span><span id="feedbackStatus"></span><span class="shortcutHint"> · ←/→ Space F Enter A-D 1-9 ?</span></span>
+    <span><span id="status"></span><span id="feedbackStatus"></span><span class="shortcutHint"> · ←/→ Space F WASD Enter ?</span></span>
   </footer>
   <script src="data/deck-data.js"></script>
   <script src="assets/deck.js"></script>
@@ -276,6 +276,7 @@ h1 { margin: 0; white-space: pre-line; font-size: 40px; line-height: 1.12; }
 .slidePrompt { margin: 0; white-space: pre-line; color: #344054; font-size: 28px; line-height: 1.35; }
 .slideOptions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 0; margin: 0; list-style: none; }
 .slideOptions li { display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 12px; min-height: 58px; padding: 10px 14px; border: 1px solid #d9dee7; border-radius: 8px; background: #f8fafc; cursor: pointer; }
+.slideOptions li.focused { border-color: #0f766e; box-shadow: inset 0 0 0 2px rgba(15, 118, 110, 0.45); }
 .slideOptions li.selected { border-color: #0f766e; box-shadow: inset 0 0 0 2px #0f766e; }
 .slideOptions li.correct { border-color: #15803d; background: #f0fdf4; }
 .slideOptions li.incorrect { border-color: #b91c1c; background: #fef2f2; }
@@ -569,15 +570,24 @@ function questionSlide(question, index) {
       syncOptionState();
     }
 
+    function focusOption(item) {
+      for (const optionItem of options.querySelectorAll("li")) optionItem.classList.toggle("focused", optionItem === item);
+      item?.focus();
+    }
+
     options.addEventListener("click", (event) => {
       const item = event.target.closest("li[data-option-id]");
-      if (item) toggleOption(item.dataset.optionId);
+      if (item) {
+        focusOption(item);
+        toggleOption(item.dataset.optionId);
+      }
     });
     options.addEventListener("keydown", (event) => {
       if (event.key !== "Enter" && event.key !== " ") return;
       const item = event.target.closest("li[data-option-id]");
       if (!item) return;
       event.preventDefault();
+      focusOption(item);
       toggleOption(item.dataset.optionId);
     });
     confirm.addEventListener("click", () => {
@@ -595,6 +605,8 @@ function questionSlide(question, index) {
       syncOptionState();
       markResult(event);
       updateFeedbackStatus();
+      reveal = true;
+      render();
     });
     answerPanel.append(confirm, result);
     syncOptionState();
@@ -640,16 +652,60 @@ function toggleReveal() {
   render();
 }
 
-function selectOptionByShortcut(key) {
-  const question = activeQuestion();
-  if (!question || !question.options?.length) return false;
-  const normalized = key.toLowerCase();
-  const byId = question.options.find((option) => option.id.toLowerCase() === normalized);
-  const byIndex = /^[1-9]$/.test(key) ? question.options[Number(key) - 1] : null;
-  const option = byId || byIndex;
-  if (!option) return false;
-  const item = activeSlide()?.querySelector(\`[data-option-id="\${CSS.escape(option.id)}"]\`);
-  item?.click();
+function optionElements() {
+  return [...(activeSlide()?.querySelectorAll(".slideOptions li[data-option-id]") || [])];
+}
+
+function focusedOptionElement() {
+  const options = optionElements();
+  return options.find((item) => item.classList.contains("focused")) || options.find((item) => item.classList.contains("selected")) || options[0];
+}
+
+function focusOptionElement(item) {
+  if (!item) return false;
+  for (const option of optionElements()) option.classList.toggle("focused", option === item);
+  item.focus();
+  return true;
+}
+
+function moveOptionFocus(direction) {
+  const options = optionElements();
+  if (options.length === 0) return false;
+  const currentElement = focusedOptionElement();
+  const currentRect = currentElement.getBoundingClientRect();
+  const centerX = currentRect.left + currentRect.width / 2;
+  const centerY = currentRect.top + currentRect.height / 2;
+  const candidates = options
+    .filter((item) => item !== currentElement)
+    .map((item) => {
+      const rect = item.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const dx = x - centerX;
+      const dy = y - centerY;
+      return { item, dx, dy, distance: Math.hypot(dx, dy) };
+    })
+    .filter(({ dx, dy }) => {
+      if (direction === "left") return dx < -8;
+      if (direction === "right") return dx > 8;
+      if (direction === "up") return dy < -8;
+      if (direction === "down") return dy > 8;
+      return false;
+    })
+    .sort((a, b) => {
+      const primaryA = direction === "left" || direction === "right" ? Math.abs(a.dx) : Math.abs(a.dy);
+      const primaryB = direction === "left" || direction === "right" ? Math.abs(b.dx) : Math.abs(b.dy);
+      const crossA = direction === "left" || direction === "right" ? Math.abs(a.dy) : Math.abs(a.dx);
+      const crossB = direction === "left" || direction === "right" ? Math.abs(b.dy) : Math.abs(b.dx);
+      return primaryA - primaryB || crossA - crossB || a.distance - b.distance;
+    });
+  return focusOptionElement(candidates[0]?.item || currentElement);
+}
+
+function selectFocusedOption() {
+  const item = focusedOptionElement();
+  if (!item) return false;
+  item.click();
   return true;
 }
 
@@ -663,7 +719,7 @@ function confirmActiveAnswer() {
 }
 
 function showShortcutHelp() {
-  window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nSelect option: A-D or 1-9\\nConfirm selected answer: Enter\\nHide answer: Esc\\nHelp: ?");
+  window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nMove option focus: W/A/S/D\\nSelect focused option: Enter\\nConfirm selected answer: Enter again or Confirm Answer\\nHide answer: Esc\\nHelp: ?");
 }
 
 document.querySelector("#deck").replaceChildren(...questions.map(questionSlide));
@@ -691,6 +747,12 @@ document.addEventListener("keydown", (event) => {
     return;
   }
   if (key === "Enter") {
+    const focused = focusedOptionElement();
+    if (focused && !focused.classList.contains("selected")) {
+      event.preventDefault();
+      selectFocusedOption();
+      return;
+    }
     if (confirmActiveAnswer()) event.preventDefault();
     return;
   }
@@ -704,7 +766,19 @@ document.addEventListener("keydown", (event) => {
     showShortcutHelp();
     return;
   }
-  if (selectOptionByShortcut(key)) {
+  if (lower === "w" && moveOptionFocus("up")) {
+    event.preventDefault();
+    return;
+  }
+  if (lower === "a" && moveOptionFocus("left")) {
+    event.preventDefault();
+    return;
+  }
+  if (lower === "s" && moveOptionFocus("down")) {
+    event.preventDefault();
+    return;
+  }
+  if (lower === "d" && moveOptionFocus("right")) {
     event.preventDefault();
   }
 });

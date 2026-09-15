@@ -109,7 +109,7 @@ Exported decks can collect simple answer feedback for choice questions.
 In the exported deck:
 
 1. Click one or more options.
-2. Click `Confirm Answer`, or press `Enter` after selecting.
+2. Click `Confirm Answer`, or press `Enter` again after selecting. The answer reveal opens automatically after confirmation.
 3. Continue through the deck.
 4. Click `Download Feedback`.
 5. Save the downloaded `*-answer-feedback.json` file.
@@ -117,7 +117,7 @@ In the exported deck:
 在导出演示中：
 
 1. 点击一个或多个选项。
-2. 点击 `Confirm Answer`，或者选择后按 `Enter`。
+2. 点击 `Confirm Answer`，或者选择后再次按 `Enter`。确认后答案会自动显示。
 3. 继续完成演示。
 4. 点击 `Download Feedback`。
 5. 保存下载的 `*-answer-feedback.json` 文件。
@@ -154,8 +154,8 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
   - `Left`, `PageUp`, `P`, or `Backspace`: previous slide.
   - `F` or `R`: show or hide the answer.
   - `Esc`: hide the answer; in Present mode, exits Present when the answer is already hidden.
-  - `A-D` or `1-9`: select an option on choice questions.
-  - `Enter`: confirm the selected answer in exported decks.
+  - `W/A/S/D`: move option focus by the on-screen layout.
+  - `Enter`: select the focused option; press again or use `Confirm Answer` to submit in exported decks.
   - `?`: show the shortcut help in exported decks.
 
 说明：
@@ -172,6 +172,6 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
   - `Left`、`PageUp`、`P` 或 `Backspace`：上一题。
   - `F` 或 `R`：显示/隐藏答案。
   - `Esc`：隐藏答案；在 Present 模式中，如果答案已隐藏则退出 Present。
-  - `A-D` 或 `1-9`：选择选项题的选项。
-  - `Enter`：在导出演示中确认已选答案。
+  - `W/A/S/D`：按界面布局移动选项焦点。
+  - `Enter`：选择当前焦点选项；在导出演示中再次按下或点击 `Confirm Answer` 提交答案。
   - `?`：在导出演示中显示快捷键帮助。
