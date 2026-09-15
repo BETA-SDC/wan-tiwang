@@ -83,9 +83,9 @@ skills/        面向 AI 助手的仓库操作说明
 
 ## First-Time Setup
 
-If this is the first time using the project on a computer, install Node.js first. Node.js normally includes npm, so installing Node.js is enough for both `node` and `npm` commands.
+Install Node.js before using the visual tools. Node.js includes npm, which this project uses to start the local management UI.
 
-第一次在一台电脑上使用本项目时，先安装 Node.js。通常 Node.js 会自带 npm，所以装好 Node.js 后就同时有 `node` 和 `npm` 命令。
+使用可视化工具前，先安装 Node.js。Node.js 会自带 npm，本项目用 npm 启动本地管理界面。
 
 Recommended beginner path:
 
@@ -93,7 +93,7 @@ Recommended beginner path:
 2. Download the LTS version for your system.
 3. Install it with the default options.
 4. Close and reopen Terminal on macOS, or PowerShell / Command Prompt on Windows.
-5. Check the installation:
+5. Check that both commands print version numbers:
 
 ```bash
 node --version
@@ -106,156 +106,72 @@ npm --version
 2. 下载适合自己系统的 LTS 版本。
 3. 按默认选项安装。
 4. macOS 关闭并重新打开 Terminal；Windows 关闭并重新打开 PowerShell 或命令提示符。
-5. 检查是否安装成功：
+5. 确认下面两个命令都能输出版本号：
 
 ```bash
 node --version
 npm --version
 ```
 
-If both commands print version numbers, setup is ready. This project requires Node.js 18 or newer.
+This project requires Node.js 18 or newer.
 
-如果两个命令都能输出版本号，就可以继续使用。本项目需要 Node.js 18 或更新版本。
+本项目需要 Node.js 18 或更新版本。
 
-If `node` works but `npm` does not, you can still start the UI with direct Node commands shown below.
+## Start the UI
 
-如果 `node` 可用但 `npm` 不可用，也可以使用下面的直接 Node 命令启动 UI。
-
-## Quick Start
-
-Most commands are the same on macOS and Windows. The main difference is how to set an environment variable such as `PORT`.
-
-大多数命令在 macOS 和 Windows 上一样。主要差异是设置环境变量，例如 `PORT`。
-
-For everyday visual work, start the local UI:
+Start the local visual management UI:
 
 ```bash
 npm run ui
 ```
 
-If npm is not available, start the same UI server directly:
-
-```bash
-node scripts/server.mjs
-```
-
-Open the local URL printed in the terminal, usually `http://127.0.0.1:5177`. Keep the terminal running while using the UI, and stop it with `Ctrl+C`.
-
-If port `5177` is already occupied, choose another port:
-
-macOS / Linux:
-
-```bash
-PORT=5180 npm run ui
-PORT=5180 node scripts/server.mjs
-```
-
-Windows PowerShell:
-
-```powershell
-$env:PORT=5180; npm run ui
-$env:PORT=5180; node scripts/server.mjs
-```
-
-Windows Command Prompt:
-
-```bat
-set PORT=5180 && npm run ui
-set PORT=5180 && node scripts\server.mjs
-```
-
-日常可视化操作，先启动本地 UI：
+启动本地可视化管理界面：
 
 ```bash
 npm run ui
 ```
 
-如果没有 npm，也可以直接启动同一个 UI 服务：
+Open the local URL printed in the terminal, usually `http://127.0.0.1:5177/`. Keep the terminal running while using the UI, and stop it with `Ctrl+C`.
 
-```bash
-node scripts/server.mjs
-```
+打开终端输出的本地地址，通常是 `http://127.0.0.1:5177/`。使用 UI 时保持终端运行，需要停止时按 `Ctrl+C`。
 
-然后打开终端输出的本地地址，通常是 `http://127.0.0.1:5177`。使用 UI 时保持终端运行，需要停止时按 `Ctrl+C`。
+The UI includes a question library, form editor, optional media upload/linking, slide export, answer feedback import, repository checks, and raw JSON editing for advanced cases.
 
-如果 `5177` 端口被占用，可以换端口：
+管理界面提供题库浏览、表单录入、可选媒体上传/关联、演示导出、作答反馈导入、仓库检查，以及高级场景下的原始 JSON 编辑。
 
-macOS / Linux:
+## How to Contribute Questions
 
-```bash
-PORT=5180 npm run ui
-PORT=5180 node scripts/server.mjs
-```
+Recommended contribution flow:
 
-Windows PowerShell:
+1. Use AI to draft question batches with the required bilingual JSON structure.
+2. Review facts, wording, category, answer, difficulty, tags, and media references.
+3. Import or paste reviewed questions through the UI.
+4. Run the maintenance check in the UI before submitting changes.
 
-```powershell
-$env:PORT=5180; npm run ui
-$env:PORT=5180; node scripts/server.mjs
-```
+推荐贡献流程：
 
-Windows 命令提示符：
+1. 先用 AI 按要求生成双语 JSON 题目草稿。
+2. 人工审核事实、措辞、分类、答案、难度、标签和媒体引用。
+3. 通过 UI 导入或粘贴审核后的题目。
+4. 提交前在 UI 里运行维护检查。
 
-```bat
-set PORT=5180 && npm run ui
-set PORT=5180 && node scripts\server.mjs
-```
+AI assistance is the preferred way to create larger batches. It keeps bilingual fields, answer formats, tags, and category IDs consistent, but AI output must still be reviewed before it becomes trusted question-bank data.
 
-### If You See `Not found`
+批量创建题目时，推荐优先使用 AI 辅助。这样更容易保持中英文字段、答案格式、标签和分类 ID 一致；但 AI 输出仍然必须经过人工审核，不能直接当作可信题库数据。
 
-如果浏览器只显示 `Not found`：
+For full AI-assisted authoring guidance, read:
 
-- Make sure you opened the URL printed by the server, such as `http://127.0.0.1:5177/`.
-- Do not open a random file path in the browser; start the local server first.
-- Make sure the command is running inside the Wan Ti Wang repository folder.
-- If you are on Windows, pull the latest version of this repository. Older versions had a Windows path bug that could make the server unable to find `admin/index.html`.
+- [AI-Assisted Authoring](docs/ai-assisted-authoring.md)
+- [AI One-File Question Brief](docs/ai-one-file-question-brief.md)
 
-检查：
+AI 辅助出题的完整说明见：
 
-- 确认打开的是服务输出的地址，例如 `http://127.0.0.1:5177/`。
-- 不要直接在浏览器打开某个文件路径；要先启动本地服务。
-- 确认命令是在 Wan Ti Wang 仓库目录里运行的。
-- Windows 用户请先更新到最新版仓库。旧版本存在 Windows 路径兼容问题，可能导致服务找不到 `admin/index.html`。
+- [AI-Assisted Authoring](docs/ai-assisted-authoring.md)
+- [AI One-File Question Brief](docs/ai-one-file-question-brief.md)
 
-The UI includes a form editor for common question creation, optional local media upload/linking, slide export, feedback import, and raw JSON editing for advanced cases.
+If another AI can read only one file, give it [AI One-File Question Brief](docs/ai-one-file-question-brief.md). That file is self-contained and tells the AI the required schema, bilingual rules, media rules, allowed answer types, and output format.
 
-管理界面提供常见题目的表单录入、可选本地媒体上传/关联、演示导出、反馈导入，也保留原始 JSON 编辑用于高级场景。
-
-For everyday CLI work, start here:
-
-```bash
-npm run wtw
-```
-
-日常 CLI 操作可以使用：
-
-```bash
-npm run wtw
-```
-
-The console groups common tasks into content creation, maintenance, play testing, and overview.
-
-控制台会把常用操作分成内容创作、维护发布、试玩检查和总览信息几类。
-
-This repository already includes a small bilingual sample set for trying the workflow.
-
-仓库里已经有少量双语样题，可以先用来测试流程。
-
-See [Operations Guide](docs/operations-guide.md) for the step-by-step UI-first workflow.
-
-分级操作手册见 [Operations Guide](docs/operations-guide.md)。
-
-See [Command Guide](docs/command-guide.md) for the organized command structure.
-
-命令入口和分级说明见 [Command Guide](docs/command-guide.md)。
-
-For AI-assisted question drafting and review, see [AI-Assisted Authoring](docs/ai-assisted-authoring.md).
-
-AI 辅助生成、翻译、审核和导入流程见 [AI-Assisted Authoring](docs/ai-assisted-authoring.md)。
-
-If you need to give another AI only one self-contained instruction file, use [AI One-File Question Brief](docs/ai-one-file-question-brief.md).
-
-如果要给其他 AI 只读一份自包含说明，请使用 [AI One-File Question Brief](docs/ai-one-file-question-brief.md)。
+如果其他 AI 只能读一份文档，就给它 [AI One-File Question Brief](docs/ai-one-file-question-brief.md)。这份文档是自包含的，说明了题目结构、中英双语规则、媒体规则、允许的题型和输出格式。
 
 ## How to Teach Another AI
 
@@ -363,6 +279,72 @@ After the AI responds:
    ```bash
    npm run wtw -- check
    ```
+
+## Local API
+
+The visual UI runs on a local HTTP server. The API is meant for the admin UI, AI agents, and small local scripts. It reads and writes repository files directly, so review changes before committing.
+
+可视化界面运行在本地 HTTP 服务上。API 面向管理 UI、AI agent 和本地小脚本，会直接读写仓库文件，所以提交前需要审核变更。
+
+Default base URL:
+
+```text
+http://127.0.0.1:5177
+```
+
+默认基础地址：
+
+```text
+http://127.0.0.1:5177
+```
+
+Main endpoints:
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `GET` | `/api/bootstrap` | Load taxonomy, formats, moods, occasions, difficulties, and stats for the UI. |
+| `GET` | `/api/questions` | List questions. Supports filters listed below. |
+| `GET` | `/api/questions/:id` | Load one question by ID. |
+| `POST` | `/api/questions` | Create one question. If `id` is omitted, the server generates the next ID from `category`. |
+| `PUT` | `/api/questions/:id` | Replace one existing question record. |
+| `GET` | `/api/media` | List media metadata. |
+| `POST` | `/api/media` | Upload/register one local media item from a browser data URL. |
+| `POST` | `/api/slides/export` | Export a folder deck under `exports/slides/`. |
+| `POST` | `/api/feedback/import` | Import answer feedback JSON from exported decks. |
+| `POST` | `/api/check` | Run validation, tag lint, duplicate check, and index rebuild. |
+
+`GET /api/questions` query parameters:
+
+| Parameter | Meaning |
+| --- | --- |
+| `q` | Full-text search over ID, category, type, title, prompt, reveal, and tags. |
+| `category` | Exact category ID, such as `science.physics`. |
+| `categoryPrefix` | Parent or subtree category filter, such as `science`. |
+| `type` | Answer type, such as `single_choice` or `multiple_choice`. |
+| `difficulty` | `easy`, `medium`, or `hard`. |
+| `status` | `draft`, `review`, `published`, or `deprecated`. |
+| `tag` | Exact tag ID. |
+| `limit` | Maximum returned questions. Defaults to `500`. |
+
+Example API calls:
+
+```bash
+curl "http://127.0.0.1:5177/api/questions?categoryPrefix=science&difficulty=hard&limit=20"
+curl "http://127.0.0.1:5177/api/questions/science-physics-000020"
+curl -X POST "http://127.0.0.1:5177/api/check"
+```
+
+常用 API 示例：
+
+```bash
+curl "http://127.0.0.1:5177/api/questions?categoryPrefix=science&difficulty=hard&limit=20"
+curl "http://127.0.0.1:5177/api/questions/science-physics-000020"
+curl -X POST "http://127.0.0.1:5177/api/check"
+```
+
+Question creation accepts the same JSON shape described in [Question Format](docs/question-format.md). For AI-generated batches, prefer reviewing them in the UI or importing them with the documented authoring workflow instead of sending unreviewed AI output straight to the API.
+
+新建题目使用 [Question Format](docs/question-format.md) 中说明的 JSON 结构。对于 AI 批量生成的题目，建议先在 UI 中审核，或按文档中的出题流程导入，不要把未经审核的 AI 输出直接写入 API。
 
 For long-term readability, tag standards, duplicate checks, and generated media indexes, see [Maintenance Guide](docs/maintenance-guide.md).
 
