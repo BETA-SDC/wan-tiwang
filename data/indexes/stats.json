@@ -1,12 +1,12 @@
 {
-  "total": 216,
+  "total": 246,
   "with_media": 3,
   "by_status": {
-    "review": 202,
+    "review": 232,
     "published": 14
   },
   "by_type": {
-    "single_choice": 181,
+    "single_choice": 211,
     "fill_blank": 19,
     "numeric": 5,
     "multiple_choice": 5,
@@ -16,13 +16,13 @@
   "by_difficulty": {
     "medium": 64,
     "easy": 41,
-    "hard": 45
+    "hard": 75
   },
   "by_category": {
     "arts.architecture": 1,
     "arts.music": 13,
     "brain.lateral-thinking": 2,
-    "brain.math-puzzles": 5,
+    "brain.math-puzzles": 10,
     "games.esports": 10,
     "games.specific-titles": 40,
     "general.everyday-trivia": 1,
@@ -44,11 +44,11 @@
     "life.food": 2,
     "life.sports": 2,
     "pop-culture.memes": 3,
-    "science.astronomy": 10,
-    "science.biology": 13,
-    "science.chemistry": 11,
-    "science.earth-science": 6,
-    "science.physics": 14,
+    "science.astronomy": 15,
+    "science.biology": 18,
+    "science.chemistry": 16,
+    "science.earth-science": 11,
+    "science.physics": 19,
     "society.economics": 6,
     "society.education": 1,
     "society.law": 4,

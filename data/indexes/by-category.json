@@ -22,6 +22,11 @@
     "brain-lateral-thinking-000002"
   ],
   "brain.math-puzzles": [
+    "brain-math-puzzles-000006",
+    "brain-math-puzzles-000007",
+    "brain-math-puzzles-000008",
+    "brain-math-puzzles-000009",
+    "brain-math-puzzles-000010",
     "brain-math-puzzles-000001",
     "brain-math-puzzles-000002",
     "brain-math-puzzles-000003",
@@ -195,6 +200,11 @@
     "pop-culture-memes-000003"
   ],
   "science.astronomy": [
+    "science-astronomy-000011",
+    "science-astronomy-000012",
+    "science-astronomy-000013",
+    "science-astronomy-000014",
+    "science-astronomy-000015",
     "science-astronomy-000003",
     "science-astronomy-000004",
     "science-astronomy-000005",
@@ -207,6 +217,11 @@
     "science-astronomy-000002"
   ],
   "science.biology": [
+    "science-biology-000014",
+    "science-biology-000015",
+    "science-biology-000016",
+    "science-biology-000017",
+    "science-biology-000018",
     "science-biology-000001",
     "science-biology-000002",
     "science-biology-000003",
@@ -222,6 +237,11 @@
     "science-biology-000013"
   ],
   "science.chemistry": [
+    "science-chemistry-000012",
+    "science-chemistry-000013",
+    "science-chemistry-000014",
+    "science-chemistry-000015",
+    "science-chemistry-000016",
     "science-chemistry-000001",
     "science-chemistry-000002",
     "science-chemistry-000003",
@@ -235,6 +255,11 @@
     "science-chemistry-000011"
   ],
   "science.earth-science": [
+    "science-earth-science-000007",
+    "science-earth-science-000008",
+    "science-earth-science-000009",
+    "science-earth-science-000010",
+    "science-earth-science-000011",
     "science-earth-science-000001",
     "science-earth-science-000002",
     "science-earth-science-000003",
@@ -243,6 +268,11 @@
     "science-earth-science-000006"
   ],
   "science.physics": [
+    "science-physics-000015",
+    "science-physics-000016",
+    "science-physics-000017",
+    "science-physics-000018",
+    "science-physics-000019",
     "science-physics-000001",
     "science-physics-000002",
     "science-physics-000003",

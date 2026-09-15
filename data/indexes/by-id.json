@@ -63,6 +63,26 @@
     "file": "data/questions/brain/lateral-thinking/riddles.jsonl",
     "line": 2
   },
+  "brain-math-puzzles-000006": {
+    "file": "data/questions/brain/math-puzzles/hard-science-expansion-001.jsonl",
+    "line": 1
+  },
+  "brain-math-puzzles-000007": {
+    "file": "data/questions/brain/math-puzzles/hard-science-expansion-001.jsonl",
+    "line": 2
+  },
+  "brain-math-puzzles-000008": {
+    "file": "data/questions/brain/math-puzzles/hard-science-expansion-001.jsonl",
+    "line": 3
+  },
+  "brain-math-puzzles-000009": {
+    "file": "data/questions/brain/math-puzzles/hard-science-expansion-001.jsonl",
+    "line": 4
+  },
+  "brain-math-puzzles-000010": {
+    "file": "data/questions/brain/math-puzzles/hard-science-expansion-001.jsonl",
+    "line": 5
+  },
   "brain-math-puzzles-000001": {
     "file": "data/questions/brain/math-puzzles/quiz-master-ppt.jsonl",
     "line": 1
@@ -579,6 +599,26 @@
     "file": "data/questions/pop-culture/memes/quiz-master-ppt.jsonl",
     "line": 3
   },
+  "science-astronomy-000011": {
+    "file": "data/questions/science/astronomy/hard-science-expansion-001.jsonl",
+    "line": 1
+  },
+  "science-astronomy-000012": {
+    "file": "data/questions/science/astronomy/hard-science-expansion-001.jsonl",
+    "line": 2
+  },
+  "science-astronomy-000013": {
+    "file": "data/questions/science/astronomy/hard-science-expansion-001.jsonl",
+    "line": 3
+  },
+  "science-astronomy-000014": {
+    "file": "data/questions/science/astronomy/hard-science-expansion-001.jsonl",
+    "line": 4
+  },
+  "science-astronomy-000015": {
+    "file": "data/questions/science/astronomy/hard-science-expansion-001.jsonl",
+    "line": 5
+  },
   "science-astronomy-000003": {
     "file": "data/questions/science/astronomy/science-expansion-001.jsonl",
     "line": 1
@@ -618,6 +658,26 @@
   "science-astronomy-000002": {
     "file": "data/questions/science/astronomy/space-trivia.jsonl",
     "line": 2
+  },
+  "science-biology-000014": {
+    "file": "data/questions/science/biology/hard-science-expansion-001.jsonl",
+    "line": 1
+  },
+  "science-biology-000015": {
+    "file": "data/questions/science/biology/hard-science-expansion-001.jsonl",
+    "line": 2
+  },
+  "science-biology-000016": {
+    "file": "data/questions/science/biology/hard-science-expansion-001.jsonl",
+    "line": 3
+  },
+  "science-biology-000017": {
+    "file": "data/questions/science/biology/hard-science-expansion-001.jsonl",
+    "line": 4
+  },
+  "science-biology-000018": {
+    "file": "data/questions/science/biology/hard-science-expansion-001.jsonl",
+    "line": 5
   },
   "science-biology-000001": {
     "file": "data/questions/science/biology/quiz-master-ppt.jsonl",
@@ -671,6 +731,26 @@
     "file": "data/questions/science/biology/science-expansion-001.jsonl",
     "line": 10
   },
+  "science-chemistry-000012": {
+    "file": "data/questions/science/chemistry/hard-science-expansion-001.jsonl",
+    "line": 1
+  },
+  "science-chemistry-000013": {
+    "file": "data/questions/science/chemistry/hard-science-expansion-001.jsonl",
+    "line": 2
+  },
+  "science-chemistry-000014": {
+    "file": "data/questions/science/chemistry/hard-science-expansion-001.jsonl",
+    "line": 3
+  },
+  "science-chemistry-000015": {
+    "file": "data/questions/science/chemistry/hard-science-expansion-001.jsonl",
+    "line": 4
+  },
+  "science-chemistry-000016": {
+    "file": "data/questions/science/chemistry/hard-science-expansion-001.jsonl",
+    "line": 5
+  },
   "science-chemistry-000001": {
     "file": "data/questions/science/chemistry/quiz-master-ppt.jsonl",
     "line": 1
@@ -715,6 +795,26 @@
     "file": "data/questions/science/chemistry/science-expansion-001.jsonl",
     "line": 10
   },
+  "science-earth-science-000007": {
+    "file": "data/questions/science/earth-science/hard-science-expansion-001.jsonl",
+    "line": 1
+  },
+  "science-earth-science-000008": {
+    "file": "data/questions/science/earth-science/hard-science-expansion-001.jsonl",
+    "line": 2
+  },
+  "science-earth-science-000009": {
+    "file": "data/questions/science/earth-science/hard-science-expansion-001.jsonl",
+    "line": 3
+  },
+  "science-earth-science-000010": {
+    "file": "data/questions/science/earth-science/hard-science-expansion-001.jsonl",
+    "line": 4
+  },
+  "science-earth-science-000011": {
+    "file": "data/questions/science/earth-science/hard-science-expansion-001.jsonl",
+    "line": 5
+  },
   "science-earth-science-000001": {
     "file": "data/questions/science/earth-science/science-expansion-001.jsonl",
     "line": 1
@@ -738,6 +838,26 @@
   "science-earth-science-000006": {
     "file": "data/questions/science/earth-science/science-expansion-001.jsonl",
     "line": 6
+  },
+  "science-physics-000015": {
+    "file": "data/questions/science/physics/hard-science-expansion-001.jsonl",
+    "line": 1
+  },
+  "science-physics-000016": {
+    "file": "data/questions/science/physics/hard-science-expansion-001.jsonl",
+    "line": 2
+  },
+  "science-physics-000017": {
+    "file": "data/questions/science/physics/hard-science-expansion-001.jsonl",
+    "line": 3
+  },
+  "science-physics-000018": {
+    "file": "data/questions/science/physics/hard-science-expansion-001.jsonl",
+    "line": 4
+  },
+  "science-physics-000019": {
+    "file": "data/questions/science/physics/hard-science-expansion-001.jsonl",
+    "line": 5
   },
   "science-physics-000001": {
     "file": "data/questions/science/physics/quiz-master-ppt.jsonl",

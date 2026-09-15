@@ -212,20 +212,21 @@
     "language-wordplay-000002",
     "language-wordplay-000001"
   ],
-  "calculus": [
-    "brain-math-puzzles-000001"
-  ],
-  "odd-function": [
-    "brain-math-puzzles-000001"
-  ],
-  "integral": [
-    "brain-math-puzzles-000001"
-  ],
   "science-pack": [
+    "brain-math-puzzles-000006",
+    "brain-math-puzzles-000007",
+    "brain-math-puzzles-000008",
+    "brain-math-puzzles-000009",
+    "brain-math-puzzles-000010",
     "brain-math-puzzles-000002",
     "brain-math-puzzles-000003",
     "brain-math-puzzles-000004",
     "brain-math-puzzles-000005",
+    "science-astronomy-000011",
+    "science-astronomy-000012",
+    "science-astronomy-000013",
+    "science-astronomy-000014",
+    "science-astronomy-000015",
     "science-astronomy-000003",
     "science-astronomy-000004",
     "science-astronomy-000005",
@@ -234,6 +235,11 @@
     "science-astronomy-000008",
     "science-astronomy-000009",
     "science-astronomy-000010",
+    "science-biology-000014",
+    "science-biology-000015",
+    "science-biology-000016",
+    "science-biology-000017",
+    "science-biology-000018",
     "science-biology-000004",
     "science-biology-000005",
     "science-biology-000006",
@@ -244,6 +250,11 @@
     "science-biology-000011",
     "science-biology-000012",
     "science-biology-000013",
+    "science-chemistry-000012",
+    "science-chemistry-000013",
+    "science-chemistry-000014",
+    "science-chemistry-000015",
+    "science-chemistry-000016",
     "science-chemistry-000002",
     "science-chemistry-000003",
     "science-chemistry-000004",
@@ -254,12 +265,22 @@
     "science-chemistry-000009",
     "science-chemistry-000010",
     "science-chemistry-000011",
+    "science-earth-science-000007",
+    "science-earth-science-000008",
+    "science-earth-science-000009",
+    "science-earth-science-000010",
+    "science-earth-science-000011",
     "science-earth-science-000001",
     "science-earth-science-000002",
     "science-earth-science-000003",
     "science-earth-science-000004",
     "science-earth-science-000005",
     "science-earth-science-000006",
+    "science-physics-000015",
+    "science-physics-000016",
+    "science-physics-000017",
+    "science-physics-000018",
+    "science-physics-000019",
     "science-physics-000003",
     "science-physics-000004",
     "science-physics-000005",
@@ -272,6 +293,73 @@
     "science-physics-000012",
     "science-physics-000013",
     "science-physics-000014"
+  ],
+  "hard-science": [
+    "brain-math-puzzles-000006",
+    "brain-math-puzzles-000007",
+    "brain-math-puzzles-000008",
+    "brain-math-puzzles-000009",
+    "brain-math-puzzles-000010",
+    "science-astronomy-000011",
+    "science-astronomy-000012",
+    "science-astronomy-000013",
+    "science-astronomy-000014",
+    "science-astronomy-000015",
+    "science-biology-000014",
+    "science-biology-000015",
+    "science-biology-000016",
+    "science-biology-000017",
+    "science-biology-000018",
+    "science-chemistry-000012",
+    "science-chemistry-000013",
+    "science-chemistry-000014",
+    "science-chemistry-000015",
+    "science-chemistry-000016",
+    "science-earth-science-000007",
+    "science-earth-science-000008",
+    "science-earth-science-000009",
+    "science-earth-science-000010",
+    "science-earth-science-000011",
+    "science-physics-000015",
+    "science-physics-000016",
+    "science-physics-000017",
+    "science-physics-000018",
+    "science-physics-000019"
+  ],
+  "probability": [
+    "brain-math-puzzles-000006",
+    "brain-math-puzzles-000008"
+  ],
+  "bayes": [
+    "brain-math-puzzles-000006"
+  ],
+  "combinatorics": [
+    "brain-math-puzzles-000007"
+  ],
+  "pigeonhole": [
+    "brain-math-puzzles-000007"
+  ],
+  "independence": [
+    "brain-math-puzzles-000008"
+  ],
+  "number-theory": [
+    "brain-math-puzzles-000009"
+  ],
+  "modular-arithmetic": [
+    "brain-math-puzzles-000009"
+  ],
+  "calculus": [
+    "brain-math-puzzles-000010",
+    "brain-math-puzzles-000001"
+  ],
+  "derivative": [
+    "brain-math-puzzles-000010"
+  ],
+  "odd-function": [
+    "brain-math-puzzles-000001"
+  ],
+  "integral": [
+    "brain-math-puzzles-000001"
   ],
   "math": [
     "brain-math-puzzles-000002",
@@ -1078,6 +1166,35 @@
   "fictional-place": [
     "pop-culture-memes-000003"
   ],
+  "stellar-physics": [
+    "science-astronomy-000011"
+  ],
+  "fusion": [
+    "science-astronomy-000011"
+  ],
+  "exoplanets": [
+    "science-astronomy-000012"
+  ],
+  "transit-method": [
+    "science-astronomy-000012"
+  ],
+  "cosmology": [
+    "science-astronomy-000013",
+    "science-astronomy-000015",
+    "science-astronomy-000010"
+  ],
+  "cmb": [
+    "science-astronomy-000013"
+  ],
+  "orbital-mechanics": [
+    "science-astronomy-000014"
+  ],
+  "tidal-force": [
+    "science-astronomy-000014"
+  ],
+  "supernova": [
+    "science-astronomy-000015"
+  ],
   "solar-system": [
     "science-astronomy-000003",
     "science-astronomy-000004",
@@ -1120,9 +1237,6 @@
   "astrophysics": [
     "science-astronomy-000009"
   ],
-  "cosmology": [
-    "science-astronomy-000010"
-  ],
   "redshift": [
     "science-astronomy-000010"
   ],
@@ -1135,6 +1249,41 @@
   "space": [
     "science-astronomy-000001",
     "science-astronomy-000002"
+  ],
+  "enzymology": [
+    "science-biology-000014"
+  ],
+  "biochemistry": [
+    "science-biology-000014"
+  ],
+  "population-genetics": [
+    "science-biology-000015"
+  ],
+  "evolution": [
+    "science-biology-000015",
+    "science-biology-000012"
+  ],
+  "cell-biology": [
+    "science-biology-000016",
+    "science-biology-000012"
+  ],
+  "membrane-potential": [
+    "science-biology-000016"
+  ],
+  "molecular-biology": [
+    "science-biology-000017",
+    "science-biology-000011"
+  ],
+  "dna-replication": [
+    "science-biology-000017"
+  ],
+  "genetics": [
+    "science-biology-000018",
+    "science-biology-000003",
+    "science-biology-000007"
+  ],
+  "meiosis": [
+    "science-biology-000018"
   ],
   "ginkgo": [
     "science-biology-000001"
@@ -1161,10 +1310,6 @@
     "science-biology-000003",
     "science-biology-000004",
     "science-biology-000013"
-  ],
-  "genetics": [
-    "science-biology-000003",
-    "science-biology-000007"
   ],
   "biology": [
     "science-biology-000004",
@@ -1197,17 +1342,43 @@
   "pcr": [
     "science-biology-000011"
   ],
-  "molecular-biology": [
-    "science-biology-000011"
-  ],
-  "evolution": [
-    "science-biology-000012"
-  ],
-  "cell-biology": [
-    "science-biology-000012"
-  ],
   "enzymes": [
     "science-biology-000013"
+  ],
+  "acid-base": [
+    "science-chemistry-000012",
+    "science-chemistry-000005",
+    "science-chemistry-000011"
+  ],
+  "buffer": [
+    "science-chemistry-000012",
+    "science-chemistry-000011"
+  ],
+  "organic-chemistry": [
+    "science-chemistry-000013",
+    "science-chemistry-000008",
+    "science-chemistry-000010"
+  ],
+  "kinetics": [
+    "science-chemistry-000013"
+  ],
+  "equilibrium": [
+    "science-chemistry-000014"
+  ],
+  "thermochemistry": [
+    "science-chemistry-000014"
+  ],
+  "periodic-trends": [
+    "science-chemistry-000015"
+  ],
+  "ionization-energy": [
+    "science-chemistry-000015"
+  ],
+  "spectroscopy": [
+    "science-chemistry-000016"
+  ],
+  "nmr": [
+    "science-chemistry-000016"
   ],
   "flame-test": [
     "science-chemistry-000001"
@@ -1233,10 +1404,6 @@
   "ph": [
     "science-chemistry-000005"
   ],
-  "acid-base": [
-    "science-chemistry-000005",
-    "science-chemistry-000011"
-  ],
   "noble-gas": [
     "science-chemistry-000006"
   ],
@@ -1248,10 +1415,6 @@
   ],
   "electrons": [
     "science-chemistry-000007"
-  ],
-  "organic-chemistry": [
-    "science-chemistry-000008",
-    "science-chemistry-000010"
   ],
   "carbon": [
     "science-chemistry-000008"
@@ -1265,16 +1428,40 @@
   "benzene": [
     "science-chemistry-000010"
   ],
-  "buffer": [
-    "science-chemistry-000011"
-  ],
-  "earth-science": [
-    "science-earth-science-000001"
-  ],
   "geology": [
+    "science-earth-science-000007",
     "science-earth-science-000001",
     "science-earth-science-000004",
     "science-earth-science-000005"
+  ],
+  "minerals": [
+    "science-earth-science-000007"
+  ],
+  "seismology": [
+    "science-earth-science-000008"
+  ],
+  "earth-interior": [
+    "science-earth-science-000008"
+  ],
+  "climate": [
+    "science-earth-science-000009",
+    "science-earth-science-000010"
+  ],
+  "enso": [
+    "science-earth-science-000009"
+  ],
+  "oceanography": [
+    "science-earth-science-000010"
+  ],
+  "meteorology": [
+    "science-earth-science-000011",
+    "science-earth-science-000006"
+  ],
+  "geostrophic-balance": [
+    "science-earth-science-000011"
+  ],
+  "earth-science": [
+    "science-earth-science-000001"
   ],
   "weather": [
     "science-earth-science-000002"
@@ -1294,11 +1481,40 @@
   "moho": [
     "science-earth-science-000005"
   ],
-  "meteorology": [
-    "science-earth-science-000006"
-  ],
   "coriolis": [
     "science-earth-science-000006"
+  ],
+  "thermodynamics": [
+    "science-physics-000015"
+  ],
+  "ideal-gas": [
+    "science-physics-000015"
+  ],
+  "optics": [
+    "science-physics-000016",
+    "science-physics-000009",
+    "science-physics-000011"
+  ],
+  "interference": [
+    "science-physics-000016"
+  ],
+  "electromagnetism": [
+    "science-physics-000017"
+  ],
+  "lorentz-force": [
+    "science-physics-000017"
+  ],
+  "oscillation": [
+    "science-physics-000018"
+  ],
+  "damping": [
+    "science-physics-000018"
+  ],
+  "relativity": [
+    "science-physics-000019"
+  ],
+  "simultaneity": [
+    "science-physics-000019"
   ],
   "photoelectric-effect": [
     "science-physics-000001"
@@ -1348,10 +1564,6 @@
   ],
   "nuclear": [
     "science-physics-000008"
-  ],
-  "optics": [
-    "science-physics-000009",
-    "science-physics-000011"
   ],
   "lens": [
     "science-physics-000009"
