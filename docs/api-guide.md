@@ -32,6 +32,25 @@ http://127.0.0.1:5177
 | `POST` | `/api/feedback/import` | Import answer feedback JSON from exported decks. |
 | `POST` | `/api/check` | Run validation, tag lint, duplicate check, and index rebuild. |
 
+## Implementation Layout
+
+API code is split by responsibility:
+
+```text
+scripts/server.mjs              Thin HTTP server entry point
+scripts/server/http.mjs         Response helpers and request body parsing
+scripts/server/static.mjs       Admin, docs, media, and export file serving
+scripts/server/api/index.mjs    API route dispatch
+scripts/server/api/questions.mjs
+scripts/server/api/media.mjs
+scripts/server/api/slides.mjs
+scripts/server/api/feedback.mjs
+scripts/server/api/bootstrap.mjs
+scripts/server/maintenance.mjs
+```
+
+数据读写复用 `scripts/question-store.mjs` 和 `scripts/media-store.mjs`，不要在 API 文件里重新实现 ID 生成、JSONL 写入、媒体元数据读取等逻辑。
+
 ## Question Filters
 
 `GET /api/questions` query parameters:
