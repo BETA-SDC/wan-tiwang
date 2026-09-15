@@ -79,6 +79,41 @@ npm run wtw -- help
 
 也可以直接调用子命令，适合熟悉流程之后快速操作。
 
+## Import Question Drafts
+
+The convenient CLI entry for reviewed JSON drafts is:
+
+```bash
+npm run import:questions -- draft-batch.json --dry-run
+npm run import:questions -- draft-batch.json --yes --check
+```
+
+这是一条更清晰的命令行导入入口：
+
+```bash
+npm run import:questions -- draft-batch.json --dry-run
+npm run import:questions -- draft-batch.json --yes --check
+```
+
+Use `--dry-run` to validate the draft, generate IDs, and show target files without writing data. Use `--yes --check` after human review to import and then run validation, tag lint, duplicate detection, and index rebuild.
+
+`--dry-run` 只检查草稿、生成 ID、显示目标文件，不写入题库。人工审核后使用 `--yes --check`，会正式导入并自动运行校验、标签检查、重复题检查和索引重建。
+
+The same command is also available through the main entry:
+
+```bash
+npm run wtw -- import draft-batch.json --dry-run
+npm run wtw -- import draft-batch.json --yes --check
+```
+
+It accepts one JSON object, a JSON array, or the same batch shape used by the authoring docs. If you need to force a target file:
+
+```bash
+npm run import:questions -- draft-batch.json --target data/questions/science/physics/mixed.jsonl --yes --check
+```
+
+也可以通过主入口使用同样功能。它支持单个 JSON 对象或 JSON 数组。如果需要强制写入某个目标文件，可以加 `--target`。
+
 ## Check Command
 
 Use this after adding or editing questions or media metadata:

@@ -420,6 +420,8 @@ Common npm commands:
 
 ```bash
 npm run wtw
+npm run import:questions -- draft-batch.json --dry-run
+npm run import:questions -- draft-batch.json --yes --check
 npm run wtw -- check
 npm run wtw -- sample
 npm run wtw -- stats
@@ -429,6 +431,8 @@ npm run wtw -- stats
 
 ```bash
 npm run wtw
+npm run import:questions -- draft-batch.json --dry-run
+npm run import:questions -- draft-batch.json --yes --check
 npm run wtw -- check
 npm run wtw -- sample
 npm run wtw -- stats
@@ -438,6 +442,8 @@ Direct Node alternatives:
 
 ```bash
 node scripts/wtw.mjs
+node scripts/wtw.mjs import draft-batch.json --dry-run
+node scripts/wtw.mjs import draft-batch.json --yes --check
 node scripts/validate.mjs
 node scripts/lint-tags.mjs
 node scripts/dedupe.mjs

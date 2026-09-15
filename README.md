@@ -36,6 +36,20 @@ For deeper authoring details, see [AI-Assisted Authoring](docs/ai-assisted-autho
 
 更完整的 AI 出题说明见 [AI-Assisted Authoring](docs/ai-assisted-authoring.md)。
 
+Quick CLI import for reviewed JSON drafts:
+
+```bash
+npm run import:questions -- draft-batch.json --dry-run
+npm run import:questions -- draft-batch.json --yes --check
+```
+
+已审核 JSON 草稿也可以直接用 CLI 导入：
+
+```bash
+npm run import:questions -- draft-batch.json --dry-run
+npm run import:questions -- draft-batch.json --yes --check
+```
+
 ## Repository Layout
 
 ```text

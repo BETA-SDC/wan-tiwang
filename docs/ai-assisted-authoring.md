@@ -196,12 +196,25 @@ CLI is still available for AI agents and automation.
 
 CLI 仍然保留给 AI agent 和自动化流程。
 
+Recommended CLI entry:
+
+推荐 CLI 入口：
+
+```bash
+npm run import:questions -- draft-batch.json --dry-run
+npm run import:questions -- draft-batch.json --yes --check
+```
+
+The first command checks the draft without writing files. The second command imports the reviewed draft and runs repository checks.
+
+第一条命令只检查草稿、不写文件。第二条命令导入已审核草稿，并运行仓库检查。
+
 For one JSON object:
 
 单个 JSON 对象导入：
 
 ```bash
-npm run new:question -- --from-json draft-question.json
+npm run import:questions -- draft-question.json --yes --check
 ```
 
 For a JSON array of draft objects:
@@ -209,7 +222,7 @@ For a JSON array of draft objects:
 批量 JSON 数组导入：
 
 ```bash
-npm run new:question -- --from-json draft-batch.json
+npm run import:questions -- draft-batch.json --yes --check
 ```
 
 For a dry run:
@@ -217,7 +230,7 @@ For a dry run:
 只试运行、不写文件：
 
 ```bash
-npm run new:question -- --from-json draft-question.json --dry-run
+npm run import:questions -- draft-question.json --dry-run
 ```
 
 Dry run also works with batch files:
@@ -225,7 +238,7 @@ Dry run also works with batch files:
 批量文件也可以先试运行：
 
 ```bash
-npm run new:question -- --from-json draft-batch.json --dry-run
+npm run import:questions -- draft-batch.json --dry-run
 ```
 
 After importing:

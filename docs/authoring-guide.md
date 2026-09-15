@@ -56,13 +56,14 @@ data/templates/true-false-question.json
 ```
 
 ```bash
-npm run new:question -- --from-json draft-question.json
+npm run import:questions -- draft-question.json --dry-run
+npm run import:questions -- draft-question.json --yes --check
 ```
 
 For quick checks without writing:
 
 ```bash
-printf '{ "type": "true_false", "category": "science.astronomy", "topic": "space-trivia", "title": { "zh-CN": "测试", "en-US": "Test" }, "prompt": { "zh-CN": "这是测试吗？", "en-US": "Is this a test?" }, "options": [{ "id": "T", "text": { "zh-CN": "真的", "en-US": "True" } }, { "id": "F", "text": { "zh-CN": "假的", "en-US": "False" } }], "answer": ["T"], "reveal": { "zh-CN": "这是测试。", "en-US": "This is a test." }, "tags": ["test"], "mood": ["easygoing"], "occasion": ["daily"], "play_time_sec": 10, "status": "draft" }' | npm run new:question -- --from-json - --dry-run
+printf '{ "type": "true_false", "category": "science.astronomy", "topic": "space-trivia", "title": { "zh-CN": "测试", "en-US": "Test" }, "prompt": { "zh-CN": "这是测试吗？", "en-US": "Is this a test?" }, "options": [{ "id": "T", "text": { "zh-CN": "真的", "en-US": "True" } }, { "id": "F", "text": { "zh-CN": "假的", "en-US": "False" } }], "answer": ["T"], "reveal": { "zh-CN": "这是测试。", "en-US": "This is a test." }, "tags": ["test"], "mood": ["easygoing"], "occasion": ["daily"], "play_time_sec": 10, "status": "draft" }' | npm run import:questions -- - --dry-run
 ```
 
 If `id` is omitted, the script generates the next ID for the category. If `topic` is provided, it is used to choose the default file name and then removed from the stored question.

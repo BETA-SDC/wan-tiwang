@@ -1,5 +1,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 
@@ -14,20 +16,12 @@ const commands = {
     run: () => runNode(["scripts/new-question.mjs"])
   },
   import: {
-    description: "Import one question from a JSON draft",
-    run: async () => {
-      const file = await askRequired("Draft JSON path");
-      runNode(["scripts/new-question.mjs", "--from-json", file]);
-    }
+    description: "Validate and import question JSON drafts",
+    run: (args) => importQuestions(args)
   },
   check: {
     description: "Run maintenance checks and rebuild indexes",
-    run: () => {
-      if (!runNode(["scripts/validate.mjs"])) return;
-      if (!runNode(["scripts/lint-tags.mjs"])) return;
-      if (!runNode(["scripts/dedupe.mjs"])) return;
-      runNode(["scripts/build-index.mjs"]);
-    }
+    run: () => runCheck()
   },
   "lint-tags": {
     description: "Check tag naming and consistency",
@@ -72,6 +66,13 @@ function runNode(args) {
   return true;
 }
 
+function runCheck() {
+  if (!runNode(["scripts/validate.mjs"])) return false;
+  if (!runNode(["scripts/lint-tags.mjs"])) return false;
+  if (!runNode(["scripts/dedupe.mjs"])) return false;
+  return runNode(["scripts/build-index.mjs"]);
+}
+
 async function ask(message, fallback = "") {
   const suffix = fallback ? ` (${fallback})` : "";
   if (queuedInput.length > 0) {
@@ -92,6 +93,86 @@ async function askRequired(message) {
     const answer = await ask(message);
     if (answer) return answer;
     console.log("Required. Please enter a value.");
+  }
+}
+
+function commandOptions(args = []) {
+  const options = {
+    dryRun: args.includes("--dry-run"),
+    yes: args.includes("--yes") || args.includes("-y"),
+    check: args.includes("--check"),
+    target: undefined,
+    file: undefined
+  };
+
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--target") {
+      options.target = args[index + 1];
+      index += 1;
+      continue;
+    }
+    if (arg.startsWith("--") || arg === "-y") continue;
+    options.file ||= arg;
+  }
+
+  return options;
+}
+
+function importArgs(file, options, dryRun) {
+  const args = ["scripts/new-question.mjs", "--from-json", file];
+  if (options.target) args.push("--target", options.target);
+  if (dryRun) args.push("--dry-run");
+  return args;
+}
+
+function stdinDraftFile() {
+  const raw = fs.readFileSync(0, "utf8");
+  if (!raw.trim()) throw new Error("No JSON draft was received from stdin.");
+  const file = path.join(os.tmpdir(), `wan-ti-wang-import-${Date.now()}.json`);
+  fs.writeFileSync(file, raw);
+  return file;
+}
+
+async function importQuestions(args = []) {
+  const options = commandOptions(args);
+  let file = options.file || await askRequired("Draft JSON path");
+  let tempFile;
+
+  if (file === "-") {
+    tempFile = stdinDraftFile();
+    file = tempFile;
+  }
+
+  try {
+    console.log("\nValidating question draft...");
+    const dryRunOk = runNode(importArgs(file, options, true));
+    if (!dryRunOk || options.dryRun) return;
+
+    let shouldImport = options.yes;
+    if (!shouldImport && input.isTTY) {
+      const answer = await ask("Import this draft now?", "yes");
+      shouldImport = ["y", "yes"].includes(answer.toLowerCase());
+    } else if (!input.isTTY) {
+      shouldImport = true;
+    }
+
+    if (!shouldImport) {
+      console.log("Import cancelled. No question files were changed.");
+      return;
+    }
+
+    console.log("\nImporting question draft...");
+    if (!runNode(importArgs(file, options, false))) return;
+
+    if (options.check) {
+      console.log("\nRunning maintenance check...");
+      runCheck();
+    } else {
+      console.log("\nNext step: npm run wtw -- check");
+    }
+  } finally {
+    if (tempFile) fs.rmSync(tempFile, { force: true });
   }
 }
 
@@ -135,7 +216,10 @@ Daily use:
 
 Direct commands:
   npm run wtw -- new      Create a bilingual question
-  npm run wtw -- import   Import one JSON draft
+  npm run wtw -- import draft.json --dry-run
+                             Validate a question draft without writing
+  npm run wtw -- import draft.json --yes --check
+                             Import a reviewed draft, then run checks
   npm run wtw -- check    Validate and rebuild indexes
   npm run wtw -- sample   Randomly sample question IDs
   npm run wtw -- stats    Show question bank stats
@@ -144,6 +228,7 @@ Direct commands:
   npm run wtw -- help     Show this help
 
 Lower-level scripts still exist for automation:
+  npm run import:questions -- draft.json --yes --check
   npm run new:question
   npm run validate
   npm run lint:tags
@@ -166,7 +251,7 @@ async function main() {
       return;
     }
 
-    await command.run();
+    await command.run(process.argv.slice(3));
     return;
   }
 
