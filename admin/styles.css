@@ -333,6 +333,23 @@ textarea {
   gap: 8px 16px;
   margin-bottom: 12px;
 }
+.fieldLabel {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+.checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  min-height: 42px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-muted);
+}
 .checkLabel {
   display: inline-flex;
   width: auto;

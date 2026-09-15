@@ -47,12 +47,15 @@ function renderCategoryLevels() {
   while (true) {
     const children = childCategories(parentId);
     if (!children.length) break;
+    const currentDepth = depth;
     const select = document.createElement("select");
-    select.append(option("", depth ? "All subcategories" : "All categories"));
+    select.id = `categoryLevel${currentDepth}`;
+    select.setAttribute("aria-label", currentDepth ? `Subcategory level ${currentDepth}` : "Top-level category");
+    select.append(option("", currentDepth ? "All subcategories" : "All categories"));
     for (const category of children) select.append(option(category.id, categoryLabel(category)));
-    select.value = state.categoryPath[depth] || "";
+    select.value = state.categoryPath[currentDepth] || "";
     select.addEventListener("change", () => {
-      state.categoryPath = state.categoryPath.slice(0, depth);
+      state.categoryPath = state.categoryPath.slice(0, currentDepth);
       if (select.value) state.categoryPath.push(select.value);
       renderCategoryLevels();
       loadQuestions();
@@ -179,6 +182,8 @@ async function init() {
 }
 
 document.querySelector("#applyFiltersButton").addEventListener("click", loadQuestions);
+elements.typeFilter.addEventListener("change", loadQuestions);
+elements.statusFilter.addEventListener("change", loadQuestions);
 elements.searchInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") loadQuestions();
 });

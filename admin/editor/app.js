@@ -36,13 +36,26 @@ function list(value) {
   return value.split(",").map((item) => item.trim()).filter(Boolean);
 }
 
-function selectedValues(select) {
-  return [...select.selectedOptions].map((item) => item.value);
+function selectedValues(container) {
+  return [...container.querySelectorAll("input:checked")].map((item) => item.value);
 }
 
-function setSelectedValues(select, values = []) {
+function setSelectedValues(container, values = []) {
   const selected = new Set(values);
-  [...select.options].forEach((item) => { item.selected = selected.has(item.value); });
+  [...container.querySelectorAll("input")].forEach((item) => { item.checked = selected.has(item.value); });
+}
+
+function renderCheckboxGroup(container, items) {
+  container.replaceChildren();
+  for (const item of items) {
+    const label = document.createElement("label");
+    label.className = "checkLabel";
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.value = item.id;
+    label.append(input, `${item.name} (${item.id})`);
+    container.append(label);
+  }
 }
 
 function renderTaxonomy() {
@@ -53,10 +66,8 @@ function renderTaxonomy() {
     const indent = item.parent ? "↳ " : "";
     elements.category.append(option(item.id, `${indent}${item.name} (${item.id})`));
   }
-  elements.mood.replaceChildren();
-  for (const item of state.bootstrap.moods) elements.mood.append(option(item.id, `${item.name} (${item.id})`));
-  elements.occasion.replaceChildren();
-  for (const item of state.bootstrap.occasions) elements.occasion.append(option(item.id, `${item.name} (${item.id})`));
+  renderCheckboxGroup(elements.mood, state.bootstrap.moods);
+  renderCheckboxGroup(elements.occasion, state.bootstrap.occasions);
 }
 
 function addOptionRow(value = {}) {
