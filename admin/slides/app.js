@@ -132,7 +132,7 @@ function sourceQuestions() {
 }
 
 function buildSlides({ shuffle = false } = {}) {
-  const count = Number(elements.slideCount.value || 10);
+  const count = Number(elements.slideCount.value || 100);
   let questions = sourceQuestions();
   if (shuffle) questions = shuffleItems(questions);
   state.slideQuestions = questions.slice(0, count);
