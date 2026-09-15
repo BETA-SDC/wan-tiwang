@@ -30,7 +30,35 @@
         "kind": {
           "enum": ["image", "audio", "video", "thumbnail"]
         },
-        "hint": { "$ref": "#/$defs/localizedText" }
+          "hint": { "$ref": "#/$defs/localizedText" }
+      }
+    },
+    "answerItem": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "number" },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "left": { "type": "string" },
+            "right": { "type": "string" },
+            "id": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "optionLike": {
+      "type": "object",
+      "required": ["id"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "$ref": "#/$defs/localizedText" },
+        "media": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/mediaRef" }
+        }
       }
     }
   },
@@ -40,7 +68,7 @@
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*-[0-9]{6}$"
     },
     "type": {
-      "enum": ["single_choice", "multiple_choice", "true_false", "fill_blank", "short_answer"]
+      "enum": ["single_choice", "multiple_choice", "true_false", "fill_blank", "numeric", "short_answer", "ordering", "matching", "hotspot"]
     },
     "title": {
       "$ref": "#/$defs/localizedText"
@@ -51,21 +79,34 @@
     "options": {
       "type": "array",
       "items": {
-        "type": "object",
-        "required": ["id"],
-        "properties": {
-          "id": { "type": "string" },
-          "text": { "$ref": "#/$defs/localizedText" },
-          "media": {
-            "type": "array",
-            "items": { "$ref": "#/$defs/mediaRef" }
-          }
-        }
+        "$ref": "#/$defs/optionLike"
       }
     },
     "answer": {
       "type": "array",
-      "minItems": 1
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/answerItem" }
+    },
+    "answer_rules": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "case_sensitive": { "type": "boolean" },
+        "trim": { "type": "boolean" },
+        "aliases": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/localizedText" }
+        },
+        "numeric": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "value": { "type": "number" },
+            "tolerance": { "type": "number" },
+            "unit": { "type": "string" }
+          }
+        }
+      }
     },
     "reveal": {
       "$ref": "#/$defs/localizedText"
@@ -92,6 +133,47 @@
       "type": "array",
       "items": {
         "$ref": "#/$defs/mediaRef"
+      }
+    },
+    "pairs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "left": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/optionLike" }
+        },
+        "right": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/optionLike" }
+        }
+      }
+    },
+    "hotspots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "shape"],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string" },
+          "shape": { "enum": ["rect", "circle", "polygon"] },
+          "label": { "$ref": "#/$defs/localizedText" },
+          "x": { "type": "number", "minimum": 0, "maximum": 1 },
+          "y": { "type": "number", "minimum": 0, "maximum": 1 },
+          "width": { "type": "number", "minimum": 0, "maximum": 1 },
+          "height": { "type": "number", "minimum": 0, "maximum": 1 },
+          "radius": { "type": "number", "minimum": 0, "maximum": 1 },
+          "points": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        }
       }
     },
     "play_time_sec": {

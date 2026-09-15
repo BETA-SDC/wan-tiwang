@@ -191,7 +191,7 @@ function readQuestionFromJson(source) {
 }
 
 async function askOptions(type) {
-  if (!["single_choice", "multiple_choice", "true_false"].includes(type)) return undefined;
+  if (!["single_choice", "multiple_choice", "true_false", "ordering"].includes(type)) return undefined;
 
   if (type === "true_false") {
     return [

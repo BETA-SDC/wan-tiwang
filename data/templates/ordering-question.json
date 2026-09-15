@@ -1,0 +1,38 @@
+{
+  "type": "ordering",
+  "title": {
+    "zh-CN": "排序题标题",
+    "en-US": "Ordering Question Title"
+  },
+  "prompt": {
+    "zh-CN": "请把以下选项按正确顺序排列。",
+    "en-US": "Put the following options in the correct order."
+  },
+  "options": [
+    {
+      "id": "A",
+      "text": {
+        "zh-CN": "第一项",
+        "en-US": "First item"
+      }
+    },
+    {
+      "id": "B",
+      "text": {
+        "zh-CN": "第二项",
+        "en-US": "Second item"
+      }
+    }
+  ],
+  "answer": ["A", "B"],
+  "reveal": {
+    "zh-CN": "正确顺序是 A、B。",
+    "en-US": "The correct order is A, then B."
+  },
+  "category": "general.everyday-trivia",
+  "tags": ["ordering"],
+  "mood": ["easygoing"],
+  "occasion": ["daily"],
+  "play_time_sec": 30,
+  "status": "draft"
+}

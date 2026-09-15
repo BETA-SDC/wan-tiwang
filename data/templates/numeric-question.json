@@ -1,0 +1,29 @@
+{
+  "type": "numeric",
+  "title": {
+    "zh-CN": "数值估算题标题",
+    "en-US": "Numeric Estimate Title"
+  },
+  "prompt": {
+    "zh-CN": "请输入一个数字答案。",
+    "en-US": "Enter a numeric answer."
+  },
+  "answer": [42],
+  "answer_rules": {
+    "numeric": {
+      "value": 42,
+      "tolerance": 1,
+      "unit": ""
+    }
+  },
+  "reveal": {
+    "zh-CN": "答案是 42，允许一定误差。",
+    "en-US": "The answer is 42, with a small tolerance allowed."
+  },
+  "category": "general.everyday-trivia",
+  "tags": ["estimate"],
+  "mood": ["easygoing"],
+  "occasion": ["daily"],
+  "play_time_sec": 20,
+  "status": "draft"
+}

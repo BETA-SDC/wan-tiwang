@@ -26,8 +26,16 @@ function escapeScriptJson(value) {
 
 function formatAnswer(question, locale) {
   const answers = question.answer || [];
-  if (!question.options) return answers.join(", ");
+  const formatRaw = (answer) => {
+    if (answer && typeof answer === "object") {
+      if (answer.left && answer.right) return `${answer.left} -> ${answer.right}`;
+      return JSON.stringify(answer);
+    }
+    return String(answer);
+  };
+  if (!question.options) return answers.map(formatRaw).join(", ");
   return answers.map((answer) => {
+    if (answer && typeof answer === "object") return formatRaw(answer);
     const item = question.options.find((option) => option.id === answer);
     const label = displayText(item?.text, locale).replace(/\n/g, " / ") || (item?.media?.length ? "media option" : "");
     return item ? `${answer}${label ? `. ${label}` : ""}` : answer;
@@ -331,8 +339,16 @@ function mediaElement(ref) {
 
 function formatAnswer(question) {
   const answers = question.answer || [];
-  if (!question.options) return answers.join(", ");
+  const formatRaw = (answer) => {
+    if (answer && typeof answer === "object") {
+      if (answer.left && answer.right) return answer.left + " -> " + answer.right;
+      return JSON.stringify(answer);
+    }
+    return String(answer);
+  };
+  if (!question.options) return answers.map(formatRaw).join(", ");
   return answers.map((answer) => {
+    if (answer && typeof answer === "object") return formatRaw(answer);
     const item = question.options.find((option) => option.id === answer);
     const label = displayText(item?.text, manifest.locale).replace(/\\n/g, " / ") || (item?.media?.length ? "media option" : "");
     return item ? answer + (label ? ". " + label : "") : answer;

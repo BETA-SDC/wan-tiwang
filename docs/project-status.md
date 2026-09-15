@@ -17,9 +17,9 @@ The repository uses JSONL as the source of truth. Generated indexes support look
 ### Question Data
 
 - Every question stores both `zh-CN` and `en-US` text.
-- Supported answer types are `single_choice`, `multiple_choice`, `true_false`, `fill_blank`, and `short_answer`.
+- Supported answer types are `single_choice`, `multiple_choice`, `true_false`, `fill_blank`, `numeric`, `short_answer`, `ordering`, `matching`, and `hotspot`.
 - Categories use hierarchical IDs such as `science.astronomy`.
-- Tags, moods, and occasions are separate from the answer type so one question can be reused in different game contexts.
+- Tags, moods, and occasions are separate from the answer type so one question can be reused in different game contexts. Media play styles such as image guessing are tags plus media references, not separate answer types.
 - Sample content currently covers general trivia, history, language, life, science, technology, and brain teasers.
 
 ### Repository Maintenance
@@ -53,14 +53,14 @@ The local UI is split into independent feature pages:
 - Switch Chinese, English, or bilingual display.
 - Show answers interactively or inline.
 - Present with keyboard navigation.
-- Export a standalone HTML file to the ignored `exports/slides/` directory.
-- Preserve relative media paths in exported HTML.
+- Export a folder deck to the ignored `exports/slides/` directory.
+- Copy referenced media into exported deck folders.
 
 ## Current Snapshot
 
 - Baseline implementation commit: `d6d9323 Split admin into feature pages`
-- Questions: 14
-- Media metadata items: 0
+- Questions: 66
+- Media metadata items: 6
 - Local media files: none tracked by Git
 - UI server: local-only Node HTTP server
 - Default UI URL: `http://127.0.0.1:5177/`
@@ -73,7 +73,7 @@ The local UI is split into independent feature pages:
 - The browser UI currently relies on a lightweight custom Node server rather than a production web framework.
 - API write operations need stronger validation, transactional behavior, and clearer user-facing error handling.
 - Media upload and question save are separate filesystem operations; a failed question write could leave an unused uploaded file or metadata record.
-- Existing media metadata has not yet been exercised with real image, audio, and video files.
+- Media metadata has been exercised with local image files; audio and video still need real fixture coverage.
 - There is no automated browser regression test suite for the main workflows.
 
 ### Priority 2: Editing Experience
@@ -99,7 +99,7 @@ The local UI is split into independent feature pages:
 - Add configurable duplicate thresholds and a review queue for near-duplicate candidates.
 - Add question provenance fields such as author, source note, confidence, review date, and license where appropriate.
 - Add explicit lifecycle transitions for draft, review, published, and deprecated.
-- Add a small test fixture set for every answer type and for media-backed questions.
+- Add a small test fixture set for every answer type, including ordering, matching, hotspot, and media-backed questions.
 
 ### Priority 5: Media Workflow
 

@@ -114,7 +114,7 @@ function readOptions() {
 }
 
 function showOptions(type) {
-  const visible = ["single_choice", "multiple_choice", "true_false"].includes(type);
+  const visible = ["single_choice", "multiple_choice", "true_false", "ordering"].includes(type);
   elements.options.closest(".formBlock").classList.toggle("hidden", !visible);
   if (type === "true_false") {
     setOptions([
@@ -124,11 +124,14 @@ function showOptions(type) {
     elements.form.answer.placeholder = "T or F";
   } else if (type === "multiple_choice") {
     elements.form.answer.placeholder = "A,B";
+  } else if (type === "ordering") {
+    if (!elements.options.children.length) setOptions();
+    elements.form.answer.placeholder = "A,B,C,D";
   } else if (visible && !elements.options.children.length) {
     setOptions();
     elements.form.answer.placeholder = "A";
   } else {
-    elements.form.answer.placeholder = type === "fill_blank" ? "答案 / answer" : "Short answer";
+    elements.form.answer.placeholder = type === "numeric" ? "42 or 42.0" : type === "fill_blank" ? "答案 / answer" : "Short answer";
   }
 }
 
@@ -268,7 +271,7 @@ function questionFromForm(uploadMedia = false) {
       play_time_sec: Number(elements.form.play_time_sec.value || 20),
       status: elements.form.status.value
     };
-    if (["single_choice", "multiple_choice", "true_false"].includes(question.type)) question.options = readOptions();
+    if (["single_choice", "multiple_choice", "true_false", "ordering"].includes(question.type)) question.options = readOptions();
     return question;
   });
 }

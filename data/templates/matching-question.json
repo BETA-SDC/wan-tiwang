@@ -1,0 +1,47 @@
+{
+  "type": "matching",
+  "title": {
+    "zh-CN": "配对题标题",
+    "en-US": "Matching Question Title"
+  },
+  "prompt": {
+    "zh-CN": "请把左侧项目与右侧项目正确配对。",
+    "en-US": "Match each item on the left with the correct item on the right."
+  },
+  "pairs": {
+    "left": [
+      {
+        "id": "L1",
+        "text": {
+          "zh-CN": "左侧项目 1",
+          "en-US": "Left item 1"
+        }
+      }
+    ],
+    "right": [
+      {
+        "id": "R1",
+        "text": {
+          "zh-CN": "右侧项目 1",
+          "en-US": "Right item 1"
+        }
+      }
+    ]
+  },
+  "answer": [
+    {
+      "left": "L1",
+      "right": "R1"
+    }
+  ],
+  "reveal": {
+    "zh-CN": "L1 对应 R1。",
+    "en-US": "L1 matches R1."
+  },
+  "category": "general.everyday-trivia",
+  "tags": ["matching"],
+  "mood": ["easygoing"],
+  "occasion": ["daily"],
+  "play_time_sec": 35,
+  "status": "draft"
+}

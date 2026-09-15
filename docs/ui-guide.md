@@ -91,6 +91,10 @@ When editing an existing question in Form mode, unexposed fields are preserved w
 
 `Answer type` describes how the player answers: single choice, multiple choice, true/false, fill in the blank, or short answer. Guess-the-image, listen-and-guess, and watch-and-answer are handled by media references plus tags, not by separate answer types.
 
+Advanced answer types such as `ordering`, `matching`, `numeric`, and `hotspot` are supported by the data model. The form editor directly supports common option-based types; use `JSON` mode for matching and hotspot structures until dedicated form controls are added.
+
+高级题型如 `ordering`、`matching`、`numeric`、`hotspot` 已被数据结构支持。表单编辑器直接覆盖常见选项型题目；配对题和热点题在专用表单控件完成前，建议使用 `JSON` 模式维护。
+
 `Answer type` 表示玩家怎么作答：单选、多选、判断、填空或简答。猜图、听音频猜、看视频回答属于媒体玩法，通过媒体引用和标签表达，不再单独作为题型。
 
 When `Image`, `Audio`, or `Video` is checked, the form shows a media section for that kind. You can choose an existing media item or upload a new local file. Uploaded files are written under `media/`, which is ignored by Git, and metadata is appended to `data/media-meta/*.jsonl`.

@@ -1,10 +1,14 @@
 {
   "version": 1,
   "formats": [
-    { "id": "single_choice", "name": "Single Choice" },
-    { "id": "multiple_choice", "name": "Multiple Choice" },
-    { "id": "true_false", "name": "True or False" },
-    { "id": "fill_blank", "name": "Fill in the Blank" },
-    { "id": "short_answer", "name": "Short Answer" }
+    { "id": "single_choice", "name": "Single Choice", "group": "choice", "description": "Choose exactly one option." },
+    { "id": "multiple_choice", "name": "Multiple Choice", "group": "choice", "description": "Choose one or more options." },
+    { "id": "true_false", "name": "True or False", "group": "choice", "description": "Choose true or false." },
+    { "id": "fill_blank", "name": "Fill in the Blank", "group": "text", "description": "Provide a short exact or alias-based answer." },
+    { "id": "numeric", "name": "Numeric Estimate", "group": "text", "description": "Provide a number, optionally with tolerance or units." },
+    { "id": "short_answer", "name": "Short Answer", "group": "text", "description": "Provide a short free-text answer." },
+    { "id": "ordering", "name": "Ordering", "group": "arrangement", "description": "Put options into the correct order." },
+    { "id": "matching", "name": "Matching", "group": "arrangement", "description": "Match items from two groups." },
+    { "id": "hotspot", "name": "Hotspot", "group": "media", "description": "Select a region on an image or other visual media." }
   ]
 }

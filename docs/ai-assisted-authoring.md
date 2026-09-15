@@ -12,6 +12,7 @@ AI 可以显著降低维护万题王的重复劳动，但不应该完全代替�
 - rewrite formal facts into lighter trivia prompts
 - detect missing fields or inconsistent metadata before validation
 - prepare media metadata when local media paths are known
+- choose the smallest stable answer type instead of inventing new type names
 
 AI 适合辅助：
 
@@ -59,6 +60,8 @@ Requirements:
 - Use answer option IDs for choice questions, such as ["A"].
 - Use status: "draft" unless the facts and wording have been reviewed.
 - Do not include media unless I provide a local media path and source information.
+- Do not create new `type` values. Use one of `single_choice`, `multiple_choice`, `true_false`, `fill_blank`, `numeric`, `short_answer`, `ordering`, `matching`, or `hotspot`.
+- Do not use `type` for play style. Use tags such as `image-guess`, `listen-and-guess`, `speed-round`, or `meme`.
 
 Topic:
 <describe the topic>

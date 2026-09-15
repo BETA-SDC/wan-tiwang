@@ -1,0 +1,47 @@
+{
+  "type": "hotspot",
+  "title": {
+    "zh-CN": "热点题标题",
+    "en-US": "Hotspot Question Title"
+  },
+  "prompt": {
+    "zh-CN": "请在图中选择正确区域。",
+    "en-US": "Select the correct region in the image."
+  },
+  "media": [
+    {
+      "id": "img-example-001",
+      "role": "question",
+      "kind": "image",
+      "hint": {
+        "zh-CN": "题目图片",
+        "en-US": "question image"
+      }
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "H1",
+      "shape": "rect",
+      "label": {
+        "zh-CN": "正确区域",
+        "en-US": "correct region"
+      },
+      "x": 0.25,
+      "y": 0.25,
+      "width": 0.3,
+      "height": 0.2
+    }
+  ],
+  "answer": ["H1"],
+  "reveal": {
+    "zh-CN": "正确区域是 H1。",
+    "en-US": "The correct region is H1."
+  },
+  "category": "general.everyday-trivia",
+  "tags": ["hotspot", "image-guess"],
+  "mood": ["easygoing"],
+  "occasion": ["daily"],
+  "play_time_sec": 25,
+  "status": "draft"
+}
