@@ -20,7 +20,8 @@ export function exportSlides(body) {
   const files = folderDeckFiles(questions, media, {
     title,
     locale: body.locale || "zh-CN",
-    revealMode: body.revealMode || "hidden"
+    revealMode: body.revealMode || "hidden",
+    guessQuestionMode: Boolean(body.guessQuestionMode)
   });
 
   for (const [relativeFile, content] of Object.entries(files)) {

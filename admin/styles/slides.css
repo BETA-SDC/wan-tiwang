@@ -30,6 +30,12 @@
   background: #eefaf7;
 }
 .pickerItem input { width: auto; margin-top: 4px; }
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.checkboxLabel input { width: auto; margin-top: 3px; }
 .pickerItem span { display: grid; gap: 4px; }
 .pickerItem small { color: var(--muted); overflow-wrap: anywhere; }
 .questionPicker > .hint { grid-column: 1 / -1; }
@@ -111,6 +117,7 @@
   font-size: 20px;
   line-height: 1.35;
 }
+.questionTextHidden { display: none; }
 .slideOptions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

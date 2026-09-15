@@ -4,6 +4,12 @@ function mediaById(media, id) {
   return media.find((item) => item.id === id);
 }
 
+export function isChoiceQuestion(question) {
+  return ["single_choice", "multiple_choice", "true_false", "ordering"].includes(question?.type)
+    && Array.isArray(question?.options)
+    && question.options.length > 0;
+}
+
 export function createQuestionMedia(question, media, locale = "zh-CN", mediaPrefix = "/") {
   const wrap = document.createElement("div");
   wrap.className = "slideMedia";
@@ -56,11 +62,14 @@ export function createQuestionSlide({
   mediaPrefix = "/",
   selectedOptionIds = new Set(),
   focusedOptionId = "",
+  guessQuestionMode = false,
+  questionVisible = true,
   onOptionFocus,
   onOptionToggle
 }) {
   const slide = document.createElement("article");
   slide.className = "questionSlide";
+  const hideQuestion = guessQuestionMode && isChoiceQuestion(question) && !questionVisible;
   if ((question.options || []).some((option) => (option.media || []).length > 0)) {
     slide.classList.add("mediaOptionSlide");
   }
@@ -71,10 +80,15 @@ export function createQuestionSlide({
 
   const title = document.createElement(headingTag);
   title.textContent = displayText(question.title, locale);
+  title.classList.toggle("questionTextHidden", hideQuestion);
 
   const prompt = document.createElement("p");
   prompt.className = "slidePrompt";
   prompt.textContent = displayText(question.prompt, locale);
+  prompt.classList.toggle("questionTextHidden", hideQuestion);
+
+  const questionMedia = createQuestionMedia(question, media, locale, mediaPrefix);
+  questionMedia.classList.toggle("questionTextHidden", hideQuestion);
 
   const options = document.createElement("ol");
   options.className = "slideOptions";
@@ -121,7 +135,7 @@ export function createQuestionSlide({
   explanation.textContent = displayText(question.reveal, locale);
   reveal.append(answer, explanation);
 
-  slide.append(kicker, title, prompt, createQuestionMedia(question, media, locale, mediaPrefix));
+  slide.append(kicker, title, prompt, questionMedia);
   if ((question.options || []).length > 0) slide.append(options);
   slide.append(reveal);
   return slide;

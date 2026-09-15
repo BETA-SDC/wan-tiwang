@@ -42,6 +42,12 @@ function formatAnswer(question, locale) {
   }).join(", ");
 }
 
+function isChoiceQuestion(question) {
+  return ["single_choice", "multiple_choice", "true_false", "ordering"].includes(question?.type)
+    && Array.isArray(question?.options)
+    && question.options.length > 0;
+}
+
 function mediaRefHtml(ref, mediaById, locale, relativePrefix) {
     const item = mediaById.get(ref.id);
     if (!item) return "";
@@ -72,6 +78,7 @@ function optionHtml(item, mediaById, locale, relativePrefix) {
 function slideHtml(question, index, total, options, mediaById, relativePrefix = "../../") {
   const locale = options.locale || "zh-CN";
   const revealInline = options.revealMode === "inline";
+  const hideQuestion = Boolean(options.guessQuestionMode) && isChoiceQuestion(question);
   const optionItems = (question.options || []).map((item) => optionHtml(item, mediaById, locale, relativePrefix)).join("");
   const slideClass = (question.options || []).some((item) => (item.media || []).length > 0)
     ? "questionSlide mediaOptionSlide"
@@ -79,9 +86,9 @@ function slideHtml(question, index, total, options, mediaById, relativePrefix = 
   return `
     <article class="${slideClass}">
       <div class="slideKicker">${index + 1} / ${total} · ${escapeHtml(question.category)} · ${escapeHtml(question.type)}</div>
-      <h1>${escapeHtml(displayText(question.title, locale))}</h1>
-      <p class="slidePrompt">${escapeHtml(displayText(question.prompt, locale))}</p>
-      <div class="slideMedia">${slideMediaHtml(question, mediaById, locale, relativePrefix)}</div>
+      <h1 class="${hideQuestion ? "questionTextHidden" : ""}">${escapeHtml(displayText(question.title, locale))}</h1>
+      <p class="slidePrompt ${hideQuestion ? "questionTextHidden" : ""}">${escapeHtml(displayText(question.prompt, locale))}</p>
+      <div class="slideMedia ${hideQuestion ? "questionTextHidden" : ""}">${slideMediaHtml(question, mediaById, locale, relativePrefix)}</div>
       ${optionItems ? `<ol class="slideOptions">${optionItems}</ol>` : ""}
       <div class="slideReveal ${revealInline ? "" : "hidden"}">
         <strong>Answer: ${escapeHtml(formatAnswer(question, locale))}</strong>
@@ -133,6 +140,7 @@ export function standaloneDeckHtml(questions, media, options = {}) {
     .slideReveal.hidden { display: none; }
     .slideReveal strong { color: #115e59; }
     .slideReveal p { margin: 0; white-space: pre-line; }
+    .questionTextHidden { display: none; }
     .controls { position: fixed; left: 24px; right: 24px; bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #e4e7ec; }
     .controls div { display: flex; gap: 8px; }
     .shortcutHint { color: #b8c1ce; font-size: 12px; }
@@ -143,15 +151,19 @@ export function standaloneDeckHtml(questions, media, options = {}) {
 </head>
 <body>
   <main class="deck">${slides}</main>
-  <footer class="controls"><div><button id="prev">Previous</button><button id="next">Next</button><button id="reveal">Show Reveal</button></div><span><span id="status"></span><span class="shortcutHint"> · ←/→ Space F ?</span></span></footer>
+  <footer class="controls"><div><button id="prev">Previous</button><button id="next">Next</button><button id="reveal">Show Reveal</button></div><span><span id="status"></span><span class="shortcutHint"> · ←/→ Space F H ?</span></span></footer>
   <script>
     const slides = [...document.querySelectorAll(".questionSlide")];
     let current = 0;
     let reveal = ${options.revealMode === "inline" ? "true" : "false"};
     const revealMode = ${JSON.stringify(options.revealMode || "hidden")};
+    const guessQuestionMode = ${Boolean(options.guessQuestionMode)};
+    let questionVisible = !guessQuestionMode;
+    const guessableSlides = new Set(${JSON.stringify(questions.map((question, index) => isChoiceQuestion(question) ? index : -1).filter((index) => index >= 0))});
     function move(delta) {
       const next = Math.max(0, Math.min(slides.length - 1, current + delta));
       if (next !== current && revealMode !== "inline") reveal = false;
+      if (next !== current) questionVisible = !guessQuestionMode;
       current = next;
       render();
     }
@@ -162,10 +174,21 @@ export function standaloneDeckHtml(questions, media, options = {}) {
       document.querySelector("#reveal").textContent = revealMode === "inline" ? "Reveal Inline" : reveal ? "Hide Reveal" : "Show Reveal";
       const activeReveal = slides[current]?.querySelector(".slideReveal");
       if (activeReveal && ${options.revealMode === "inline" ? "false" : "true"}) activeReveal.classList.toggle("hidden", !reveal);
+      const activeQuestionHidden = guessQuestionMode && guessableSlides.has(current) && !questionVisible;
+      slides.forEach((slide, index) => {
+        slide.querySelector("h1")?.classList.toggle("questionTextHidden", index === current && activeQuestionHidden);
+        slide.querySelector(".slidePrompt")?.classList.toggle("questionTextHidden", index === current && activeQuestionHidden);
+        slide.querySelector(".slideMedia")?.classList.toggle("questionTextHidden", index === current && activeQuestionHidden);
+      });
     }
     document.querySelector("#prev").addEventListener("click", () => move(-1));
     document.querySelector("#next").addEventListener("click", () => move(1));
     document.querySelector("#reveal").addEventListener("click", () => { reveal = !reveal; render(); });
+    function toggleQuestion() {
+      if (!guessQuestionMode || !guessableSlides.has(current)) return;
+      questionVisible = !questionVisible;
+      render();
+    }
     function toggleReveal() {
       if (revealMode === "inline") return;
       reveal = !reveal;
@@ -178,10 +201,11 @@ export function standaloneDeckHtml(questions, media, options = {}) {
       if (["ArrowLeft", "PageUp", "Backspace"].includes(key) || lower === "p") { event.preventDefault(); move(-1); return; }
       if (["ArrowRight", "PageDown", " "].includes(key) || lower === "n") { event.preventDefault(); move(1); return; }
       if (lower === "f" || lower === "r") { event.preventDefault(); toggleReveal(); return; }
+      if (lower === "h") { event.preventDefault(); toggleQuestion(); return; }
       if (key === "Escape" && reveal && revealMode !== "inline") { event.preventDefault(); toggleReveal(); return; }
       if (key === "?") {
         event.preventDefault();
-        window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nHide answer: Esc\\nHelp: ?");
+        window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nShow or hide question in guess mode: H\\nHide answer: Esc\\nHelp: ?");
       }
     });
     render();
@@ -213,7 +237,8 @@ export function folderDeckFiles(questions, media, options = {}) {
     question_count: questions.length,
     media_count: media.length,
     exported_at: new Date().toISOString(),
-    format: "wan-ti-wang-folder-deck-v1"
+    format: "wan-ti-wang-folder-deck-v1",
+    guessQuestionMode: Boolean(options.guessQuestionMode)
   };
 
   return {
@@ -256,7 +281,7 @@ function folderIndexHtml(title) {
       <button id="reveal" type="button">Show Reveal</button>
       <button id="downloadFeedback" type="button">Download Feedback</button>
     </div>
-    <span><span id="status"></span><span id="feedbackStatus"></span><span class="shortcutHint"> · ←/→ Space F WASD 1-9 Enter ?</span></span>
+    <span><span id="status"></span><span id="feedbackStatus"></span><span class="shortcutHint"> · ←/→ Space F H WASD 1-9 Enter ?</span></span>
   </footer>
   <script src="data/deck-data.js"></script>
   <script src="assets/deck.js"></script>
@@ -301,6 +326,7 @@ h1 { margin: 0; white-space: pre-line; font-size: 40px; line-height: 1.12; }
 .slideReveal.hidden { display: none; }
 .slideReveal strong { color: #115e59; }
 .slideReveal p { margin: 0; white-space: pre-line; }
+.questionTextHidden { display: none; }
 .answerPanel { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: #344054; }
 .answerPanel:empty { display: none; }
 .answerPanel button { background: #0f766e; color: #fff; border-color: #0f766e; }
@@ -331,6 +357,7 @@ const storageKey = "wtw-feedback:" + (manifest.exported_at || manifest.title || 
 const feedbackState = loadFeedbackState();
 let current = 0;
 let reveal = manifest.revealMode === "inline";
+let questionVisible = !manifest.guessQuestionMode;
 
 function loadFeedbackState() {
   try {
@@ -468,6 +495,16 @@ function activeQuestion() {
 
 function activeSlide() {
   return document.querySelectorAll(".questionSlide")[current];
+}
+
+function isChoiceQuestion(question) {
+  return ["single_choice", "multiple_choice", "true_false", "ordering"].includes(question?.type)
+    && Array.isArray(question?.options)
+    && question.options.length > 0;
+}
+
+function canToggleQuestion() {
+  return Boolean(manifest.guessQuestionMode) && isChoiceQuestion(activeQuestion());
 }
 
 function activeSelectedIds() {
@@ -625,6 +662,10 @@ function questionSlide(question, index) {
   if ((question.options || []).length > 0) slide.append(options);
   slide.append(answerPanel);
   slide.append(revealBlock);
+  const hidden = Boolean(manifest.guessQuestionMode) && isChoiceQuestion(question) && !questionVisible;
+  title.classList.toggle("questionTextHidden", hidden);
+  prompt.classList.toggle("questionTextHidden", hidden);
+  slideMedia.classList.toggle("questionTextHidden", hidden);
   return slide;
 }
 
@@ -636,12 +677,19 @@ function render() {
   document.querySelector("#reveal").textContent = manifest.revealMode === "inline" ? "Reveal Inline" : reveal ? "Hide Reveal" : "Show Reveal";
   const activeReveal = slides[current]?.querySelector(".slideReveal");
   if (activeReveal && manifest.revealMode !== "inline") activeReveal.classList.toggle("hidden", !reveal);
+  const hidden = Boolean(manifest.guessQuestionMode) && isChoiceQuestion(activeQuestion()) && !questionVisible;
+  slides.forEach((slide, index) => {
+    slide.querySelector("h1")?.classList.toggle("questionTextHidden", index === current && hidden);
+    slide.querySelector(".slidePrompt")?.classList.toggle("questionTextHidden", index === current && hidden);
+    slide.querySelector(".slideMedia")?.classList.toggle("questionTextHidden", index === current && hidden);
+  });
   updateFeedbackStatus();
 }
 
 function move(delta) {
   const next = Math.max(0, Math.min(questions.length - 1, current + delta));
   if (next !== current && manifest.revealMode !== "inline") reveal = false;
+  if (next !== current) questionVisible = !manifest.guessQuestionMode;
   current = next;
   render();
 }
@@ -649,6 +697,12 @@ function move(delta) {
 function toggleReveal() {
   if (manifest.revealMode === "inline") return;
   reveal = !reveal;
+  render();
+}
+
+function toggleQuestion() {
+  if (!canToggleQuestion()) return;
+  questionVisible = !questionVisible;
   render();
 }
 
@@ -728,7 +782,7 @@ function confirmActiveAnswer() {
 }
 
 function showShortcutHelp() {
-  window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nMove option focus: W/A/S/D\\nSelect option by number: 1-9\\nSelect focused option: Enter\\nConfirm selected answer: Enter again or Confirm Answer\\nHide answer: Esc\\nHelp: ?");
+  window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nShow or hide question in guess mode: H\\nMove option focus: W/A/S/D\\nSelect option by number: 1-9\\nSelect focused option: Enter\\nConfirm selected answer: Enter again or Confirm Answer\\nHide answer: Esc\\nHelp: ?");
 }
 
 document.querySelector("#deck").replaceChildren(...questions.map(questionSlide));
@@ -753,6 +807,11 @@ document.addEventListener("keydown", (event) => {
   if (lower === "f" || lower === "r") {
     event.preventDefault();
     toggleReveal();
+    return;
+  }
+  if (lower === "h") {
+    event.preventDefault();
+    toggleQuestion();
     return;
   }
   if (key === "Enter") {

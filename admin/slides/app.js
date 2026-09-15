@@ -1,6 +1,6 @@
 import { requestJson } from "../shared/api.js";
 import { localized } from "../shared/i18n.js";
-import { createQuestionSlide } from "../shared/question-view.js";
+import { createQuestionSlide, isChoiceQuestion } from "../shared/question-view.js";
 import { mountAppShell } from "../shared/app-shell.js";
 
 const state = {
@@ -10,6 +10,8 @@ const state = {
   slideQuestions: [],
   currentSlide: 0,
   revealVisible: false,
+  guessQuestionMode: false,
+  questionVisible: true,
   previewSelections: new Map(),
   focusedOptions: new Map()
 };
@@ -21,10 +23,12 @@ const elements = {
   slideCount: document.querySelector("#slideCount"),
   slideLocale: document.querySelector("#slideLocale"),
   slideRevealMode: document.querySelector("#slideRevealMode"),
+  guessQuestionMode: document.querySelector("#guessQuestionMode"),
   pickerStatus: document.querySelector("#pickerStatus"),
   slideQuestionPicker: document.querySelector("#slideQuestionPicker"),
   slideDeck: document.querySelector("#slideDeck"),
   slideStatus: document.querySelector("#slideStatus"),
+  toggleQuestionButton: document.querySelector("#toggleQuestionButton"),
   exportStatus: document.querySelector("#exportStatus")
 };
 
@@ -99,12 +103,16 @@ function renderSlides() {
     empty.textContent = "Choose questions and build slides. 选择题目后生成幻灯片。";
     elements.slideDeck.append(empty);
     elements.slideStatus.textContent = "No slides yet.";
+    elements.toggleQuestionButton.disabled = true;
     return;
   }
 
   state.currentSlide = Math.max(0, Math.min(state.currentSlide, state.slideQuestions.length - 1));
+  const question = state.slideQuestions[state.currentSlide];
+  const canToggleQuestion = state.guessQuestionMode && isChoiceQuestion(question);
+  const questionVisible = !canToggleQuestion || state.questionVisible;
   const slide = createQuestionSlide({
-    question: state.slideQuestions[state.currentSlide],
+    question,
     media: state.media,
     locale: elements.slideLocale.value,
     index: state.currentSlide,
@@ -113,6 +121,8 @@ function renderSlides() {
     revealMode,
     selectedOptionIds: selectedOptionIdsForCurrentSlide(),
     focusedOptionId: focusedOptionIdForCurrentSlide(),
+    guessQuestionMode: state.guessQuestionMode,
+    questionVisible,
     onOptionFocus: focusCurrentOption,
     onOptionToggle: toggleCurrentOption
   });
@@ -122,6 +132,8 @@ function renderSlides() {
   const revealButton = document.querySelector("#toggleRevealButton");
   revealButton.disabled = revealMode === "inline";
   revealButton.textContent = revealMode === "inline" ? "Reveal Inline" : state.revealVisible ? "Hide Reveal" : "Show Reveal";
+  elements.toggleQuestionButton.disabled = !canToggleQuestion;
+  elements.toggleQuestionButton.textContent = canToggleQuestion && questionVisible ? "Hide Question" : "Show Question";
 }
 
 function currentQuestion() {
@@ -245,6 +257,7 @@ function buildSlides({ shuffle = false } = {}) {
   state.slideQuestions = questions.slice(0, count);
   state.currentSlide = 0;
   state.revealVisible = elements.slideRevealMode.value === "inline";
+  state.questionVisible = !state.guessQuestionMode;
   renderSlides();
 }
 
@@ -263,6 +276,16 @@ function toggleReveal() {
   renderSlides();
 }
 
+function canToggleQuestion() {
+  return state.guessQuestionMode && isChoiceQuestion(currentQuestion());
+}
+
+function toggleQuestion() {
+  if (!canToggleQuestion()) return;
+  state.questionVisible = !state.questionVisible;
+  renderSlides();
+}
+
 async function exportSlides() {
   elements.exportStatus.textContent = "Generating export folder...";
   if (state.slideQuestions.length === 0) buildSlides();
@@ -273,7 +296,8 @@ async function exportSlides() {
       ids,
       title: elements.deckTitle.value.trim() || "Wan Ti Wang Slides",
       locale: elements.slideLocale.value,
-      revealMode: elements.slideRevealMode.value
+      revealMode: elements.slideRevealMode.value,
+      guessQuestionMode: state.guessQuestionMode
     })
   });
 
@@ -301,6 +325,7 @@ function moveSlide(delta) {
   const changed = nextSlide !== state.currentSlide;
   state.currentSlide = nextSlide;
   if (changed && elements.slideRevealMode.value !== "inline") state.revealVisible = false;
+  if (changed) state.questionVisible = !state.guessQuestionMode;
   renderSlides();
 }
 
@@ -335,6 +360,7 @@ document.querySelector("#nextSlideButton").addEventListener("click", () => moveS
 document.querySelector("#toggleRevealButton").addEventListener("click", () => {
   toggleReveal();
 });
+elements.toggleQuestionButton.addEventListener("click", toggleQuestion);
 document.querySelector("#presentSlidesButton").addEventListener("click", () => togglePresentation());
 document.querySelector("#selectAllButton").addEventListener("click", () => {
   for (const question of shownQuestions()) state.selectedIds.add(question.id);
@@ -349,6 +375,11 @@ document.querySelector("#clearSelectionButton").addEventListener("click", () => 
 elements.slideSearch.addEventListener("input", renderPicker);
 elements.slideLocale.addEventListener("change", renderSlides);
 elements.slideRevealMode.addEventListener("change", syncRevealForMode);
+elements.guessQuestionMode.addEventListener("change", () => {
+  state.guessQuestionMode = elements.guessQuestionMode.checked;
+  state.questionVisible = !state.guessQuestionMode;
+  renderSlides();
+});
 document.addEventListener("keydown", (event) => {
   if (event.defaultPrevented || isEditingTarget(event.target)) return;
   const key = event.key;
@@ -366,6 +397,11 @@ document.addEventListener("keydown", (event) => {
   if (lower === "f" || lower === "r") {
     event.preventDefault();
     toggleReveal();
+    return;
+  }
+  if (lower === "h") {
+    event.preventDefault();
+    toggleQuestion();
     return;
   }
   if (key === "Escape") {

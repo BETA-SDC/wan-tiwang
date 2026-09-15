@@ -41,11 +41,12 @@ node scripts/server.mjs
    - `Selected from Library`: use only questions selected in the Question Library.
    - `All questions`: use the full bank.
 4. Set count, language, and reveal mode.
-5. Click `Build Preview` or `Shuffle Preview`.
-6. Use `Previous`, `Next`, and `Show Reveal`, or the keyboard shortcuts listed below.
-7. Use `Present` for a slide-like full-stage view.
-8. In exported decks, players can click or keyboard-select choice options and confirm an answer, then use `Download Feedback` to export answer counts.
-9. Click `Export Folder` to write a deck folder under `exports/slides/`. The app shows a success popup and provides `Open Deck` and `Open in New Tab` actions.
+5. Optionally enable `Guess the question from options` for a playful round where choice questions initially show only their options. Press `H` or use `Show Question` to reveal the question; moving to another slide hides it again.
+6. Click `Build Preview` or `Shuffle Preview`.
+7. Use `Previous`, `Next`, and `Show Reveal`, or the keyboard shortcuts listed below.
+8. Use `Present` for a slide-like full-stage view.
+9. In exported decks, players can click or keyboard-select choice options and confirm an answer, then use `Download Feedback` to export answer counts.
+10. Click `Export Folder` to write a deck folder under `exports/slides/`. The app shows a success popup and provides `Open Deck` and `Open in New Tab` actions.
 
 中文流程：
 
@@ -56,11 +57,12 @@ node scripts/server.mjs
    - `Selected from Library`：只使用在 Question Library 中勾选的题目。
    - `All questions`：使用全部题目。
 4. 设置数量、语言和答案显示方式。
-5. 点击 `Build Preview` 或 `Shuffle Preview`。
-6. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示，也可以使用下面列出的快捷键。
-7. 使用 `Present` 进入类似幻灯片的展示模式。
-8. 在导出的演示中，玩家可以点击或用键盘选择选项并确认答案，再用 `Download Feedback` 导出作答统计。
-9. 点击 `Export Folder`，把演示文件夹写到 `exports/slides/`。管理台会弹出成功提示，并提供 `Open Deck` 和 `Open in New Tab` 操作。
+5. 如果想玩“根据选项猜题”，勾选 `Guess the question from options`。选择题会先只显示选项；按 `H` 或点击 `Show Question` 显示题目，切换到下一题时会自动隐藏。
+6. 点击 `Build Preview` 或 `Shuffle Preview`。
+7. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示，也可以使用下面列出的快捷键。
+8. 使用 `Present` 进入类似幻灯片的展示模式。
+9. 在导出的演示中，玩家可以点击或用键盘选择选项并确认答案，再用 `Download Feedback` 导出作答统计。
+10. 点击 `Export Folder`，把演示文件夹写到 `exports/slides/`。管理台会弹出成功提示，并提供 `Open Deck` 和 `Open in New Tab` 操作。
 
 ## Export Folder
 
@@ -149,10 +151,12 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
 - Exported decks can record local answer feedback for choice questions. `Download Feedback` saves a JSON file with answered and correct counts; import it from `Maintenance` to add those counts back to question `feedback`.
 - `Hidden until show` keeps answers hidden until `Show Reveal` is clicked, and automatically hides the answer again when you move to another question.
 - `Inline on each slide` is useful for review decks.
+- `Guess the question from options` applies to `single_choice`, `multiple_choice`, `true_false`, and `ordering` questions. It hides the question title, prompt, and question-level media while keeping option text and option media visible.
 - Keyboard shortcuts work in preview, Present mode, and exported decks:
   - `Right`, `PageDown`, `Space`, or `N`: next slide.
   - `Left`, `PageUp`, `P`, or `Backspace`: previous slide.
   - `F` or `R`: show or hide the answer.
+  - `H`: show or hide the question in Guess the question from options mode.
   - `Esc`: hide the answer; in Present mode, exits Present when the answer is already hidden.
   - `W/A/S/D`: move option focus by the on-screen layout.
   - `1-9`: select an option by its on-screen order.
@@ -168,10 +172,12 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
 - 导出演示可以在本地记录选择题作答反馈。`Download Feedback` 会保存包含回答次数和答对次数的 JSON；在 `Maintenance` 页面导入后，会把这些计数累加回题目的 `feedback` 字段。
 - `Hidden until show` 会默认隐藏答案，点击 `Show Reveal` 才显示，并且每次切换题目都会重新收起答案。
 - `Inline on each slide` 适合审题或复习场景。
+- `Guess the question from options` 适用于 `single_choice`、`multiple_choice`、`true_false` 和 `ordering` 题型。它会隐藏题目标题、题干和题目级媒体，但保留选项文字和选项媒体。
 - 预览、Present 模式和导出演示都支持键盘快捷键：
   - `Right`、`PageDown`、`Space` 或 `N`：下一题。
   - `Left`、`PageUp`、`P` 或 `Backspace`：上一题。
   - `F` 或 `R`：显示/隐藏答案。
+  - `H`：在“根据选项猜题”模式中显示/隐藏题目。
   - `Esc`：隐藏答案；在 Present 模式中，如果答案已隐藏则退出 Present。
   - `W/A/S/D`：按界面布局移动选项焦点。
   - `1-9`：按界面选项顺序选择。
