@@ -655,6 +655,17 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #f8fafc;
+  cursor: pointer;
+}
+.slideOptions li:hover,
+.slideOptions li:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+}
+.slideOptions li.selected {
+  border-color: var(--accent);
+  background: #ecfdf5;
+  box-shadow: inset 0 0 0 2px rgba(15, 118, 110, 0.65);
 }
 .slideOptions span {
   display: grid;

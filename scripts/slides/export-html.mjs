@@ -135,6 +135,7 @@ export function standaloneDeckHtml(questions, media, options = {}) {
     .slideReveal p { margin: 0; white-space: pre-line; }
     .controls { position: fixed; left: 24px; right: 24px; bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #e4e7ec; }
     .controls div { display: flex; gap: 8px; }
+    .shortcutHint { color: #b8c1ce; font-size: 12px; }
     button { min-height: 38px; border: 1px solid #d9dee7; border-radius: 6px; background: #fff; color: #18212f; padding: 0 12px; cursor: pointer; font: inherit; }
     @media (max-width: 820px) { .mediaOptionSlide .slideOptions { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media print { body { background: white; } .deck { display: block; padding: 0; } .questionSlide, .questionSlide.active { display: grid; width: 100%; height: 100vh; border-radius: 0; page-break-after: always; } .controls { display: none; } }
@@ -142,7 +143,7 @@ export function standaloneDeckHtml(questions, media, options = {}) {
 </head>
 <body>
   <main class="deck">${slides}</main>
-  <footer class="controls"><div><button id="prev">Previous</button><button id="next">Next</button><button id="reveal">Show Reveal</button></div><span id="status"></span></footer>
+  <footer class="controls"><div><button id="prev">Previous</button><button id="next">Next</button><button id="reveal">Show Reveal</button></div><span><span id="status"></span><span class="shortcutHint"> · ←/→ Space F ?</span></span></footer>
   <script>
     const slides = [...document.querySelectorAll(".questionSlide")];
     let current = 0;
@@ -165,10 +166,23 @@ export function standaloneDeckHtml(questions, media, options = {}) {
     document.querySelector("#prev").addEventListener("click", () => move(-1));
     document.querySelector("#next").addEventListener("click", () => move(1));
     document.querySelector("#reveal").addEventListener("click", () => { reveal = !reveal; render(); });
+    function toggleReveal() {
+      if (revealMode === "inline") return;
+      reveal = !reveal;
+      render();
+    }
     document.addEventListener("keydown", (event) => {
-      if (event.key === "ArrowLeft") move(-1);
-      if (event.key === "ArrowRight") move(1);
-      if (event.key.toLowerCase() === "r") { reveal = !reveal; render(); }
+      if (event.defaultPrevented || event.target.closest("input, textarea, select, button, audio, video, [contenteditable='true']")) return;
+      const key = event.key;
+      const lower = key.toLowerCase();
+      if (["ArrowLeft", "PageUp", "Backspace"].includes(key) || lower === "p") { event.preventDefault(); move(-1); return; }
+      if (["ArrowRight", "PageDown", " "].includes(key) || lower === "n") { event.preventDefault(); move(1); return; }
+      if (lower === "f" || lower === "r") { event.preventDefault(); toggleReveal(); return; }
+      if (key === "Escape" && reveal && revealMode !== "inline") { event.preventDefault(); toggleReveal(); return; }
+      if (key === "?") {
+        event.preventDefault();
+        window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nHide answer: Esc\\nHelp: ?");
+      }
     });
     render();
   </script>
@@ -242,7 +256,7 @@ function folderIndexHtml(title) {
       <button id="reveal" type="button">Show Reveal</button>
       <button id="downloadFeedback" type="button">Download Feedback</button>
     </div>
-    <span><span id="status"></span><span id="feedbackStatus"></span></span>
+    <span><span id="status"></span><span id="feedbackStatus"></span><span class="shortcutHint"> · ←/→ Space F Enter A-D 1-9 ?</span></span>
   </footer>
   <script src="data/deck-data.js"></script>
   <script src="assets/deck.js"></script>
@@ -293,6 +307,7 @@ h1 { margin: 0; white-space: pre-line; font-size: 40px; line-height: 1.12; }
 .answerPanel small { font-weight: 700; }
 .controls { position: fixed; left: 24px; right: 24px; bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #e4e7ec; }
 .controls div { display: flex; gap: 8px; }
+.shortcutHint { color: #b8c1ce; font-size: 12px; }
 button { min-height: 38px; border: 1px solid #d9dee7; border-radius: 6px; background: #fff; color: #18212f; padding: 0 12px; cursor: pointer; font: inherit; }
 @media (max-width: 820px) {
   .mediaOptionSlide .slideOptions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -444,6 +459,23 @@ function downloadFeedback() {
   link.click();
   URL.revokeObjectURL(link.href);
   link.remove();
+}
+
+function activeQuestion() {
+  return questions[current];
+}
+
+function activeSlide() {
+  return document.querySelectorAll(".questionSlide")[current];
+}
+
+function activeSelectedIds() {
+  const slide = activeSlide();
+  if (!slide) return [];
+  return [...slide.querySelectorAll(".slideOptions li.selected")]
+    .map((item) => item.dataset.optionId)
+    .filter(Boolean)
+    .sort();
 }
 
 function questionSlide(question, index) {
@@ -602,15 +634,79 @@ function move(delta) {
   render();
 }
 
+function toggleReveal() {
+  if (manifest.revealMode === "inline") return;
+  reveal = !reveal;
+  render();
+}
+
+function selectOptionByShortcut(key) {
+  const question = activeQuestion();
+  if (!question || !question.options?.length) return false;
+  const normalized = key.toLowerCase();
+  const byId = question.options.find((option) => option.id.toLowerCase() === normalized);
+  const byIndex = /^[1-9]$/.test(key) ? question.options[Number(key) - 1] : null;
+  const option = byId || byIndex;
+  if (!option) return false;
+  const item = activeSlide()?.querySelector(\`[data-option-id="\${CSS.escape(option.id)}"]\`);
+  item?.click();
+  return true;
+}
+
+function confirmActiveAnswer() {
+  const question = activeQuestion();
+  if (!question || !question.options?.length) return false;
+  const button = activeSlide()?.querySelector(".answerPanel button");
+  if (!button || button.disabled || activeSelectedIds().length === 0) return false;
+  button.click();
+  return true;
+}
+
+function showShortcutHelp() {
+  window.alert("Shortcuts\\n\\nNext: Right / PageDown / Space / N\\nPrevious: Left / PageUp / P / Backspace\\nShow or hide answer: F or R\\nSelect option: A-D or 1-9\\nConfirm selected answer: Enter\\nHide answer: Esc\\nHelp: ?");
+}
+
 document.querySelector("#deck").replaceChildren(...questions.map(questionSlide));
 document.querySelector("#prev").addEventListener("click", () => move(-1));
 document.querySelector("#next").addEventListener("click", () => move(1));
-document.querySelector("#reveal").addEventListener("click", () => { reveal = !reveal; render(); });
+document.querySelector("#reveal").addEventListener("click", toggleReveal);
 document.querySelector("#downloadFeedback").addEventListener("click", downloadFeedback);
 document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowLeft") move(-1);
-  if (event.key === "ArrowRight") move(1);
-  if (event.key.toLowerCase() === "r") { reveal = !reveal; render(); }
+  if (event.defaultPrevented || event.target.closest("input, textarea, select, button, audio, video, [contenteditable='true']")) return;
+  const key = event.key;
+  const lower = key.toLowerCase();
+  if (["ArrowLeft", "PageUp", "Backspace"].includes(key) || lower === "p") {
+    event.preventDefault();
+    move(-1);
+    return;
+  }
+  if (["ArrowRight", "PageDown", " "].includes(key) || lower === "n") {
+    event.preventDefault();
+    move(1);
+    return;
+  }
+  if (lower === "f" || lower === "r") {
+    event.preventDefault();
+    toggleReveal();
+    return;
+  }
+  if (key === "Enter") {
+    if (confirmActiveAnswer()) event.preventDefault();
+    return;
+  }
+  if (key === "Escape" && reveal && manifest.revealMode !== "inline") {
+    event.preventDefault();
+    toggleReveal();
+    return;
+  }
+  if (key === "?") {
+    event.preventDefault();
+    showShortcutHelp();
+    return;
+  }
+  if (selectOptionByShortcut(key)) {
+    event.preventDefault();
+  }
 });
 render();
 `;

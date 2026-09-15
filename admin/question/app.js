@@ -8,6 +8,7 @@ const questionId = params.get("id");
 let revealVisible = false;
 let question = null;
 let media = [];
+let selectedOptionIds = new Set();
 
 const deck = document.querySelector("#questionPreviewDeck");
 const meta = document.querySelector("#questionMeta");
@@ -25,12 +26,46 @@ function render() {
     media,
     locale: localeSelect.value,
     revealVisible,
-    revealMode
+    revealMode,
+    selectedOptionIds,
+    onOptionToggle: toggleOption
   });
   slide.classList.add("activeSlide");
   deck.append(slide);
   revealButton.disabled = revealMode === "inline";
   revealButton.textContent = revealMode === "inline" ? "Reveal Inline" : revealVisible ? "Hide Reveal" : "Show Reveal";
+}
+
+function toggleOption(optionId) {
+  if (!question || !optionId) return;
+  if (selectedOptionIds.has(optionId)) {
+    selectedOptionIds.delete(optionId);
+  } else {
+    if (question.type !== "multiple_choice") selectedOptionIds.clear();
+    selectedOptionIds.add(optionId);
+  }
+  render();
+}
+
+function toggleOptionByShortcut(key) {
+  if (!question) return false;
+  const normalized = key.toLowerCase();
+  const byId = (question.options || []).find((option) => option.id.toLowerCase() === normalized);
+  const byIndex = /^[1-9]$/.test(key) ? question.options?.[Number(key) - 1] : null;
+  const option = byId || byIndex;
+  if (!option) return false;
+  toggleOption(option.id);
+  return true;
+}
+
+function canToggleReveal() {
+  return revealModeSelect.value !== "inline";
+}
+
+function toggleReveal() {
+  if (!canToggleReveal()) return;
+  revealVisible = !revealVisible;
+  render();
 }
 
 async function init() {
@@ -52,14 +87,35 @@ async function init() {
 }
 
 revealButton.addEventListener("click", () => {
-  revealVisible = !revealVisible;
-  render();
+  toggleReveal();
 });
 localeSelect.addEventListener("change", render);
 revealModeSelect.addEventListener("change", () => {
   revealVisible = revealModeSelect.value === "inline";
   render();
 });
+document.addEventListener("keydown", (event) => {
+  if (event.defaultPrevented || isEditingTarget(event.target)) return;
+  const key = event.key;
+  const lower = key.toLowerCase();
+  if (lower === "f" || lower === "r") {
+    event.preventDefault();
+    toggleReveal();
+    return;
+  }
+  if (key === "Escape" && revealVisible && canToggleReveal()) {
+    event.preventDefault();
+    toggleReveal();
+    return;
+  }
+  if (toggleOptionByShortcut(key)) {
+    event.preventDefault();
+  }
+});
+
+function isEditingTarget(target) {
+  return Boolean(target?.closest?.("input, textarea, select, button, [contenteditable='true'], audio, video"));
+}
 
 init().catch((error) => {
   deck.innerHTML = `<pre class="error">${error.stack || error.message}</pre>`;

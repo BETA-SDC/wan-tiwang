@@ -53,7 +53,9 @@ export function createQuestionSlide({
   revealVisible = false,
   revealMode = "hidden",
   headingTag = "h3",
-  mediaPrefix = "/"
+  mediaPrefix = "/",
+  selectedOptionIds = new Set(),
+  onOptionToggle
 }) {
   const slide = document.createElement("article");
   slide.className = "questionSlide";
@@ -74,8 +76,14 @@ export function createQuestionSlide({
 
   const options = document.createElement("ol");
   options.className = "slideOptions";
-  for (const item of question.options || []) {
+  for (const [optionIndex, item] of (question.options || []).entries()) {
     const node = document.createElement("li");
+    node.dataset.optionId = item.id;
+    node.dataset.optionIndex = String(optionIndex + 1);
+    node.tabIndex = 0;
+    node.setAttribute("role", "button");
+    node.setAttribute("aria-pressed", String(selectedOptionIds.has(item.id)));
+    node.classList.toggle("selected", selectedOptionIds.has(item.id));
     const marker = document.createElement("span");
     marker.textContent = item.id;
     const body = document.createElement("div");
@@ -88,6 +96,12 @@ export function createQuestionSlide({
     text.textContent = displayText(item.text, locale);
     if (text.textContent) body.append(text);
     node.append(marker, body);
+    node.addEventListener("click", () => onOptionToggle?.(item.id));
+    node.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      onOptionToggle?.(item.id);
+    });
     options.append(node);
   }
 

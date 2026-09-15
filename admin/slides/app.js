@@ -9,7 +9,8 @@ const state = {
   selectedIds: new Set(JSON.parse(localStorage.getItem("wtw:selectedSlideIds") || "[]")),
   slideQuestions: [],
   currentSlide: 0,
-  revealVisible: false
+  revealVisible: false,
+  previewSelections: new Map()
 };
 
 const elements = {
@@ -108,7 +109,9 @@ function renderSlides() {
     index: state.currentSlide,
     total: state.slideQuestions.length,
     revealVisible: state.revealVisible,
-    revealMode
+    revealMode,
+    selectedOptionIds: selectedOptionIdsForCurrentSlide(),
+    onOptionToggle: toggleCurrentOption
   });
   slide.classList.add("activeSlide");
   elements.slideDeck.append(slide);
@@ -116,6 +119,43 @@ function renderSlides() {
   const revealButton = document.querySelector("#toggleRevealButton");
   revealButton.disabled = revealMode === "inline";
   revealButton.textContent = revealMode === "inline" ? "Reveal Inline" : state.revealVisible ? "Hide Reveal" : "Show Reveal";
+}
+
+function selectedOptionIdsForCurrentSlide() {
+  const question = state.slideQuestions[state.currentSlide];
+  return new Set(state.previewSelections.get(question?.id) || []);
+}
+
+function setCurrentSelection(selected) {
+  const question = state.slideQuestions[state.currentSlide];
+  if (!question) return;
+  state.previewSelections.set(question.id, [...selected]);
+}
+
+function toggleCurrentOption(optionId) {
+  const question = state.slideQuestions[state.currentSlide];
+  if (!question || !optionId) return;
+  const selected = selectedOptionIdsForCurrentSlide();
+  if (selected.has(optionId)) {
+    selected.delete(optionId);
+  } else {
+    if (question.type !== "multiple_choice") selected.clear();
+    selected.add(optionId);
+  }
+  setCurrentSelection(selected);
+  renderSlides();
+}
+
+function toggleOptionByShortcut(key) {
+  const question = state.slideQuestions[state.currentSlide];
+  if (!question) return false;
+  const normalized = key.toLowerCase();
+  const byId = (question.options || []).find((option) => option.id.toLowerCase() === normalized);
+  const byIndex = /^[1-9]$/.test(key) ? question.options?.[Number(key) - 1] : null;
+  const option = byId || byIndex;
+  if (!option) return false;
+  toggleCurrentOption(option.id);
+  return true;
 }
 
 function shuffleItems(items) {
@@ -143,6 +183,16 @@ function buildSlides({ shuffle = false } = {}) {
 
 function syncRevealForMode() {
   state.revealVisible = elements.slideRevealMode.value === "inline";
+  renderSlides();
+}
+
+function canToggleReveal() {
+  return elements.slideRevealMode.value !== "inline";
+}
+
+function toggleReveal() {
+  if (!canToggleReveal()) return;
+  state.revealVisible = !state.revealVisible;
   renderSlides();
 }
 
@@ -216,8 +266,7 @@ document.querySelector("#exportSlidesButton").addEventListener("click", () => {
 document.querySelector("#prevSlideButton").addEventListener("click", () => moveSlide(-1));
 document.querySelector("#nextSlideButton").addEventListener("click", () => moveSlide(1));
 document.querySelector("#toggleRevealButton").addEventListener("click", () => {
-  state.revealVisible = !state.revealVisible;
-  renderSlides();
+  toggleReveal();
 });
 document.querySelector("#presentSlidesButton").addEventListener("click", () => togglePresentation());
 document.querySelector("#selectAllButton").addEventListener("click", () => {
@@ -234,14 +283,38 @@ elements.slideSearch.addEventListener("input", renderPicker);
 elements.slideLocale.addEventListener("change", renderSlides);
 elements.slideRevealMode.addEventListener("change", syncRevealForMode);
 document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowLeft") moveSlide(-1);
-  if (event.key === "ArrowRight") moveSlide(1);
-  if (event.key.toLowerCase() === "r") {
-    state.revealVisible = !state.revealVisible;
-    renderSlides();
+  if (event.defaultPrevented || isEditingTarget(event.target)) return;
+  const key = event.key;
+  const lower = key.toLowerCase();
+  if (["ArrowLeft", "PageUp", "p", "Backspace"].includes(key) || lower === "p") {
+    event.preventDefault();
+    moveSlide(-1);
+    return;
   }
-  if (event.key === "Escape") togglePresentation(false);
+  if (["ArrowRight", "PageDown", " ", "n"].includes(key) || lower === "n") {
+    event.preventDefault();
+    moveSlide(1);
+    return;
+  }
+  if (lower === "f" || lower === "r") {
+    event.preventDefault();
+    toggleReveal();
+    return;
+  }
+  if (key === "Escape") {
+    event.preventDefault();
+    if (state.revealVisible && canToggleReveal()) toggleReveal();
+    else togglePresentation(false);
+    return;
+  }
+  if (toggleOptionByShortcut(key)) {
+    event.preventDefault();
+  }
 });
+
+function isEditingTarget(target) {
+  return Boolean(target?.closest?.("input, textarea, select, button, [contenteditable='true'], audio, video"));
+}
 document.addEventListener("wtw:selection-cleared", () => {
   state.selectedIds.clear();
   elements.slideSource.value = "filtered";

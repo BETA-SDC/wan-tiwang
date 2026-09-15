@@ -42,9 +42,9 @@ node scripts/server.mjs
    - `All questions`: use the full bank.
 4. Set count, language, and reveal mode.
 5. Click `Build Preview` or `Shuffle Preview`.
-6. Use `Previous`, `Next`, and `Show Reveal`.
+6. Use `Previous`, `Next`, and `Show Reveal`, or the keyboard shortcuts listed below.
 7. Use `Present` for a slide-like full-stage view.
-8. In exported decks, players can click choice options and confirm an answer, then use `Download Feedback` to export answer counts.
+8. In exported decks, players can click or keyboard-select choice options and confirm an answer, then use `Download Feedback` to export answer counts.
 9. Click `Export Folder` to write a deck folder under `exports/slides/`. The app shows a success popup and provides `Open Deck` and `Open in New Tab` actions.
 
 中文流程：
@@ -57,9 +57,9 @@ node scripts/server.mjs
    - `All questions`：使用全部题目。
 4. 设置数量、语言和答案显示方式。
 5. 点击 `Build Preview` 或 `Shuffle Preview`。
-6. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示。
+6. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示，也可以使用下面列出的快捷键。
 7. 使用 `Present` 进入类似幻灯片的展示模式。
-8. 在导出的演示中，玩家可以点击选择题选项并确认答案，再用 `Download Feedback` 导出作答统计。
+8. 在导出的演示中，玩家可以点击或用键盘选择选项并确认答案，再用 `Download Feedback` 导出作答统计。
 9. 点击 `Export Folder`，把演示文件夹写到 `exports/slides/`。管理台会弹出成功提示，并提供 `Open Deck` 和 `Open in New Tab` 操作。
 
 ## Export Folder
@@ -109,7 +109,7 @@ Exported decks can collect simple answer feedback for choice questions.
 In the exported deck:
 
 1. Click one or more options.
-2. Click `Confirm Answer`.
+2. Click `Confirm Answer`, or press `Enter` after selecting.
 3. Continue through the deck.
 4. Click `Download Feedback`.
 5. Save the downloaded `*-answer-feedback.json` file.
@@ -117,7 +117,7 @@ In the exported deck:
 在导出演示中：
 
 1. 点击一个或多个选项。
-2. 点击 `Confirm Answer`。
+2. 点击 `Confirm Answer`，或者选择后按 `Enter`。
 3. 继续完成演示。
 4. 点击 `Download Feedback`。
 5. 保存下载的 `*-answer-feedback.json` 文件。
@@ -149,8 +149,14 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
 - Exported decks can record local answer feedback for choice questions. `Download Feedback` saves a JSON file with answered and correct counts; import it from `Maintenance` to add those counts back to question `feedback`.
 - `Hidden until show` keeps answers hidden until `Show Reveal` is clicked, and automatically hides the answer again when you move to another question.
 - `Inline on each slide` is useful for review decks.
-- Arrow keys move between slides in the Slides view.
-- `R` toggles reveal, and `Esc` exits Present mode.
+- Keyboard shortcuts work in preview, Present mode, and exported decks:
+  - `Right`, `PageDown`, `Space`, or `N`: next slide.
+  - `Left`, `PageUp`, `P`, or `Backspace`: previous slide.
+  - `F` or `R`: show or hide the answer.
+  - `Esc`: hide the answer; in Present mode, exits Present when the answer is already hidden.
+  - `A-D` or `1-9`: select an option on choice questions.
+  - `Enter`: confirm the selected answer in exported decks.
+  - `?`: show the shortcut help in exported decks.
 
 说明：
 
@@ -161,5 +167,11 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
 - 导出演示可以在本地记录选择题作答反馈。`Download Feedback` 会保存包含回答次数和答对次数的 JSON；在 `Maintenance` 页面导入后，会把这些计数累加回题目的 `feedback` 字段。
 - `Hidden until show` 会默认隐藏答案，点击 `Show Reveal` 才显示，并且每次切换题目都会重新收起答案。
 - `Inline on each slide` 适合审题或复习场景。
-- 在 Slides 视图中可以用左右方向键翻页。
-- `R` 切换答案显示，`Esc` 退出 Present 模式。
+- 预览、Present 模式和导出演示都支持键盘快捷键：
+  - `Right`、`PageDown`、`Space` 或 `N`：下一题。
+  - `Left`、`PageUp`、`P` 或 `Backspace`：上一题。
+  - `F` 或 `R`：显示/隐藏答案。
+  - `Esc`：隐藏答案；在 Present 模式中，如果答案已隐藏则退出 Present。
+  - `A-D` 或 `1-9`：选择选项题的选项。
+  - `Enter`：在导出演示中确认已选答案。
+  - `?`：在导出演示中显示快捷键帮助。
