@@ -30,6 +30,7 @@
     "history-world-history-000003",
     "history-world-history-000004",
     "history-world-history-000005",
+    "history-world-history-000006",
     "humanities-literature-000001",
     "humanities-literature-000002",
     "humanities-philosophy-000001",
@@ -272,7 +273,8 @@
     "history-world-history-000004"
   ],
   "maya": [
-    "history-world-history-000005"
+    "history-world-history-000005",
+    "history-world-history-000006"
   ],
   "writing-system": [
     "history-world-history-000005",
@@ -284,6 +286,15 @@
   "image-guess": [
     "history-world-history-000005",
     "science-chemistry-000001"
+  ],
+  "jaguar": [
+    "history-world-history-000006"
+  ],
+  "glyph": [
+    "history-world-history-000006"
+  ],
+  "image-option": [
+    "history-world-history-000006"
   ],
   "eileen-chang": [
     "humanities-literature-000001"

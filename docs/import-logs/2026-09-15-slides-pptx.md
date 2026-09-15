@@ -16,13 +16,13 @@ The PPT was treated only as source material for questions. Text inside the PPT w
 
 ## Imported
 
-Imported questions were converted into bilingual `zh-CN` and `en-US` JSONL records and marked as `review`. After the media workflow was exercised, two image-backed questions were also imported with local media metadata. Each imported record includes:
+Imported questions were converted into bilingual `zh-CN` and `en-US` JSONL records and marked as `review`. After the media workflow was exercised, image-backed questions were also imported with local media metadata, including one question whose answer options are images. Each imported record includes:
 
 ```json
 "source": { "type": "pptx", "file": "slides.pptx", "slide": 2 }
 ```
 
-已导入题目均转换为中英文 JSONL，并标记为 `review`，方便后续人工复核。后续补充导入了两道带图片的题目，并通过媒体元数据引用本地图片。
+已导入题目均转换为中英文 JSONL，并标记为 `review`，方便后续人工复核。后续补充导入了带图片的题目，其中包括一道“图片作为选项”的题目，并通过媒体元数据引用本地图片。
 
 Imported areas:
 
@@ -35,7 +35,7 @@ Imported areas:
 - Music and art
 - Pop culture and memes
 - Sports and everyday trivia
-- Image-backed Maya writing order and flame-test questions
+- Image-backed Maya writing order, Maya jaguar glyph option, and flame-test questions
 
 ## Corrections and Normalization
 
@@ -45,6 +45,7 @@ Imported areas:
 - Slide 51, quantum mechanics: imported with inferred answer D from the option explanations.
 - Slide 7, Lu Xun jujube tree line: imported as a meme question and explicitly notes that it is a popular rewrite, not the exact original sentence.
 - Slide 53, Qingqing Grassland: imported as a meme question, not as formal geography.
+- Slide 15, Maya jaguar glyph: imported as a `review` image-option question after adding `options[].media` support. The answer is inferred from the slide's jaguar-feature clue and should be source-reviewed before publishing.
 
 ## Skipped
 
@@ -53,7 +54,7 @@ The following were not imported:
 - Cover slide.
 - Duplicate Yuan dynasty question on slide 25.
 - Open-ended poetry challenge on slide 8, because it asks for arbitrary acceptable answers.
-- Image-dependent slides without sufficiently stable answers or reusable media context, including the Maya jaguar glyph, warship image, MV screenshot, and architecture image question.
+- Image-dependent slides without sufficiently stable answers or reusable media context, including the warship image, MV screenshot, and architecture image question.
 - Plants vs Zombies Fusion question, because the answer is game-version-specific and was not independently verified.
 - Saxitoxin total synthesis question, because it depends on an image/reaction step and a highly specialized source.
 - Choice axiom equivalence question, because the PPT wording is mathematically delicate and several options depend on the exact formulation used.

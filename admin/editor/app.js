@@ -74,6 +74,10 @@ function addOptionRow(value = {}) {
     labelNode.append(label, input);
     row.append(labelNode);
   }
+  const image = document.createElement("label");
+  image.append("Image", mediaOptions("image", (value.media || []).find((item) => item.kind === "image" || state.media.find((media) => media.id === item.id)?.type === "image")?.id || ""));
+  image.querySelector("select").dataset.optionField = "media_image";
+  row.append(image);
   const remove = document.createElement("button");
   remove.type = "button";
   remove.textContent = "Remove";
@@ -94,13 +98,19 @@ function setOptions(values = []) {
 }
 
 function readOptions() {
-  return [...elements.options.querySelectorAll(".optionRow")].map((row) => ({
-    id: row.querySelector('[data-option-field="id"]').value.trim(),
-    text: localizedObject(
+  return [...elements.options.querySelectorAll(".optionRow")].map((row) => {
+    const id = row.querySelector('[data-option-field="id"]').value.trim();
+    const text = localizedObject(
       row.querySelector('[data-option-field="zh"]').value,
       row.querySelector('[data-option-field="en"]').value
-    )
-  })).filter((item) => item.id || item.text["zh-CN"] || item.text["en-US"]);
+    );
+    const imageId = row.querySelector('[data-option-field="media_image"]').value;
+    return {
+      id,
+      ...(text["zh-CN"] || text["en-US"] ? { text } : {}),
+      ...(imageId ? { media: [{ id: imageId, role: "option", kind: "image" }] } : {})
+    };
+  }).filter((item) => item.id || item.text?.["zh-CN"] || item.text?.["en-US"] || item.media?.length);
 }
 
 function showOptions(type) {

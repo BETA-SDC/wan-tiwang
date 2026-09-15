@@ -21,7 +21,14 @@ const stats = {
 function pushIndex(index, key, questionId) {
   if (!key) return;
   index[key] ??= [];
-  index[key].push(questionId);
+  if (!index[key].includes(questionId)) index[key].push(questionId);
+}
+
+function mediaRefs(question) {
+  return [
+    ...(question.media ?? []),
+    ...(question.options ?? []).flatMap((option) => option.media ?? [])
+  ];
 }
 
 for (const file of questionFiles) {
@@ -37,10 +44,10 @@ for (const file of questionFiles) {
     for (const tag of question.tags ?? []) pushIndex(byTag, tag, question.id);
     for (const mood of question.mood ?? []) pushIndex(byMood, mood, question.id);
     for (const occasion of question.occasion ?? []) pushIndex(byOccasion, occasion, question.id);
-    for (const media of question.media ?? []) pushIndex(byMedia, media.id, question.id);
+    for (const media of mediaRefs(question)) pushIndex(byMedia, media.id, question.id);
 
     stats.total += 1;
-    if ((question.media ?? []).length > 0) stats.with_media += 1;
+    if (mediaRefs(question).length > 0) stats.with_media += 1;
     stats.by_status[question.status] = (stats.by_status[question.status] ?? 0) + 1;
     stats.by_type[question.type] = (stats.by_type[question.type] ?? 0) + 1;
     stats.by_category[question.category] = (stats.by_category[question.category] ?? 0) + 1;

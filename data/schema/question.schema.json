@@ -20,6 +20,18 @@
           "minLength": 1
         }
       }
+    },
+    "mediaRef": {
+      "type": "object",
+      "required": ["id", "role"],
+      "properties": {
+        "id": { "type": "string" },
+        "role": { "type": "string" },
+        "kind": {
+          "enum": ["image", "audio", "video", "thumbnail"]
+        },
+        "hint": { "$ref": "#/$defs/localizedText" }
+      }
     }
   },
   "properties": {
@@ -40,10 +52,14 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "text"],
+        "required": ["id"],
         "properties": {
           "id": { "type": "string" },
-          "text": { "$ref": "#/$defs/localizedText" }
+          "text": { "$ref": "#/$defs/localizedText" },
+          "media": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/mediaRef" }
+          }
         }
       }
     },
@@ -75,16 +91,7 @@
     "media": {
       "type": "array",
       "items": {
-        "type": "object",
-        "required": ["id", "role"],
-        "properties": {
-          "id": { "type": "string" },
-          "role": { "type": "string" },
-          "kind": {
-            "enum": ["image", "audio", "video", "thumbnail"]
-          },
-          "hint": { "$ref": "#/$defs/localizedText" }
-        }
+        "$ref": "#/$defs/mediaRef"
       }
     },
     "play_time_sec": {

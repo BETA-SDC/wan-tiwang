@@ -36,6 +36,16 @@ function validateLocalizedText(file, line, value, fieldName) {
   }
 }
 
+function validateMediaRef(file, line, media, fieldName = "media reference") {
+  if (!media.id) addError(file, line, `${fieldName} is missing id`);
+  if (!media.role) addError(file, line, `${fieldName} is missing role`);
+  if (media.id && !mediaIds.has(media.id)) addError(file, line, `unknown media reference: ${media.id}`);
+  if (media.kind && media.id && mediaTypes.has(media.id) && media.kind !== mediaTypes.get(media.id)) {
+    addError(file, line, `${fieldName} kind ${media.kind} does not match metadata type ${mediaTypes.get(media.id)} for ${media.id}`);
+  }
+  if (media.hint !== undefined) validateLocalizedText(file, line, media.hint, `${fieldName} ${media.id ?? ""} hint`.trim());
+}
+
 for (const file of mediaFiles) {
   for (const { value: item, line } of readJsonl(file)) {
     if (!item.id) addError(file, line, "media item is missing id");
@@ -64,7 +74,11 @@ for (const file of questionFiles) {
 
     for (const option of question.options ?? []) {
       if (!option.id) addError(file, line, "option is missing id");
-      validateLocalizedText(file, line, option.text, `option ${option.id ?? ""} text`.trim());
+      if (option.text === undefined && (option.media ?? []).length === 0) {
+        addError(file, line, `option ${option.id ?? ""} must include text or media`.trim());
+      }
+      if (option.text !== undefined) validateLocalizedText(file, line, option.text, `option ${option.id ?? ""} text`.trim());
+      for (const media of option.media ?? []) validateMediaRef(file, line, media, `option ${option.id ?? ""} media`.trim());
     }
 
     if (question.reveal !== undefined) validateLocalizedText(file, line, question.reveal, "reveal");
@@ -78,14 +92,7 @@ for (const file of questionFiles) {
       if (!occasions.has(occasion)) addError(file, line, `unknown occasion: ${occasion}`);
     }
 
-    for (const media of question.media ?? []) {
-      if (!media.id) addError(file, line, "media reference is missing id");
-      if (media.id && !mediaIds.has(media.id)) addError(file, line, `unknown media reference: ${media.id}`);
-      if (media.kind && media.id && mediaTypes.has(media.id) && media.kind !== mediaTypes.get(media.id)) {
-        addError(file, line, `media reference kind ${media.kind} does not match metadata type ${mediaTypes.get(media.id)} for ${media.id}`);
-      }
-      if (media.hint !== undefined) validateLocalizedText(file, line, media.hint, `media ${media.id ?? ""} hint`.trim());
-    }
+    for (const media of question.media ?? []) validateMediaRef(file, line, media);
   }
 }
 

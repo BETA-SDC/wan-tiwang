@@ -94,6 +94,31 @@ In this example, `single_choice` is the answer type, while `image-guess` is a ta
 
 在这个例子里，`single_choice` 是作答方式，`image-guess` 标签才表示猜图玩法。
 
+If the media belongs to an answer option, put the reference on that option:
+
+如果媒体本身就是选项，请把引用写在对应选项上：
+
+```json
+"options": [
+  {
+    "id": "A",
+    "text": { "zh-CN": "选项 A", "en-US": "Option A" },
+    "media": [
+      {
+        "id": "img-history-world-history-maya-jaguar-glyph-a-001",
+        "role": "option",
+        "kind": "image",
+        "hint": { "zh-CN": "玛雅字符选项 A", "en-US": "Maya glyph option A" }
+      }
+    ]
+  }
+]
+```
+
+Use question-level `media` for shared prompt material, and `options[].media` for media that is part of a specific choice.
+
+题干共用材料使用题目级 `media`；某个选项自己的图片、音频或视频使用 `options[].media`。
+
 `npm run wtw -- check` validates that the referenced media ID exists, optional `kind` matches the media metadata type, optional `hint` is bilingual, and media paths are relative. It does not currently verify that ignored local media files physically exist on disk.
 
 `npm run wtw -- check` 会校验题目引用的媒体 ID 是否存在、可选的 `kind` 是否和媒体元数据类型一致、可选的 `hint` 是否双语，以及媒体路径是否为相对路径。它目前不会检查被 Git 忽略的本地媒体文件是否真实存在。

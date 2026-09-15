@@ -1,12 +1,12 @@
 {
-  "total": 65,
-  "with_media": 2,
+  "total": 66,
+  "with_media": 3,
   "by_status": {
-    "review": 51,
+    "review": 52,
     "published": 14
   },
   "by_type": {
-    "single_choice": 38,
+    "single_choice": 39,
     "fill_blank": 16,
     "multiple_choice": 5,
     "true_false": 4,
@@ -22,7 +22,7 @@
     "geography.nature": 2,
     "history.ancient-china": 2,
     "history.figures": 2,
-    "history.world-history": 5,
+    "history.world-history": 6,
     "humanities.literature": 2,
     "humanities.philosophy": 1,
     "language.chinese": 3,

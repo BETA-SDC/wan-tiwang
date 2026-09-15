@@ -88,6 +88,7 @@ Use `status: "published"` only when the question is ready for random sampling.
 - `mood`：题目氛围，比如 `funny`、`surprising`、`hardcore`。
 - `occasion`：适合场景，比如 `daily`、`party`、`stream`。
 - `media`：媒体引用，至少写媒体 ID 和角色；推荐补充 `kind` 和双语 `hint`，方便搜索和维护。
+- `options[].media`：当选项本身是图片、音频或视频时，把媒体引用放在对应选项内，而不是放在题干 `media` 里。
 - `play_time_sec`：预估游玩时长。
 - `status`：题目状态，`published` 的题目才适合进入随机抽题。
 

@@ -25,12 +25,12 @@ function formatAnswer(question, locale) {
   if (!question.options) return answers.join(", ");
   return answers.map((answer) => {
     const item = question.options.find((option) => option.id === answer);
-    return item ? `${answer}. ${displayText(item.text, locale).replace(/\n/g, " / ")}` : answer;
+    const label = displayText(item?.text, locale).replace(/\n/g, " / ") || (item?.media?.length ? "media option" : "");
+    return item ? `${answer}${label ? `. ${label}` : ""}` : answer;
   }).join(", ");
 }
 
-function slideMediaHtml(question, mediaById, locale, relativePrefix) {
-  return (question.media || []).map((ref) => {
+function mediaRefHtml(ref, mediaById, locale, relativePrefix) {
     const item = mediaById.get(ref.id);
     if (!item) return "";
     const kind = ref.kind || item.type;
@@ -40,15 +40,27 @@ function slideMediaHtml(question, mediaById, locale, relativePrefix) {
     if (kind === "audio") return `<audio controls src="${escapeHtml(src)}"></audio>`;
     if (kind === "video") return `<video controls src="${escapeHtml(src)}"></video>`;
     return "";
-  }).join("");
+}
+
+function slideMediaHtml(question, mediaById, locale, relativePrefix) {
+  return (question.media || []).map((ref) => mediaRefHtml(ref, mediaById, locale, relativePrefix)).join("");
+}
+
+function optionHtml(item, mediaById, locale, relativePrefix) {
+  const media = (item.media || []).map((ref) => mediaRefHtml(ref, mediaById, locale, relativePrefix)).join("");
+  const text = displayText(item.text, locale);
+  return `
+    <li>
+      <span>${escapeHtml(item.id)}</span>
+      <div class="optionBody">${media}${text ? `<strong>${escapeHtml(text)}</strong>` : ""}</div>
+    </li>
+  `;
 }
 
 function slideHtml(question, index, total, options, mediaById, relativePrefix = "../../") {
   const locale = options.locale || "zh-CN";
   const revealInline = options.revealMode === "inline";
-  const optionItems = (question.options || []).map((item) => `
-    <li><span>${escapeHtml(item.id)}</span><strong>${escapeHtml(displayText(item.text, locale))}</strong></li>
-  `).join("");
+  const optionItems = (question.options || []).map((item) => optionHtml(item, mediaById, locale, relativePrefix)).join("");
   return `
     <article class="questionSlide">
       <div class="slideKicker">${index + 1} / ${total} · ${escapeHtml(question.category)} · ${escapeHtml(question.type)}</div>
@@ -86,6 +98,9 @@ export function standaloneDeckHtml(questions, media, options = {}) {
     .slideOptions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 0; margin: 0; list-style: none; }
     .slideOptions li { display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 12px; min-height: 58px; padding: 10px 14px; border: 1px solid #d9dee7; border-radius: 8px; background: #f8fafc; }
     .slideOptions span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #0f766e; color: #fff; font-weight: 800; }
+    .optionBody { display: grid; gap: 8px; min-width: 0; }
+    .optionBody img, .optionBody video { max-height: 160px; max-width: 100%; object-fit: contain; border-radius: 6px; background: #101828; }
+    .optionBody audio { width: 100%; }
     .slideOptions strong { white-space: pre-line; overflow-wrap: anywhere; font-size: 22px; }
     .slideMedia:empty { display: none; }
     .slideMedia img, .slideMedia video { max-height: 240px; max-width: 100%; object-fit: contain; border-radius: 8px; background: #101828; }

@@ -323,7 +323,7 @@ textarea {
 }
 .optionRow {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1fr) 88px;
+  grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1fr) minmax(180px, 0.8fr) 88px;
   gap: 8px;
   align-items: end;
 }
@@ -629,6 +629,22 @@ textarea {
   white-space: pre-line;
   overflow-wrap: anywhere;
   font-size: 15px;
+}
+.optionBody {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.optionBody img,
+.optionBody video {
+  max-height: 130px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #101828;
+}
+.optionBody audio {
+  width: 100%;
 }
 .slideMedia {
   display: grid;

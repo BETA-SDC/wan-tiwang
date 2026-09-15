@@ -17,6 +17,7 @@ export function formatAnswer(question, locale = "zh-CN") {
   if (!question.options) return answers.join(", ");
   return answers.map((answer) => {
     const item = question.options.find((option) => option.id === answer);
-    return item ? `${answer}. ${displayText(item.text, locale).replace(/\n/g, " / ")}` : answer;
+    const label = displayText(item?.text, locale).replace(/\n/g, " / ") || (item?.media?.length ? "media option" : "");
+    return item ? `${answer}${label ? `. ${label}` : ""}` : answer;
   }).join(", ");
 }

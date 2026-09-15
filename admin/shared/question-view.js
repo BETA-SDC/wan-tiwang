@@ -9,31 +9,39 @@ export function createQuestionMedia(question, media, locale = "zh-CN", mediaPref
   wrap.className = "slideMedia";
 
   for (const ref of question.media || []) {
-    const item = mediaById(media, ref.id);
-    if (!item) continue;
-    const kind = ref.kind || item.type;
-    const src = `${mediaPrefix}${item.path}`;
-    const label = displayText(ref.hint, locale) || item.alt || item.title || ref.id;
-
-    if (kind === "image" || kind === "thumbnail") {
-      const image = document.createElement("img");
-      image.src = src;
-      image.alt = label;
-      wrap.append(image);
-    } else if (kind === "audio") {
-      const audio = document.createElement("audio");
-      audio.controls = true;
-      audio.src = src;
-      wrap.append(audio);
-    } else if (kind === "video") {
-      const video = document.createElement("video");
-      video.controls = true;
-      video.src = src;
-      wrap.append(video);
-    }
+    const node = createMediaElement(ref, media, locale, mediaPrefix);
+    if (node) wrap.append(node);
   }
 
   return wrap;
+}
+
+function createMediaElement(ref, media, locale = "zh-CN", mediaPrefix = "/") {
+  const item = mediaById(media, ref.id);
+  if (!item) return null;
+  const kind = ref.kind || item.type;
+  const src = `${mediaPrefix}${item.path}`;
+  const label = displayText(ref.hint, locale) || item.alt || item.title || ref.id;
+
+  if (kind === "image" || kind === "thumbnail") {
+    const image = document.createElement("img");
+    image.src = src;
+    image.alt = label;
+    return image;
+  }
+  if (kind === "audio") {
+    const audio = document.createElement("audio");
+    audio.controls = true;
+    audio.src = src;
+    return audio;
+  }
+  if (kind === "video") {
+    const video = document.createElement("video");
+    video.controls = true;
+    video.src = src;
+    return video;
+  }
+  return null;
 }
 
 export function createQuestionSlide({
@@ -67,9 +75,16 @@ export function createQuestionSlide({
     const node = document.createElement("li");
     const marker = document.createElement("span");
     marker.textContent = item.id;
+    const body = document.createElement("div");
+    body.className = "optionBody";
+    for (const ref of item.media || []) {
+      const mediaNode = createMediaElement(ref, media, locale, mediaPrefix);
+      if (mediaNode) body.append(mediaNode);
+    }
     const text = document.createElement("strong");
     text.textContent = displayText(item.text, locale);
-    node.append(marker, text);
+    if (text.textContent) body.append(text);
+    node.append(marker, body);
     options.append(node);
   }
 
