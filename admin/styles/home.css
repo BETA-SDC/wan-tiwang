@@ -1,0 +1,49 @@
+.quickActions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.taskButton {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 112px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+.taskButton:hover { border-color: var(--accent); }
+.taskButton strong { font-size: 15px; }
+.taskButton span { color: var(--muted); }
+.guidePanel {
+  padding: 18px;
+  border-top: 3px solid var(--accent);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.guidePanel h2 { margin: 0 0 14px; font-size: 16px; }
+.guidePanel p { margin-top: 14px; color: var(--muted); }
+.flowSteps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+}
+.flowSteps span {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-muted);
+  color: var(--text);
+  font-size: 12px;
+  text-align: center;
+}
+@media (max-width: 820px) {
+  .quickActions,
+  .flowSteps { grid-template-columns: 1fr; }
+}

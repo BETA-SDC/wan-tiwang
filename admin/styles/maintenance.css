@@ -1,0 +1,9 @@
+.noticePanel {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+}
+.noticePanel p { color: var(--muted); }

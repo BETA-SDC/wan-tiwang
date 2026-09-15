@@ -55,6 +55,7 @@ The admin UI also keeps shared browser helpers in one place:
 
 ```text
 admin/shared/api.js       JSON requests
+admin/shared/bootstrap.js Cached taxonomy/stats loader
 admin/shared/dom.js       Required DOM lookup, options, page errors
 admin/shared/files.js     Text and data-URL file reading
 admin/shared/page.js      Page startup and error boundary

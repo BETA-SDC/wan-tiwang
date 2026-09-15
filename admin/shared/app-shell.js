@@ -1,4 +1,4 @@
-import { requestJson } from "./api.js";
+import { loadBootstrap } from "./bootstrap.js";
 
 const routes = [
   ["home", "Home", "/", "任务总览"],
@@ -119,7 +119,7 @@ export function mountAppShell() {
     document.dispatchEvent(new CustomEvent("wtw:selection-cleared"));
   });
 
-  requestJson("/api/bootstrap").then((data) => {
+  loadBootstrap().then((data) => {
     const bankStats = data.stats || {};
     stats.append(
       createStat("Questions", bankStats.total ?? 0),

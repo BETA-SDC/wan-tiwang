@@ -1,0 +1,36 @@
+.settingsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.formBlock {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+}
+.settingsGrid .formBlock h2 { margin: 0 0 6px; }
+.taxonomyTree,
+.taxonomyList {
+  display: grid;
+  gap: 5px;
+  margin-top: 14px;
+  max-height: 460px;
+  overflow: auto;
+}
+.taxonomyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 32px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.taxonomyItem.taxonomyChild { padding-left: 24px; }
+.taxonomyItem code {
+  color: var(--muted);
+  font-size: 11px;
+}
+@media (max-width: 820px) {
+  .settingsGrid { grid-template-columns: 1fr; }
+}

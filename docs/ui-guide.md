@@ -86,6 +86,34 @@ Every feature is a separate page with the same navigation shell. Use the left na
 /maintenance/     Maintenance
 ```
 
+## Frontend Structure
+
+Each page loads only the JavaScript and CSS it needs. Shared browser modules live under `admin/shared/`:
+
+```text
+admin/shared/app-shell.js   navigation shell
+admin/shared/bootstrap.js   cached taxonomy/stats loader
+admin/shared/api.js         JSON requests
+admin/shared/dom.js         DOM helpers and page errors
+admin/shared/files.js       file readers
+admin/shared/page.js        page startup template
+```
+
+CSS is split the same way:
+
+```text
+admin/styles/base.css       shared shell, controls, panels
+admin/styles/home.css
+admin/styles/editor.css
+admin/styles/import.css
+admin/styles/library.css
+admin/styles/settings.css
+admin/styles/maintenance.css
+admin/styles/slides.css
+```
+
+新页面应该加载 `base.css` 加自己的页面 CSS，不要直接依赖旧的总样式文件。需要 taxonomy/stats 时使用 `loadBootstrap()`，不要重复请求 `/api/bootstrap`。
+
 ## Save Flow
 
 1. Create or edit a question in `Editor`.

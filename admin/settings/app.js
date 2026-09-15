@@ -1,4 +1,5 @@
 import { requestJson } from "../shared/api.js";
+import { loadBootstrap } from "../shared/bootstrap.js";
 import { startPage } from "../shared/page.js";
 
 function renderList(target, items) {
@@ -16,7 +17,7 @@ function renderList(target, items) {
 }
 
 async function init() {
-  const data = await requestJson("/api/bootstrap");
+  const data = await loadBootstrap();
   const categoryTree = document.querySelector("#categoryTree");
   categoryTree.replaceChildren();
   for (const category of data.categories) {

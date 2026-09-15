@@ -1,4 +1,5 @@
 import { requestJson } from "../shared/api.js";
+import { loadBootstrap } from "../shared/bootstrap.js";
 import { createOption as option } from "../shared/dom.js";
 import { localized } from "../shared/i18n.js";
 import { startPage } from "../shared/page.js";
@@ -176,7 +177,7 @@ async function loadQuestions() {
 }
 
 async function init() {
-  state.bootstrap = await requestJson("/api/bootstrap");
+  state.bootstrap = await loadBootstrap();
   renderFilters();
   await loadQuestions();
 }

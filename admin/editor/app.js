@@ -1,4 +1,5 @@
 import { requestJson } from "../shared/api.js";
+import { loadBootstrap } from "../shared/bootstrap.js";
 import { byId, createOption as option } from "../shared/dom.js";
 import { readDataUrlFile } from "../shared/files.js";
 import { localized } from "../shared/i18n.js";
@@ -351,7 +352,7 @@ async function save() {
 }
 
 async function init() {
-  const [bootstrap, media] = await Promise.all([requestJson("/api/bootstrap"), requestJson("/api/media")]);
+  const [bootstrap, media] = await Promise.all([loadBootstrap(), requestJson("/api/media")]);
   state.bootstrap = bootstrap;
   state.media = media.media;
   renderTaxonomy();
