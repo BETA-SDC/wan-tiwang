@@ -8,6 +8,34 @@ This repository stores question data, taxonomy definitions, media metadata, gene
 
 本仓库存放题目数据、分类体系、媒体元数据、自动生成索引和维护脚本。媒体文件本体暂时只保存在本地并被 Git 忽略；题目和媒体元数据中统一使用相对路径引用。
 
+## AI Question Creation
+
+For AI-assisted question creation, start with [AI One-File Question Brief](docs/ai-one-file-question-brief.md). Give this file to another AI when you want it to draft questions for this repository. It is self-contained and explains the required JSON shape, bilingual rules, categories, answer types, media references, and output format.
+
+AI 辅助出题请优先从 [AI One-File Question Brief](docs/ai-one-file-question-brief.md) 开始。如果要让其他 AI 给本仓库生成题目，先把这份文档给它读。它是自包含说明，已经包含 JSON 结构、中英双语规则、分类、题型、媒体引用和输出格式。
+
+Recommended contribution flow:
+
+1. Ask AI to draft questions using [AI One-File Question Brief](docs/ai-one-file-question-brief.md).
+2. Review facts, wording, category, answer, difficulty, tags, and media references.
+3. Import or paste reviewed questions through the UI.
+4. Run the maintenance check in the UI before submitting changes.
+
+推荐贡献流程：
+
+1. 让 AI 按 [AI One-File Question Brief](docs/ai-one-file-question-brief.md) 生成题目草稿。
+2. 人工审核事实、措辞、分类、答案、难度、标签和媒体引用。
+3. 通过 UI 导入或粘贴审核后的题目。
+4. 提交前在 UI 里运行维护检查。
+
+When asking AI to generate a batch, add a short task message with the topic, category IDs, question count, difficulty mix, mood, occasion, whether media is needed, and any real media file information.
+
+让 AI 批量出题时，补充一段简短任务消息，说明主题、分类 ID、题目数量、难度比例、氛围、使用场景、是否需要媒体，以及真实媒体文件信息。
+
+For deeper authoring details, see [AI-Assisted Authoring](docs/ai-assisted-authoring.md).
+
+更完整的 AI 出题说明见 [AI-Assisted Authoring](docs/ai-assisted-authoring.md)。
+
 ## Repository Layout
 
 ```text
@@ -138,147 +166,6 @@ Open the local URL printed in the terminal, usually `http://127.0.0.1:5177/`. Ke
 The UI includes a question library, form editor, optional media upload/linking, slide export, answer feedback import, repository checks, and raw JSON editing for advanced cases.
 
 管理界面提供题库浏览、表单录入、可选媒体上传/关联、演示导出、作答反馈导入、仓库检查，以及高级场景下的原始 JSON 编辑。
-
-## How to Contribute Questions
-
-Recommended contribution flow:
-
-1. Use AI to draft question batches with the required bilingual JSON structure.
-2. Review facts, wording, category, answer, difficulty, tags, and media references.
-3. Import or paste reviewed questions through the UI.
-4. Run the maintenance check in the UI before submitting changes.
-
-推荐贡献流程：
-
-1. 先用 AI 按要求生成双语 JSON 题目草稿。
-2. 人工审核事实、措辞、分类、答案、难度、标签和媒体引用。
-3. 通过 UI 导入或粘贴审核后的题目。
-4. 提交前在 UI 里运行维护检查。
-
-AI assistance is the preferred way to create larger batches. It keeps bilingual fields, answer formats, tags, and category IDs consistent, but AI output must still be reviewed before it becomes trusted question-bank data.
-
-批量创建题目时，推荐优先使用 AI 辅助。这样更容易保持中英文字段、答案格式、标签和分类 ID 一致；但 AI 输出仍然必须经过人工审核，不能直接当作可信题库数据。
-
-For full AI-assisted authoring guidance, read:
-
-- [AI-Assisted Authoring](docs/ai-assisted-authoring.md)
-- [AI One-File Question Brief](docs/ai-one-file-question-brief.md)
-
-AI 辅助出题的完整说明见：
-
-- [AI-Assisted Authoring](docs/ai-assisted-authoring.md)
-- [AI One-File Question Brief](docs/ai-one-file-question-brief.md)
-
-If another AI can read only one file, give it [AI One-File Question Brief](docs/ai-one-file-question-brief.md). That file is self-contained and tells the AI the required schema, bilingual rules, media rules, allowed answer types, and output format.
-
-如果其他 AI 只能读一份文档，就给它 [AI One-File Question Brief](docs/ai-one-file-question-brief.md)。这份文档是自包含的，说明了题目结构、中英双语规则、媒体规则、允许的题型和输出格式。
-
-## How to Teach Another AI
-
-If another AI does not have an agent or repository access, give it exactly this document first:
-
-```text
-docs/ai-one-file-question-brief.md
-```
-
-如果其他 AI 没有 agent，也不能读取仓库，先只给它这一份文档：
-
-```text
-docs/ai-one-file-question-brief.md
-```
-
-Then send a task message after the document. The task message should include:
-
-- topic or topic range
-- target category IDs
-- number of questions
-- desired difficulty mix, such as `easy: 2, medium: 2, hard: 1`
-- desired mood and occasion
-- whether media is needed
-- for media: the real file names, local paths, media types, and known source/license information
-
-然后在文档后面补充任务消息。任务消息应包含：
-
-- 主题或主题范围
-- 目标分类 ID
-- 题目数量
-- 难度比例，例如 `easy: 2, medium: 2, hard: 1`
-- 希望的氛围和使用场景
-- 是否需要媒体
-- 如果有媒体：真实文件名、本地路径、媒体类型，以及已知的来源和许可信息
-
-Copyable instruction for normal questions:
-
-普通题可以直接复制下面这段：
-
-```text
-Read the attached file docs/ai-one-file-question-brief.md and follow it exactly.
-
-Create 10 questions about [topic].
-Use these categories: [category IDs].
-Difficulty mix: 3 easy, 5 medium, 2 hard.
-Use a mix of single_choice, multiple_choice, and true_false.
-Mood: easygoing, surprising.
-Occasions: daily, party.
-Return only one valid JSON array. Do not include Markdown or explanations.
-```
-
-Copyable instruction for media questions:
-
-媒体题可以直接复制下面这段：
-
-```text
-Read the attached file docs/ai-one-file-question-brief.md and follow it exactly.
-
-Create 5 media-backed questions about [topic].
-Use these categories: [category IDs].
-Difficulty mix: 2 easy, 2 medium, 1 hard.
-Return one JSON object with:
-- media_files_to_place_locally
-- media_metadata_jsonl
-- question_drafts
-
-I will provide these real local media files:
-- [file name] | [image/audio/video] | [local path] | source: [known source or unknown] | license: [known license or unknown]
-
-Use question-level media for shared prompt material.
-Use options[].media when an image, audio clip, or video is itself an answer option.
-Return only valid JSON. Do not include Markdown or explanations.
-```
-
-After the AI responds:
-
-1. Save ordinary output as `draft-batch.json`.
-2. For media output, review and register `media_metadata_jsonl`, then save only `question_drafts` as `draft-batch.json`.
-3. Run a dry run:
-   ```bash
-   npm run new:question -- --from-json draft-batch.json --dry-run
-   ```
-4. Import after review:
-   ```bash
-   npm run new:question -- --from-json draft-batch.json
-   ```
-5. Run:
-   ```bash
-   npm run wtw -- check
-   ```
-
-拿到 AI 结果后：
-
-1. 普通题输出保存为 `draft-batch.json`。
-2. 媒体题先审核并登记 `media_metadata_jsonl`，再只把 `question_drafts` 保存为 `draft-batch.json`。
-3. 先试运行：
-   ```bash
-   npm run new:question -- --from-json draft-batch.json --dry-run
-   ```
-4. 人工审核无误后正式导入：
-   ```bash
-   npm run new:question -- --from-json draft-batch.json
-   ```
-5. 最后运行：
-   ```bash
-   npm run wtw -- check
-   ```
 
 ## Local API
 
