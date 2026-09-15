@@ -44,7 +44,7 @@ node scripts/server.mjs
 5. Optionally enable `Guess the question from options` for a playful round where choice questions initially show only their options. During the preview or presentation, press `G` or use `Enable Guess Mode` / `Disable Guess Mode` to switch this mode at any time. Press `H` or use `Show Question` to reveal the question; moving to another slide hides it again.
 6. Click `Build Preview` or `Shuffle Preview`.
 7. Use `Previous`, `Next`, and `Show Reveal`, or the keyboard shortcuts listed below.
-8. Use `Present` for a slide-like full-stage view.
+8. Use `Present` for a slide-like full-stage view. The floating control bar keeps navigation, guess mode, question/reveal toggles, and `Exit Present` available while presenting.
 9. In exported decks, players can click or keyboard-select choice options and confirm an answer, then use `Download Feedback` to export answer counts.
 10. Click `Export Folder` to write a deck folder under `exports/slides/`. The app shows a success popup and provides `Open Deck` and `Open in New Tab` actions.
 
@@ -60,7 +60,7 @@ node scripts/server.mjs
 5. 如果想玩“根据选项猜题”，可以先勾选 `Guess the question from options`。演示过程中也可以按 `G`，或点击 `Enable Guess Mode` / `Disable Guess Mode`，随时开启或关闭；开启后选择题只显示选项，按 `H` 或点击 `Show Question` 显示题目，切换到下一题时会自动隐藏。
 6. 点击 `Build Preview` 或 `Shuffle Preview`。
 7. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示，也可以使用下面列出的快捷键。
-8. 使用 `Present` 进入类似幻灯片的展示模式。
+8. 使用 `Present` 进入类似幻灯片的展示模式。演示时底部浮动控制栏会集中提供翻页、猜题模式、题目/答案显示和 `Exit Present` 返回入口。
 9. 在导出的演示中，玩家可以点击或用键盘选择选项并确认答案，再用 `Download Feedback` 导出作答统计。
 10. 点击 `Export Folder`，把演示文件夹写到 `exports/slides/`。管理台会弹出成功提示，并提供 `Open Deck` 和 `Open in New Tab` 操作。
 
@@ -152,6 +152,7 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
 - `Hidden until show` keeps answers hidden until `Show Reveal` is clicked, and automatically hides the answer again when you move to another question.
 - `Inline on each slide` is useful for review decks.
 - `Guess the question from options` applies to `single_choice`, `multiple_choice`, `true_false`, and `ordering` questions. It hides the question title, prompt, and question-level media while keeping option text and option media visible.
+- Present mode provides a floating control bar, so the presenter can operate the deck with the mouse and use `Exit Present` without relying on a keyboard.
 - Keyboard shortcuts work in preview, Present mode, and exported decks:
   - `Right`, `PageDown`, `Space`, or `N`: next slide.
   - `Left`, `PageUp`, `P`, or `Backspace`: previous slide.
@@ -174,6 +175,7 @@ The import adds to each question's `feedback.answered_count` and `feedback.corre
 - `Hidden until show` 会默认隐藏答案，点击 `Show Reveal` 才显示，并且每次切换题目都会重新收起答案。
 - `Inline on each slide` 适合审题或复习场景。
 - `Guess the question from options` 适用于 `single_choice`、`multiple_choice`、`true_false` 和 `ordering` 题型。它会隐藏题目标题、题干和题目级媒体，但保留选项文字和选项媒体。
+- Present 模式提供底部浮动控制栏，演示者可以直接用鼠标操作，并通过 `Exit Present` 返回，不必依赖键盘。
 - 预览、Present 模式和导出演示都支持键盘快捷键：
   - `Right`、`PageDown`、`Space` 或 `N`：下一题。
   - `Left`、`PageUp`、`P` 或 `Backspace`：上一题。

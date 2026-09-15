@@ -378,6 +378,7 @@ document.querySelector("#toggleRevealButton").addEventListener("click", () => {
 });
 elements.toggleQuestionButton.addEventListener("click", toggleQuestion);
 elements.toggleGuessModeButton.addEventListener("click", toggleGuessQuestionMode);
+document.querySelector("#exitPresentButton").addEventListener("click", () => togglePresentation(false));
 document.querySelector("#presentSlidesButton").addEventListener("click", () => togglePresentation());
 document.querySelector("#selectAllButton").addEventListener("click", () => {
   for (const question of shownQuestions()) state.selectedIds.add(question.id);

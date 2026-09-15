@@ -67,6 +67,7 @@
 }
 .exportResult small { overflow-wrap: anywhere; }
 .slidePreviewHeader { margin-top: 8px; }
+#exitPresentButton { display: none; }
 .slideStage {
   display: grid;
   place-items: center;
@@ -244,6 +245,41 @@ body.presenting { background: #101828; }
 body.presenting .standaloneLayout > .panel,
 body.presenting .standaloneLayout .sectionHeader,
 body.presenting .questionPicker { display: none; }
+body.presenting .standaloneLayout .slidePreviewHeader {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  margin: 0;
+  padding: 8px;
+  border: 1px solid #475467;
+  border-radius: 8px;
+  background: rgba(24, 33, 47, 0.94);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  color: #e4e7ec;
+  transform: translateX(-50%);
+}
+body.presenting .slidePreviewHeader > div:first-child { display: none; }
+body.presenting .slidePreviewHeader .actions { flex-wrap: wrap; }
+body.presenting .slidePreviewHeader button {
+  border-color: #667085;
+  background: #344054;
+  color: #ffffff;
+}
+body.presenting .slidePreviewHeader button:hover {
+  border-color: #98a2b3;
+  background: #475467;
+}
+body.presenting .slidePreviewHeader button:disabled {
+  border-color: #344054;
+  background: #1d2939;
+  color: #98a2b3;
+}
+body.presenting #exitPresentButton { display: inline-flex; }
 body.presenting .standaloneLayout,
 body.presenting .content {
   display: block;
@@ -256,7 +292,8 @@ body.presenting .content {
 body.presenting .view { display: none; }
 body.presenting .slideStage {
   min-height: calc(100vh - 92px);
-  padding: 0;
+  padding: 0 0 82px;
+  box-sizing: border-box;
   border: 0;
   background: #101828;
 }
@@ -283,6 +320,20 @@ body.presenting .slideFooter { color: #e4e7ec; }
   }
   .questionSlide h3 { font-size: 28px; }
   .slidePrompt { font-size: 20px; }
+  body.presenting .standaloneLayout .slidePreviewHeader {
+    right: 10px;
+    left: 10px;
+    width: auto;
+    max-width: none;
+    transform: none;
+  }
+  body.presenting .slidePreviewHeader .actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  body.presenting .slidePreviewHeader button { width: 100%; }
+  body.presenting .slideStage { padding-bottom: 168px; }
 }
 @media print {
   body { background: white; }
