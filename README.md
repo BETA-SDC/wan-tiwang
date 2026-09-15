@@ -8,6 +8,12 @@ This repository stores question data, taxonomy definitions, media metadata, gene
 
 本仓库存放题目数据、分类体系、媒体元数据、自动生成索引和维护脚本。媒体文件本体暂时只保存在本地并被 Git 忽略；题目和媒体元数据中统一使用相对路径引用。
 
+## Contributing
+
+Start with [Contributing](CONTRIBUTING.md) for the contribution workflow, repository structure, AI-assisted drafting, UI import, CLI import, and pre-submit checks.
+
+贡献题目或工具改进时，请先看 [Contributing](CONTRIBUTING.md)，里面集中说明贡献流程、仓库结构、AI 辅助出题、UI/CLI 导入和提交前检查。
+
 ## AI Question Creation
 
 For AI-assisted question creation, start with [AI One-File Question Brief](docs/ai-one-file-question-brief.md). Give this file to another AI when you want it to draft questions for this repository. It is self-contained and explains the required JSON shape, bilingual rules, categories, answer types, media references, and output format.
