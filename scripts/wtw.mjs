@@ -31,6 +31,10 @@ const commands = {
     description: "Find exact and near-duplicate questions",
     run: () => runNode(["scripts/dedupe.mjs"])
   },
+  "rebalance-answers": {
+    description: "Evenly distribute correct option positions",
+    run: (args) => runNode(["scripts/rebalance-choice-answers.mjs", ...args])
+  },
   sample: {
     description: "Randomly sample question IDs",
     run: async () => {
@@ -225,6 +229,8 @@ Direct commands:
   npm run wtw -- stats    Show question bank stats
   npm run wtw -- lint-tags  Check tag naming and consistency
   npm run wtw -- dedupe     Find exact and near-duplicate questions
+  npm run wtw -- rebalance-answers --write
+                             Evenly distribute correct option positions
   npm run wtw -- help     Show this help
 
 Lower-level scripts still exist for automation:

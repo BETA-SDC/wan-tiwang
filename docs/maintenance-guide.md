@@ -171,3 +171,35 @@ You can tune the near-duplicate threshold:
 ```bash
 WTW_SIMILARITY_THRESHOLD=0.9 npm run dedupe
 ```
+
+## Choice Answer Distribution
+
+Single-choice questions keep their option labels in the data (`A`, `B`, `C`, `D`). If too many questions have the correct answer in the first position, preview the planned rebalance:
+
+```bash
+npm run wtw -- rebalance-answers
+```
+
+Apply it after review:
+
+```bash
+npm run wtw -- rebalance-answers --write
+npm run wtw -- check
+```
+
+The tool moves complete option objects, including attached media, updates answer IDs, and adjusts explicit answer letters in reveal text. It does not change question meaning or touch multiple-choice, true/false, fill-in-the-blank, or numeric questions.
+
+单选题的数据使用 `A`、`B`、`C`、`D` 作为选项标签。如果正确答案长期集中在第一个选项，可以先预览重新分布结果：
+
+```bash
+npm run wtw -- rebalance-answers
+```
+
+确认后执行：
+
+```bash
+npm run wtw -- rebalance-answers --write
+npm run wtw -- check
+```
+
+工具会整体移动选项对象，包括选项关联的媒体；同时更新答案 ID 和解释文本中明确写出的答案字母。它不会改变题意，也不会处理多选、判断、填空或数值题。
