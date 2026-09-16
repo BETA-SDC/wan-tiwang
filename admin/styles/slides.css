@@ -4,10 +4,14 @@
   gap: 16px;
   padding: 16px;
 }
+.standaloneLayout > .panel,
+.standaloneLayout > .content {
+  min-width: 0;
+}
 .singlePreview { padding: 18px; }
 .pickerFilters {
   display: grid;
-  grid-template-columns: minmax(220px, 1.3fr) minmax(220px, 1.2fr) minmax(150px, 0.75fr) minmax(150px, 0.75fr) minmax(130px, 0.65fr) auto;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.2fr) repeat(3, minmax(0, 0.75fr)) auto;
   gap: 10px;
   align-items: end;
   margin-bottom: 12px;
@@ -16,16 +20,25 @@
   border-radius: 8px;
   background: var(--surface);
 }
-.pickerFilters label { margin: 0; }
+.pickerFilters label {
+  min-width: 0;
+  margin: 0;
+}
+.pickerFilters input,
+.pickerFilters select {
+  min-width: 0;
+}
 .categoryLevels {
   display: grid;
   gap: 8px;
 }
+.categoryLevels select { min-width: 0; }
 .selectedOnlyFilter {
   min-height: 40px;
   padding: 9px 0;
 }
 .pickerBulkActions { justify-content: end; }
+.pickerBulkActions { flex-wrap: wrap; }
 .pickerBulkActions button { white-space: nowrap; }
 .questionPicker {
   display: grid;
@@ -94,6 +107,13 @@
 }
 .exportResult small { overflow-wrap: anywhere; }
 .slidePreviewHeader { margin-top: 8px; }
+.slidePreviewHeader .actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.slidePreviewHeader .actions button {
+  flex: 0 1 auto;
+}
 #exitPresentButton { display: none; }
 .slideStage {
   display: grid;
@@ -332,11 +352,24 @@ body.presenting .questionSlide h3 { font-size: 38px; }
 body.presenting .slidePrompt { font-size: 26px; }
 body.presenting .slideOptions strong { font-size: 20px; }
 body.presenting .slideFooter { color: #e4e7ec; }
+@media (max-width: 1180px) {
+  .standaloneLayout {
+    grid-template-columns: 1fr;
+  }
+  .standaloneLayout > .panel {
+    margin-bottom: 0;
+  }
+  .pickerFilters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 @media (max-width: 820px) {
   .standaloneLayout { grid-template-columns: 1fr; }
   .pickerFilters { grid-template-columns: 1fr; }
   .pickerBulkActions { justify-content: stretch; }
   .pickerBulkActions button { width: 100%; }
+  .slidePreviewHeader .actions { justify-content: stretch; }
+  .slidePreviewHeader .actions button { flex: 1 1 auto; }
   .slideOptions { grid-template-columns: 1fr; }
   .mediaOptionSlide .slideOptions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
