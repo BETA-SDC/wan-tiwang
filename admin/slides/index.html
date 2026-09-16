@@ -15,12 +15,11 @@
           <label>Deck title <input id="deckTitle" value="Wan Ti Wang Slides"></label>
           <label>Question source
             <select id="slideSource">
-              <option value="selected">Selected from Library</option>
-              <option value="filtered">Search results</option>
+              <option value="selected">Selected questions</option>
+              <option value="filtered">Filtered results</option>
               <option value="all">All questions</option>
             </select>
           </label>
-          <label>Search <input id="slideSearch" type="search" placeholder="id, title, tag, keyword"></label>
           <label>Count <input id="slideCount" type="number" min="1" max="100" value="100"></label>
           <label>Language
             <select id="slideLocale">
@@ -51,8 +50,8 @@
           <div class="deckActionGroup">
             <h3>Selection</h3>
             <div class="actions stackedActions compactActions">
-              <button id="selectAllButton" type="button">Select Shown</button>
-              <button id="clearSelectionButton" type="button">Clear Selection</button>
+              <button id="buildSelectedButton" type="button">Build Selected</button>
+              <button id="clearSelectionButton" type="button">Clear All Selected</button>
             </div>
           </div>
           <div id="exportStatus" class="exportResult">Only Export Folder writes files.</div>
@@ -63,7 +62,32 @@
               <h2>Question Picker</h2>
               <p id="pickerStatus">Loading questions...</p>
             </div>
+            <div class="actions pickerBulkActions">
+              <button id="resetPickerButton" type="button">Reset Filters</button>
+              <button id="selectFilteredButton" type="button">Select Filtered</button>
+              <button id="clearFilteredButton" type="button">Clear Filtered</button>
+              <button id="invertFilteredButton" type="button">Invert Filtered</button>
+            </div>
           </div>
+          <section class="pickerFilters" aria-label="Question filters">
+            <label for="slideSearch">Search <input id="slideSearch" type="search" placeholder="id, title, prompt, tag"></label>
+            <label>Category 分类层级 <div id="slideCategoryLevels" class="categoryLevels"></div></label>
+            <label for="slideTypeFilter">Type <select id="slideTypeFilter"></select></label>
+            <label for="slideDifficultyFilter">Difficulty <select id="slideDifficultyFilter"></select></label>
+            <label for="slideStatusFilter">Status
+              <select id="slideStatusFilter">
+                <option value="">All statuses</option>
+                <option value="draft">draft</option>
+                <option value="review">review</option>
+                <option value="published">published</option>
+                <option value="deprecated">deprecated</option>
+              </select>
+            </label>
+            <label class="checkboxLabel selectedOnlyFilter">
+              <input id="selectedOnlyFilter" type="checkbox">
+              Selected only 只看已选
+            </label>
+          </section>
           <div id="slideQuestionPicker" class="questionPicker"></div>
           <div class="sectionHeader slidePreviewHeader">
             <div>

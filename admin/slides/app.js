@@ -1,11 +1,15 @@
 import { requestJson } from "../shared/api.js";
+import { loadBootstrap } from "../shared/bootstrap.js";
+import { createOption as option } from "../shared/dom.js";
 import { localized } from "../shared/i18n.js";
 import { createQuestionSlide, isChoiceQuestion } from "../shared/question-view.js";
 import { mountAppShell } from "../shared/app-shell.js";
 
 const state = {
+  bootstrap: null,
   questions: [],
   media: [],
+  categoryPath: [],
   selectedIds: new Set(JSON.parse(localStorage.getItem("wtw:selectedSlideIds") || "[]")),
   slideQuestions: [],
   currentSlide: 0,
@@ -20,6 +24,11 @@ const elements = {
   deckTitle: document.querySelector("#deckTitle"),
   slideSource: document.querySelector("#slideSource"),
   slideSearch: document.querySelector("#slideSearch"),
+  slideCategoryLevels: document.querySelector("#slideCategoryLevels"),
+  slideTypeFilter: document.querySelector("#slideTypeFilter"),
+  slideDifficultyFilter: document.querySelector("#slideDifficultyFilter"),
+  slideStatusFilter: document.querySelector("#slideStatusFilter"),
+  selectedOnlyFilter: document.querySelector("#selectedOnlyFilter"),
   slideCount: document.querySelector("#slideCount"),
   slideLocale: document.querySelector("#slideLocale"),
   slideRevealMode: document.querySelector("#slideRevealMode"),
@@ -35,9 +44,68 @@ const elements = {
 
 function saveSelection() {
   localStorage.setItem("wtw:selectedSlideIds", JSON.stringify([...state.selectedIds]));
+  document.dispatchEvent(new CustomEvent("wtw:selection-changed", { detail: { count: state.selectedIds.size } }));
 }
 
-function matchesSearch(question) {
+function childCategories(parentId) {
+  return state.bootstrap.categories
+    .filter((category) => (parentId ? category.parent === parentId : !category.parent))
+    .sort((a, b) => a.id.localeCompare(b.id));
+}
+
+function categoryLabel(category) {
+  return `${category.name} (${category.id})`;
+}
+
+function renderCategoryLevels() {
+  elements.slideCategoryLevels.replaceChildren();
+  let parentId = "";
+  let depth = 0;
+  while (true) {
+    const children = childCategories(parentId);
+    if (!children.length) break;
+    const currentDepth = depth;
+    const select = document.createElement("select");
+    select.setAttribute("aria-label", currentDepth ? `Subcategory level ${currentDepth}` : "Top-level category");
+    select.append(option("", currentDepth ? "All subcategories" : "All categories"));
+    for (const category of children) select.append(option(category.id, categoryLabel(category)));
+    select.value = state.categoryPath[currentDepth] || "";
+    select.addEventListener("change", () => {
+      state.categoryPath = state.categoryPath.slice(0, currentDepth);
+      if (select.value) state.categoryPath.push(select.value);
+      renderCategoryLevels();
+      renderPicker();
+    });
+    elements.slideCategoryLevels.append(select);
+    if (!select.value) break;
+    parentId = select.value;
+    depth += 1;
+  }
+}
+
+function selectedCategoryPrefix() {
+  return state.categoryPath.at(-1) || "";
+}
+
+function renderFilters() {
+  renderCategoryLevels();
+  elements.slideTypeFilter.replaceChildren(option("", "All answer types"));
+  for (const format of state.bootstrap.formats) {
+    elements.slideTypeFilter.append(option(format.id, `${format.name} (${format.id})`));
+  }
+  elements.slideDifficultyFilter.replaceChildren(option("", "All difficulties"));
+  for (const difficulty of state.bootstrap.difficulties) {
+    elements.slideDifficultyFilter.append(option(difficulty.id, `${difficulty.name} (${difficulty.id})`));
+  }
+}
+
+function matchesFilters(question) {
+  const categoryPrefix = selectedCategoryPrefix();
+  if (categoryPrefix && question.category !== categoryPrefix && !question.category.startsWith(`${categoryPrefix}.`)) return false;
+  if (elements.slideTypeFilter.value && question.type !== elements.slideTypeFilter.value) return false;
+  if (elements.slideDifficultyFilter.value && question.difficulty !== elements.slideDifficultyFilter.value) return false;
+  if (elements.slideStatusFilter.value && question.status !== elements.slideStatusFilter.value) return false;
+  if (elements.selectedOnlyFilter.checked && !state.selectedIds.has(question.id)) return false;
   const query = elements.slideSearch.value.trim().toLowerCase();
   if (!query) return true;
   return [
@@ -53,12 +121,13 @@ function matchesSearch(question) {
 }
 
 function shownQuestions() {
-  return state.questions.filter(matchesSearch);
+  return state.questions.filter(matchesFilters);
 }
 
 function renderPicker() {
   const questions = shownQuestions();
-  elements.pickerStatus.textContent = `${questions.length} shown · ${state.selectedIds.size} selected`;
+  const selectedInView = questions.filter((question) => state.selectedIds.has(question.id)).length;
+  elements.pickerStatus.textContent = `${questions.length} shown · ${selectedInView} selected here · ${state.selectedIds.size} selected total`;
   elements.slideQuestionPicker.replaceChildren();
 
   for (const question of questions.slice(0, 300)) {
@@ -80,8 +149,17 @@ function renderPicker() {
     const title = document.createElement("strong");
     title.textContent = localized(question.title);
     const meta = document.createElement("small");
-    meta.textContent = `${question.id} · ${question.category}`;
-    text.append(title, meta);
+    meta.textContent = `${question.id} · ${question.category} · ${question.type} · ${question.difficulty || "no difficulty"}`;
+    const actions = document.createElement("small");
+    actions.className = "pickerItemActions";
+    const preview = document.createElement("a");
+    preview.href = `/question/?id=${encodeURIComponent(question.id)}`;
+    preview.textContent = "Preview";
+    const edit = document.createElement("a");
+    edit.href = `/editor/?id=${encodeURIComponent(question.id)}`;
+    edit.textContent = "Edit";
+    actions.append(preview, edit);
+    text.append(title, meta, actions);
 
     row.append(checkbox, text);
     elements.slideQuestionPicker.append(row);
@@ -353,13 +431,16 @@ function togglePresentation(force) {
 
 async function init() {
   mountAppShell();
-  const [questions, media] = await Promise.all([
+  const [bootstrap, questions, media] = await Promise.all([
+    loadBootstrap(),
     requestJson("/api/questions?limit=10000"),
     requestJson("/api/media")
   ]);
+  state.bootstrap = bootstrap;
   state.questions = questions.questions;
   state.media = media.media;
-  if (state.selectedIds.size === 0) elements.slideSource.value = "filtered";
+  renderFilters();
+  elements.slideSource.value = state.selectedIds.size === 0 ? "filtered" : "selected";
   renderPicker();
   buildSlides();
 }
@@ -380,17 +461,53 @@ elements.toggleQuestionButton.addEventListener("click", toggleQuestion);
 elements.toggleGuessModeButton.addEventListener("click", toggleGuessQuestionMode);
 document.querySelector("#exitPresentButton").addEventListener("click", () => togglePresentation(false));
 document.querySelector("#presentSlidesButton").addEventListener("click", () => togglePresentation());
-document.querySelector("#selectAllButton").addEventListener("click", () => {
+document.querySelector("#selectFilteredButton").addEventListener("click", () => {
   for (const question of shownQuestions()) state.selectedIds.add(question.id);
   saveSelection();
   renderPicker();
+});
+document.querySelector("#resetPickerButton").addEventListener("click", () => {
+  state.categoryPath = [];
+  elements.slideSearch.value = "";
+  elements.slideTypeFilter.value = "";
+  elements.slideDifficultyFilter.value = "";
+  elements.slideStatusFilter.value = "";
+  elements.selectedOnlyFilter.checked = false;
+  renderFilters();
+  renderPicker();
+});
+document.querySelector("#clearFilteredButton").addEventListener("click", () => {
+  for (const question of shownQuestions()) state.selectedIds.delete(question.id);
+  saveSelection();
+  renderPicker();
+});
+document.querySelector("#invertFilteredButton").addEventListener("click", () => {
+  for (const question of shownQuestions()) {
+    if (state.selectedIds.has(question.id)) state.selectedIds.delete(question.id);
+    else state.selectedIds.add(question.id);
+  }
+  saveSelection();
+  renderPicker();
+});
+document.querySelector("#buildSelectedButton").addEventListener("click", () => {
+  elements.slideSource.value = "selected";
+  buildSlides();
 });
 document.querySelector("#clearSelectionButton").addEventListener("click", () => {
   state.selectedIds.clear();
   saveSelection();
   renderPicker();
 });
-elements.slideSearch.addEventListener("input", renderPicker);
+for (const filter of [
+  elements.slideSearch,
+  elements.slideTypeFilter,
+  elements.slideDifficultyFilter,
+  elements.slideStatusFilter,
+  elements.selectedOnlyFilter
+]) {
+  filter.addEventListener("input", renderPicker);
+  filter.addEventListener("change", renderPicker);
+}
 elements.slideLocale.addEventListener("change", renderSlides);
 elements.slideRevealMode.addEventListener("change", syncRevealForMode);
 elements.guessQuestionMode.addEventListener("change", () => {

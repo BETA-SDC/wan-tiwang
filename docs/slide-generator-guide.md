@@ -34,34 +34,36 @@ node scripts/server.mjs
 
 ## Workflow
 
-1. Use `Browse` filters to narrow the question pool, or tick specific questions in the list.
-2. Open `/slides/` from `Open Slides`.
-3. Choose a source:
-   - `Search results`: use the questions currently matching the generator search.
-   - `Selected from Library`: use only questions selected in the Question Library.
+1. Open `/slides/` from `Open Slides`. The generator now includes its own question picker, so you do not need to switch back to the library to filter questions.
+2. Use search, hierarchical category filters, answer type, difficulty, status, or `Selected only` to narrow the picker.
+3. Use `Select Filtered`, `Clear Filtered`, or `Invert Filtered` for batch selection. Use `Reset Filters` to return to the full bank.
+4. Choose a source:
+   - `Filtered results`: use the questions currently matching the picker filters.
+   - `Selected questions`: use only the persistent selected set.
    - `All questions`: use the full bank.
-4. Set count, language, and reveal mode.
-5. Optionally enable `Guess the question from options` for a playful round where choice questions initially show only their options. During the preview or presentation, press `G` or use `Enable Guess Mode` / `Disable Guess Mode` to switch this mode at any time. Press `H` or use `Show Question` to reveal the question; moving to another slide hides it again.
-6. Click `Build Preview` or `Shuffle Preview`.
-7. Use `Previous`, `Next`, and `Show Reveal`, or the keyboard shortcuts listed below.
-8. Use `Present` for a slide-like full-stage view. The floating control bar keeps navigation, guess mode, question/reveal toggles, and `Exit Present` available while presenting.
-9. In exported decks, players can click or keyboard-select choice options and confirm an answer, then use `Download Feedback` to export answer counts.
+5. Set count, language, and reveal mode.
+6. Optionally enable `Guess the question from options` for a playful round where choice questions initially show only their options. During the preview or presentation, press `G` or use `Enable Guess Mode` / `Disable Guess Mode` to switch this mode at any time. Press `H` or use `Show Question` to reveal the question; moving to another slide hides it again.
+7. Click `Build Preview`, `Build Selected`, or `Shuffle Preview`.
+8. Use `Previous`, `Next`, and `Show Reveal`, or the keyboard shortcuts listed below.
+9. Use `Present` for a slide-like full-stage view. The floating control bar keeps navigation, guess mode, question/reveal toggles, and `Exit Present` available while presenting.
+10. In exported decks, players can click or keyboard-select choice options and confirm an answer, then use `Download Feedback` to export answer counts.
 10. Click `Export Folder` to write a deck folder under `exports/slides/`. The app shows a success popup and provides `Open Deck` and `Open in New Tab` actions.
 
 中文流程：
 
-1. 先用 `Browse` 筛选题目，或者在题目列表里勾选具体题目。
-2. 通过 `Open Slides` 打开 `/slides/`。
-3. 选择来源：
-   - `Search results`：使用生成器搜索当前匹配的题目。
-   - `Selected from Library`：只使用在 Question Library 中勾选的题目。
+1. 通过 `Open Slides` 打开 `/slides/`。生成器现在自带选题器，不需要再回到题库页筛选。
+2. 使用搜索、层级分类、题型、难度、状态或 `Selected only` 缩小题目范围。
+3. 使用 `Select Filtered`、`Clear Filtered` 或 `Invert Filtered` 批量处理当前结果；使用 `Reset Filters` 恢复全部题目。
+4. 选择来源：
+   - `Filtered results`：使用当前筛选结果。
+   - `Selected questions`：只使用持续保存的已选题目集合。
    - `All questions`：使用全部题目。
-4. 设置数量、语言和答案显示方式。
-5. 如果想玩“根据选项猜题”，可以先勾选 `Guess the question from options`。演示过程中也可以按 `G`，或点击 `Enable Guess Mode` / `Disable Guess Mode`，随时开启或关闭；开启后选择题只显示选项，按 `H` 或点击 `Show Question` 显示题目，切换到下一题时会自动隐藏。
-6. 点击 `Build Preview` 或 `Shuffle Preview`。
-7. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示，也可以使用下面列出的快捷键。
-8. 使用 `Present` 进入类似幻灯片的展示模式。演示时底部浮动控制栏会集中提供翻页、猜题模式、题目/答案显示和 `Exit Present` 返回入口。
-9. 在导出的演示中，玩家可以点击或用键盘选择选项并确认答案，再用 `Download Feedback` 导出作答统计。
+5. 设置数量、语言和答案显示方式。
+6. 如果想玩“根据选项猜题”，可以先勾选 `Guess the question from options`。演示过程中也可以按 `G`，或点击 `Enable Guess Mode` / `Disable Guess Mode`，随时开启或关闭；开启后选择题只显示选项，按 `H` 或点击 `Show Question` 显示题目，切换到下一题时会自动隐藏。
+7. 点击 `Build Preview`、`Build Selected` 或 `Shuffle Preview`。
+8. 使用 `Previous`、`Next` 和 `Show Reveal` 控制展示，也可以使用下面列出的快捷键。
+9. 使用 `Present` 进入类似幻灯片的展示模式。演示时底部浮动控制栏会集中提供翻页、猜题模式、题目/答案显示和 `Exit Present` 返回入口。
+10. 在导出的演示中，玩家可以点击或用键盘选择选项并确认答案，再用 `Download Feedback` 导出作答统计。
 10. 点击 `Export Folder`，把演示文件夹写到 `exports/slides/`。管理台会弹出成功提示，并提供 `Open Deck` 和 `Open in New Tab` 操作。
 
 ## Export Folder
